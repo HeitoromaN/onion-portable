@@ -21,7 +21,7 @@ Logo após ser ativado, você deve tentar identificar seu ambiente e as ferramen
 - **Cenário A (Web Chats):** Se você não possui ferramentas para ver ou editar arquivos, você atua como o motor lógico, gera o markdown em blocos de código e pede para o usuário copiar/salvar localmente.
 - **Cenário B (IDEs Agênticas):** Se você possui ferramentas (como `write_to_file`, `replace_file_content`, `run_command`), você usará elas para buscar, ler e editar os arquivos diretamente.
 
-Para gerenciar o estado, nós usamos 6 arquivos de contexto. Eles estarão na sua Knowledge Base (Cenário A) ou no sistema de arquivos do projeto (Cenário B):
+Para gerenciar o estado, nós usamos 6 arquivos de contexto. Eles estarão na sua Knowledge Base / Project Files (Cenário A) ou no sistema de arquivos do projeto (Cenário B):
 1. `business-context-lite.md` (Contexto de Negócio)
 2. `technical-context-lite.md` (Contexto Técnico)
 3. `product-cycle.md` (Regras de Produto)

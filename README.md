@@ -29,11 +29,17 @@ Neste cenário, a IA guiará as fases de Produto e Engenharia através de respos
     2. Adicione o conteúdo de [`ONION-MASTER-PROMPT.md`](./ONION-MASTER-PROMPT.md) nas *Custom Instructions* do Projeto.
     3. Faça o upload dos 6 arquivos da pasta `docs/` nos *Project Files* (Knowledge).
     4. *Fluxo:* Sempre que o Claude atualizar uma especificação, copie a resposta dele e atualize os arquivos correspondentes na sua máquina.
-*   **ChatGPT (Custom GPTs / Team Workspaces)**:
-    1. Crie um **Custom GPT**.
-    2. Cole o conteúdo de [`ONION-MASTER-PROMPT.md`](./ONION-MASTER-PROMPT.md) no campo de *Instructions*.
-    3. Faça o upload dos 6 arquivos de `docs/` na área de *Knowledge*.
-    4. Habilite o "Code Interpreter" para que o GPT consiga raciocinar melhor na escrita.
+*   **ChatGPT (Custom GPTs ou ChatGPT Projects)**:
+    *   **Opção A: Custom GPTs (Geral/Persistente)**:
+        1. Crie um **Custom GPT** (acessando *Explore GPTs* -> *Create*).
+        2. Cole o conteúdo de [`ONION-MASTER-PROMPT.md`](./ONION-MASTER-PROMPT.md) no campo de *Instructions*.
+        3. Na área de *Knowledge*, faça o upload dos 6 arquivos da pasta `docs/` para servirem de referência de regras e templates.
+        4. Certifique-se de habilitar o "Code Interpreter" nas configurações para melhor raciocínio e escrita lógica.
+    *   **Opção B: ChatGPT Projects (Ideal para Repositórios/Times)**:
+        1. Crie um **Project** (disponível para contas Team/Enterprise).
+        2. Nas *Custom Instructions* do projeto, insira o conteúdo do [`ONION-MASTER-PROMPT.md`](./ONION-MASTER-PROMPT.md).
+        3. Faça o upload dos 6 arquivos da pasta `docs/` e de qualquer outro código relevante do repositório em *Files* do projeto.
+        4. O histórico de conversas e os arquivos compartilhados no projeto manterão o alinhamento de forma simplificada.
 *   **Gemini (Advanced / Gems)**:
     1. Crie uma **Gem** personalizada.
     2. Cole o conteúdo de [`ONION-MASTER-PROMPT.md`](./ONION-MASTER-PROMPT.md) nas instruções da Gem.
