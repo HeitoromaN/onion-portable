@@ -542,7 +542,7 @@
         <span>Pulse Mais</span><span class="sep">|</span>
         <span>Desenvolvimento com IA 2026</span>
     </div>
-    <div class="slide-counter">Slide <span id="current-num">1</span> / 12</div>
+    <div class="slide-counter">Slide <span id="current-num">1</span> / 13</div>
 </header>
 
 <!-- Slides -->
@@ -907,8 +907,52 @@
         </div>
     </section>
 
-    <!-- ── SLIDE 9: REGRA DE OURO ── -->
-    <section class="slide" id="s9" data-orb-a="#ef4444" data-orb-b="#f59e0b">
+    <!-- ── SLIDE 9: CICLO DE SESSÃO ── -->
+    <section class="slide" id="s9" data-orb-a="#8b5cf6" data-orb-b="#34d399">
+        <div class="card">
+            <div class="badge badge-purple">📓 @docs — /session</div>
+            <h2 class="title">Ciclo de <span class="gradient-text">Sessão</span> — Memória Persistente do Projeto</h2>
+            <p class="subtitle">Cada sessão de trabalho é documentada automaticamente. A IA nunca perde o fio da meada.</p>
+
+            <div class="two-col" style="margin-top:24px;">
+                <div>
+                    <div class="panel" style="margin-bottom:14px;">
+                        <span class="panel-icon">📁</span>
+                        <h3>Estrutura de Sessão</h3>
+                        <p>Cada sessão gera uma pasta datada em <code style="color:var(--cyan)">docs/sessions/YYYY-MM-DD_HHMM_nome/</code> com 6 artefatos padronizados.</p>
+                    </div>
+                    <div class="cmd-row" style="flex-direction:column; gap:10px;">
+                        <div class="cmd-pill">/session start<span>Cria a pasta da sessão, preenche context.md com o estado atual do projeto e registra o objetivo.</span></div>
+                        <div class="cmd-pill">/session save<span>Persiste decisões, mudanças e notas do que foi feito na sessão em andamento.</span></div>
+                        <div class="cmd-pill">/session end<span>Fecha a sessão: atualiza o README, gera files-changed.txt e commands-executed.txt, e indexa no README global.</span></div>
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.8rem; color:var(--dim); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">Artefatos gerados por sessão</p>
+                    <div class="file-card" style="font-size:0.78rem;">
+                        <div class="line accent">📄 README.md</div>
+                        <div class="line">Objetivo, resultados, tempo investido</div>
+                        <div class="line accent" style="margin-top:8px;">📄 context.md</div>
+                        <div class="line">Estado inicial, motivação, restrições</div>
+                        <div class="line accent" style="margin-top:8px;">📄 decisions.md</div>
+                        <div class="line">Decisões arquiteturais com justificativas</div>
+                        <div class="line accent" style="margin-top:8px;">📄 changes.md</div>
+                        <div class="line">Arquivos criados e modificados</div>
+                        <div class="line accent" style="margin-top:8px;">📄 files-changed.txt</div>
+                        <div class="line">Lista de caminhos para diff rápido</div>
+                        <div class="line accent" style="margin-top:8px;">📄 commands-executed.txt</div>
+                        <div class="line">Histórico de comandos executados</div>
+                    </div>
+                    <div style="margin-top:14px; padding:10px 14px; background:rgba(5,150,105,0.06); border:1px solid rgba(5,150,105,0.15); border-radius:10px; font-size:0.82rem; color:var(--muted);">
+                        💡 <strong style="color:var(--green)">Por que importa:</strong> Ao retomar o projeto dias depois, a IA lê a última sessão e resgata exatamente o contexto — sem precisar reexplicar nada.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SLIDE 10: REGRA DE OURO ── -->
+    <section class="slide" id="s10" data-orb-a="#ef4444" data-orb-b="#f59e0b">
         <div class="card">
             <div class="badge badge-red">🛡️ A Regra</div>
             <h2 class="title">O Guardião do Fluxo — <span class="red-text">Impedindo Atalhos</span></h2>
@@ -945,8 +989,8 @@
         </div>
     </section>
 
-    <!-- ── SLIDE 10: CENÁRIOS A vs B ── -->
-    <section class="slide" id="s10" data-orb-a="#f59e0b" data-orb-b="#10b981">
+    <!-- ── SLIDE 11: CENÁRIOS A vs B ── -->
+    <section class="slide" id="s11" data-orb-a="#f59e0b" data-orb-b="#10b981">
         <div class="card">
             <div class="badge badge-amber">🌐 Ambientes</div>
             <h2 class="title">Cenário A vs. <span class="green-text">Cenário B</span></h2>
@@ -977,8 +1021,8 @@
         </div>
     </section>
 
-    <!-- ── SLIDE 11: DEMO HANDS-ON ── -->
-    <section class="slide" id="s11" data-orb-a="#8b5cf6" data-orb-b="#06b6d4">
+    <!-- ── SLIDE 12: DEMO HANDS-ON ── -->
+    <section class="slide" id="s12" data-orb-a="#8b5cf6" data-orb-b="#06b6d4">
         <div class="card">
             <div class="badge badge-cyan">🎯 Demo Prática</div>
             <h2 class="title">Demonstração <span class="cyan-text">Hands-On</span> do Fluxo</h2>
@@ -1024,8 +1068,8 @@
         </div>
     </section>
 
-    <!-- ── SLIDE 12: CONCLUSÃO ── -->
-    <section class="slide" id="s12" data-orb-a="#8b5cf6" data-orb-b="#34d399">
+    <!-- ── SLIDE 13: CONCLUSÃO ── -->
+    <section class="slide" id="s13" data-orb-a="#8b5cf6" data-orb-b="#34d399">
         <div class="card">
             <div class="cta-content">
                 <span class="cta-trophy">🏆</span>
