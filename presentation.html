@@ -10,23 +10,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #070810;
-            --surface: rgba(14, 16, 30, 0.7);
-            --border: rgba(139, 92, 246, 0.15);
-            --primary: #8b5cf6;
-            --primary-light: #a78bfa;
-            --primary-glow: rgba(139, 92, 246, 0.3);
-            --cyan: #22d3ee;
-            --cyan-dim: rgba(34, 211, 238, 0.15);
-            --green: #10b981;
-            --green-dim: rgba(16, 185, 129, 0.12);
-            --amber: #f59e0b;
-            --red: #ef4444;
-            --text: #f1f5f9;
-            --muted: #94a3b8;
-            --dim: #475569;
-            --gradient: linear-gradient(135deg, #8b5cf6, #3b82f6);
-            --gradient-warm: linear-gradient(135deg, #f59e0b, #ef4444);
+            --bg: #f8fafc;
+            --surface: rgba(255, 255, 255, 0.85);
+            --border: rgba(99, 102, 241, 0.12);
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.12);
+            --cyan: #0891b2;
+            --cyan-dim: rgba(8, 145, 178, 0.08);
+            --green: #059669;
+            --green-dim: rgba(5, 150, 105, 0.08);
+            --amber: #d97706;
+            --red: #dc2626;
+            --text: #0f172a;
+            --muted: #475569;
+            --dim: #64748b;
+            --gradient: linear-gradient(135deg, #4f46e5, #2563eb);
+            --gradient-warm: linear-gradient(135deg, #ea580c, #dc2626);
             --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -51,21 +51,21 @@
         }
         .orb-a { width: 50vw; height: 50vw; top: -15vw; right: -10vw; }
         .orb-b { width: 40vw; height: 40vw; bottom: -10vw; left: -10vw; }
-        .orb.visible { opacity: 0.1; }
+        .orb.visible { opacity: 0.18; }
 
         /* ── GRID OVERLAY ── */
         .grid-overlay {
             position: fixed; inset: 0; z-index: 0; pointer-events: none;
             background-image:
-                linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
+                linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
             background-size: 60px 60px;
         }
 
         /* ── HEADER BAR ── */
         .header-bar {
             position: fixed; top: 0; left: 0; right: 0; height: 56px;
-            background: rgba(7,8,16,0.85); border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(248,250,252,0.8); border-bottom: 1px solid rgba(0,0,0,0.05);
             backdrop-filter: blur(16px); z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 32px;
@@ -82,17 +82,17 @@
             font-family: 'Space Grotesk', sans-serif; font-weight: 700;
             font-size: 1rem; letter-spacing: -0.3px;
         }
-        .logo-text span { color: var(--primary-light); }
+        .logo-text span { color: var(--primary); }
         .header-meta {
             font-size: 0.78rem; color: var(--dim);
             display: flex; align-items: center; gap: 16px;
         }
-        .header-meta .sep { color: rgba(255,255,255,0.08); }
+        .header-meta .sep { color: rgba(0,0,0,0.08); }
         .slide-counter {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.85rem; color: var(--muted);
         }
-        .slide-counter span { color: var(--primary-light); font-weight: 600; }
+        .slide-counter span { color: var(--primary); font-weight: 600; }
 
         /* ── SLIDES ── */
         .slides-wrapper {
@@ -125,7 +125,7 @@
             border-radius: 24px;
             padding: 48px 56px;
             backdrop-filter: blur(20px);
-            box-shadow: 0 32px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+            box-shadow: 0 30px 60px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.6);
             width: 100%; max-width: 1100px;
             position: relative; overflow: hidden;
         }
@@ -133,7 +133,7 @@
             content: ''; position: absolute; top: 0; left: 0; right: 0;
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            opacity: 0.4;
+            opacity: 0.25;
         }
 
         /* ── TYPOGRAPHY ── */
@@ -144,11 +144,11 @@
             text-transform: uppercase; margin-bottom: 20px;
             border: 1px solid;
         }
-        .badge-purple { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.25); color: var(--primary-light); }
-        .badge-red    { background: rgba(239,68,68,0.1);  border-color: rgba(239,68,68,0.25);  color: #fca5a5; }
-        .badge-cyan   { background: var(--cyan-dim);      border-color: rgba(34,211,238,0.25); color: var(--cyan); }
-        .badge-green  { background: var(--green-dim);     border-color: rgba(16,185,129,0.25); color: var(--green); }
-        .badge-amber  { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.25); color: var(--amber); }
+        .badge-purple { background: rgba(99,102,241,0.08); border-color: rgba(99,102,241,0.18); color: var(--primary); }
+        .badge-red    { background: rgba(239,68,68,0.08);  border-color: rgba(239,68,68,0.18);  color: var(--red); }
+        .badge-cyan   { background: rgba(8,145,178,0.08);  border-color: rgba(8,145,178,0.18);  color: var(--cyan); }
+        .badge-green  { background: rgba(5,150,105,0.08);  border-color: rgba(5,150,105,0.18);  color: var(--green); }
+        .badge-amber  { background: rgba(217,119,6,0.08);  border-color: rgba(217,119,6,0.18);  color: var(--amber); }
 
         h1.hero { font-family: 'Space Grotesk', sans-serif; font-size: 3.6rem; font-weight: 700; letter-spacing: -2px; line-height: 1.1; margin-bottom: 16px; }
         h2.title { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 700; letter-spacing: -1px; margin-bottom: 10px; }
@@ -163,7 +163,7 @@
         .green-text { color: var(--green); }
         .amber-text { color: var(--amber); }
         .red-text { color: var(--red); }
-        .primary-text { color: var(--primary-light); }
+        .primary-text { color: var(--primary); }
 
         /* ── GRID LAYOUTS ── */
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 28px; }
@@ -172,25 +172,25 @@
 
         /* ── PANEL CARDS ── */
         .panel {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.45);
+            border: 1px solid rgba(99,102,241,0.08);
             border-radius: 16px; padding: 24px;
             transition: var(--transition);
         }
-        .panel:hover { border-color: var(--primary); background: rgba(139,92,246,0.04); transform: translateY(-4px); }
+        .panel:hover { border-color: var(--primary); background: rgba(99,102,241,0.03); transform: translateY(-4px); }
         .panel-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
         .panel h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; margin-bottom: 8px; }
         .panel p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
 
         /* ── PROBLEM/SOLUTION CARDS ── */
         .problem-card {
-            background: rgba(239,68,68,0.04);
-            border: 1px solid rgba(239,68,68,0.15);
+            background: rgba(220,38,38,0.03);
+            border: 1px solid rgba(220,38,38,0.1);
             border-radius: 16px; padding: 24px;
         }
         .solution-card {
-            background: rgba(16,185,129,0.04);
-            border: 1px solid rgba(16,185,129,0.15);
+            background: rgba(5,150,105,0.03);
+            border: 1px solid rgba(5,150,105,0.1);
             border-radius: 16px; padding: 24px;
         }
         .card-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
@@ -198,44 +198,78 @@
         /* ── FLOW DIAGRAM ── */
         .flow-row {
             display: flex; align-items: center; justify-content: center;
-            gap: 0; margin-top: 32px; flex-wrap: nowrap;
+            gap: 0; margin: 32px 0 28px;
+            flex-wrap: nowrap;
+            background: linear-gradient(135deg, rgba(99,102,241,0.06) 0%, rgba(8,145,178,0.06) 100%);
+            border-radius: 20px; padding: 24px 16px;
+            border: 1px solid rgba(99,102,241,0.12);
         }
         .flow-node {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 14px; padding: 18px 22px;
-            text-align: center; min-width: 160px;
+            background: #fff;
+            border: 2px solid rgba(99,102,241,0.18);
+            border-radius: 16px; padding: 20px 24px;
+            text-align: center; min-width: 130px;
             transition: var(--transition);
+            box-shadow: 0 4px 16px rgba(99,102,241,0.08);
+            position: relative;
         }
-        .flow-node:hover { border-color: var(--primary); background: rgba(139,92,246,0.05); transform: translateY(-4px); }
-        .flow-node .fn-icon { font-size: 1.6rem; margin-bottom: 8px; }
-        .flow-node .fn-label { font-size: 0.9rem; font-weight: 600; }
-        .flow-node .fn-sub { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+        .flow-node:hover {
+            border-color: var(--primary);
+            background: rgba(99,102,241,0.04);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(99,102,241,0.18);
+        }
+        .flow-node .fn-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+        .flow-node .fn-label { font-size: 0.88rem; font-weight: 700; color: var(--text); }
+        .flow-node .fn-sub {
+            font-size: 0.72rem; color: var(--primary);
+            margin-top: 6px; font-weight: 600;
+            background: rgba(99,102,241,0.08);
+            border-radius: 6px; padding: 2px 8px;
+            display: inline-block;
+        }
+        .flow-node:nth-child(1) { border-color: rgba(217,119,6,0.3); }
+        .flow-node:nth-child(3) { border-color: rgba(139,92,246,0.3); }
+        .flow-node:nth-child(5) { border-color: rgba(8,145,178,0.3); }
+        .flow-node:nth-child(7) { border-color: rgba(5,150,105,0.3); }
+        .flow-node:nth-child(9) { border-color: rgba(99,102,241,0.4); }
+        .flow-node:nth-child(9) .fn-sub { background: rgba(99,102,241,0.12); color: var(--primary); }
         .flow-arrow {
-            width: 48px; text-align: center; color: var(--primary);
-            font-size: 1.2rem; flex-shrink: 0;
+            display: flex; align-items: center; flex-shrink: 0;
+            width: 44px; justify-content: center;
+            color: var(--primary); font-size: 1.4rem;
+            opacity: 0.6;
+            position: relative;
+        }
+        .flow-arrow::after {
+            content: '';
+            position: absolute;
+            width: 30px; height: 2px;
+            background: linear-gradient(90deg, rgba(99,102,241,0.3), rgba(99,102,241,0.05));
+            top: 50%; transform: translateY(-50%);
         }
 
         /* ── FILE CARDS ── */
         .file-card {
-            background: rgba(7,8,16,0.8); border: 1px solid rgba(255,255,255,0.07);
+            background: rgba(255,255,255,0.6); border: 1px solid rgba(0,0,0,0.08);
             border-radius: 14px; padding: 20px;
             font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
             transition: var(--transition); cursor: default;
+            color: #0f172a;
         }
-        .file-card:hover { border-color: var(--cyan); box-shadow: 0 0 24px rgba(34,211,238,0.1); }
+        .file-card:hover { border-color: var(--primary); box-shadow: 0 0 24px rgba(99,102,241,0.06); }
         .file-card .fc-head {
             display: flex; align-items: center; justify-content: space-between;
             padding-bottom: 10px; margin-bottom: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            color: #818cf8;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            color: #4f46e5;
         }
         .fc-type {
-            font-size: 0.68rem; background: rgba(129,140,248,0.1);
+            font-size: 0.68rem; background: rgba(99,102,241,0.08);
             padding: 2px 6px; border-radius: 4px; font-weight: 600;
         }
         .file-card .line { color: var(--muted); margin-bottom: 5px; line-height: 1.5; }
-        .file-card .line.accent { color: var(--cyan); }
+        .file-card .line.accent { color: var(--primary); font-weight: 600; }
         .file-card .line.green { color: var(--green); }
 
         /* ── PERSONA TABS ── */
@@ -246,18 +280,18 @@
         .tab-list { display: flex; flex-direction: column; gap: 8px; }
         .tab-item {
             padding: 13px 18px; border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
-            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.5);
             cursor: pointer; transition: var(--transition);
             font-size: 0.95rem; font-weight: 600;
             display: flex; align-items: center; gap: 10px; color: var(--muted);
         }
-        .tab-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
-        .tab-item.active { background: var(--gradient); color: #fff; border-color: transparent; box-shadow: 0 8px 24px rgba(139,92,246,0.25); }
+        .tab-item:hover { background: rgba(0,0,0,0.02); color: var(--text); }
+        .tab-item.active { background: var(--gradient); color: #fff; border-color: transparent; box-shadow: 0 8px 24px rgba(99,102,241,0.25); }
         .tab-panel { display: none; animation: fadeUp 0.4s ease-out; }
         .tab-panel.active { display: block; }
         .tab-panel-inner {
-            background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.55); border: 1px solid rgba(0,0,0,0.05);
             border-radius: 16px; padding: 28px; height: 100%;
         }
         .tab-panel h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; margin-bottom: 6px; }
@@ -265,7 +299,7 @@
         .step-list { list-style: none; }
         .step-list li {
             padding: 10px 12px 10px 36px; position: relative;
-            border-left: 2px solid rgba(255,255,255,0.06);
+            border-left: 2px solid rgba(0,0,0,0.05);
             margin-left: 10px; margin-bottom: 4px;
             font-size: 0.9rem; color: var(--muted); line-height: 1.55;
         }
@@ -273,8 +307,8 @@
             content: attr(data-n);
             position: absolute; left: -14px; top: 10px;
             width: 24px; height: 24px; border-radius: 50%;
-            background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.25);
-            color: var(--primary-light); font-size: 0.75rem; font-weight: 700;
+            background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.18);
+            color: var(--primary); font-size: 0.75rem; font-weight: 700;
             display: flex; align-items: center; justify-content: center;
         }
 
@@ -287,13 +321,13 @@
         .tl-item:not(:last-child)::before {
             content: ''; position: absolute;
             left: 19px; top: 40px; bottom: 0; width: 2px;
-            background: rgba(139,92,246,0.15);
+            background: rgba(99,102,241,0.15);
         }
         .tl-dot {
             width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1rem; border: 2px solid rgba(139,92,246,0.25);
-            background: rgba(139,92,246,0.08);
+            font-size: 1rem; border: 2px solid rgba(99,102,241,0.2);
+            background: rgba(99,102,241,0.05);
         }
         .tl-content h4 { font-size: 1rem; margin-bottom: 4px; color: var(--text); }
         .tl-content p { font-size: 0.88rem; color: var(--muted); line-height: 1.55; }
@@ -301,32 +335,33 @@
         /* ── SCENARIO CARDS ── */
         .scenario {
             border-radius: 18px; padding: 28px; position: relative;
-            border: 1px solid rgba(255,255,255,0.06);
-            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.4);
             transition: var(--transition);
         }
         .scenario:hover { transform: translateY(-5px); }
-        .scenario.a-side { border-color: rgba(245,158,11,0.2); background: rgba(245,158,11,0.03); }
-        .scenario.b-side { border-color: rgba(16,185,129,0.2); background: rgba(16,185,129,0.03); }
+        .scenario.a-side { border-color: rgba(217,119,6,0.1); background: rgba(217,119,6,0.02); }
+        .scenario.b-side { border-color: rgba(5,150,105,0.1); background: rgba(5,150,105,0.02); }
         .scenario h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; margin-bottom: 12px; }
         .scenario ul { list-style: none; }
         .scenario ul li {
             padding: 8px 0; font-size: 0.87rem; color: var(--muted);
-            border-bottom: 1px solid rgba(255,255,255,0.04); line-height: 1.55;
+            border-bottom: 1px solid rgba(0,0,0,0.04); line-height: 1.55;
         }
         .scenario ul li:last-child { border-bottom: none; }
         .scenario ul li::before { content: '→ '; color: var(--green); }
 
         /* ── TERMINAL BLOCK ── */
         .terminal {
-            background: #020308; border: 1px solid rgba(255,255,255,0.06);
+            background: #0f111a; border: 1px solid rgba(0,0,0,0.08);
             border-radius: 14px; padding: 0; overflow: hidden;
             font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
+            box-shadow: 0 10px 30px rgba(15,23,42,0.05);
         }
         .terminal-bar {
-            background: rgba(255,255,255,0.03); padding: 10px 16px;
+            background: rgba(255,255,255,0.02); padding: 10px 16px;
             display: flex; align-items: center; gap: 6px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .dot-r { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; }
         .dot-y { width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; }
@@ -346,28 +381,28 @@
         }
         .demo-step {
             display: flex; align-items: flex-start; gap: 16px;
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.45); border: 1px solid rgba(0,0,0,0.05);
             border-radius: 12px; padding: 16px 20px;
             transition: var(--transition);
         }
-        .demo-step:hover { border-color: var(--primary); background: rgba(139,92,246,0.04); }
+        .demo-step:hover { border-color: var(--primary); background: rgba(99,102,241,0.03); }
         .step-num {
             width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
             background: var(--gradient); display: flex; align-items: center;
-            justify-content: center; font-weight: 700; font-size: 0.85rem;
+            justify-content: center; font-weight: 700; font-size: 0.85rem; color: #fff;
         }
         .demo-step h4 { font-size: 0.95rem; margin-bottom: 3px; }
         .demo-step p { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
 
         /* ── RULE CARD ── */
         .rule-big {
-            background: rgba(239,68,68,0.04);
-            border: 1px solid rgba(239,68,68,0.2);
+            background: rgba(220,38,38,0.03);
+            border: 1px solid rgba(220,38,38,0.1);
             border-radius: 16px; padding: 24px; margin: 24px 0;
             display: flex; align-items: flex-start; gap: 18px;
         }
         .rule-icon { font-size: 2rem; flex-shrink: 0; }
-        .rule-big h3 { font-size: 1.1rem; color: #fca5a5; margin-bottom: 6px; }
+        .rule-big h3 { font-size: 1.1rem; color: var(--red); margin-bottom: 6px; }
         .rule-big p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
 
         /* ── COMMANDS ── */
@@ -375,10 +410,10 @@
             display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap;
         }
         .cmd-pill {
-            background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.5); border: 1px solid rgba(0,0,0,0.06);
             border-radius: 10px; padding: 12px 18px;
             font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
-            color: var(--cyan); flex: 1;
+            color: var(--primary); flex: 1;
         }
         .cmd-pill span { color: var(--muted); font-size: 0.78rem; display: block; margin-top: 4px; font-family: 'Outfit', sans-serif; }
 
@@ -386,61 +421,42 @@
         .cta-content { text-align: center; max-width: 700px; margin: 0 auto; }
         .cta-trophy { font-size: 4rem; display: block; margin-bottom: 24px; animation: bounce 2s ease-in-out infinite; }
         .challenge-box {
-            background: rgba(139,92,246,0.06); border: 1px solid rgba(139,92,246,0.2);
+            background: rgba(99,102,241,0.04); border: 1px solid rgba(99,102,241,0.15);
             border-radius: 16px; padding: 24px; margin-top: 32px; text-align: left;
         }
-        .challenge-box h4 { font-family: 'Space Grotesk', sans-serif; margin-bottom: 16px; color: var(--primary-light); font-size: 1rem; }
+        .challenge-box h4 { font-family: 'Space Grotesk', sans-serif; margin-bottom: 16px; color: var(--primary); font-size: 1rem; }
         .challenge-list { list-style: none; }
         .challenge-list li { padding: 8px 0 8px 22px; position: relative; font-size: 0.9rem; color: var(--muted); }
         .challenge-list li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
 
-        /* ── INSTRUCTOR NOTES ── */
-        .notes-toggle {
-            position: fixed; bottom: 84px; right: 24px; z-index: 200;
-            background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3);
-            border-radius: 10px; padding: 8px 14px; font-size: 0.78rem;
-            color: var(--primary-light); cursor: pointer; transition: var(--transition);
-            font-family: 'Outfit', sans-serif;
-        }
-        .notes-toggle:hover { background: rgba(139,92,246,0.25); }
 
-        .notes-drawer {
-            position: fixed; bottom: 72px; left: 0; right: 0;
-            background: rgba(7,8,16,0.97); border-top: 1px solid rgba(139,92,246,0.2);
-            padding: 20px 48px; z-index: 150; transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-            backdrop-filter: blur(20px);
-        }
-        .notes-drawer.open { transform: translateY(0); }
-        .notes-drawer h4 { color: var(--primary-light); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-        .notes-drawer p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; max-width: 900px; font-style: italic; }
 
         /* ── PROGRESS / NAV BAR ── */
         .nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0; height: 72px;
-            background: rgba(7,8,16,0.9); border-top: 1px solid rgba(255,255,255,0.05);
+            background: rgba(248,250,252,0.85); border-top: 1px solid rgba(0,0,0,0.05);
             backdrop-filter: blur(20px); z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 32px;
         }
         .nav-left { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; color: var(--dim); }
-        .kbd { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 2px 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; }
+        .kbd { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); border-radius: 4px; padding: 2px 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text); }
 
         /* Progress bar */
-        .progress-bar-wrap { flex: 1; max-width: 500px; height: 3px; background: rgba(255,255,255,0.06); border-radius: 3px; margin: 0 32px; }
+        .progress-bar-wrap { flex: 1; max-width: 500px; height: 3px; background: rgba(0,0,0,0.05); border-radius: 3px; margin: 0 32px; }
         .progress-fill { height: 100%; background: var(--gradient); border-radius: 3px; transition: width 0.5s cubic-bezier(0.16,1,0.3,1); }
 
         /* Nav buttons */
         .nav-right { display: flex; align-items: center; gap: 12px; }
         .nav-btn {
             width: 44px; height: 44px; border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(0,0,0,0.06);
+            background: rgba(255,255,255,0.5);
             color: var(--text); cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             font-size: 1rem; transition: var(--transition);
         }
-        .nav-btn:hover:not(:disabled) { border-color: var(--primary); background: rgba(139,92,246,0.1); }
+        .nav-btn:hover:not(:disabled) { border-color: var(--primary); background: rgba(99,102,241,0.06); }
         .nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
 
         /* ── ANIMATIONS ── */
@@ -474,7 +490,7 @@
         .cover-meta {
             display: flex; gap: 32px; justify-content: center;
             margin-top: 40px; padding-top: 24px;
-            border-top: 1px solid rgba(255,255,255,0.06);
+            border-top: 1px solid rgba(0,0,0,0.05);
             font-size: 0.85rem; color: var(--dim);
         }
         .cover-meta strong { color: var(--muted); }
@@ -490,10 +506,10 @@
             text-align: center; margin: 4px 0; transition: var(--transition);
         }
         .layer:hover { transform: scaleX(1.04); cursor: default; }
-        .l1 { width: 85%; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #fca5a5; }
-        .l2 { width: 68%; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); color: #fcd34d; }
-        .l3 { width: 52%; background: rgba(34,211,238,0.08); border: 1px solid rgba(34,211,238,0.2); color: var(--cyan); }
-        .l4 { width: 36%; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); color: var(--green); }
+        .l1 { width: 85%; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.18); color: var(--red); }
+        .l2 { width: 68%; background: rgba(217,119,6,0.08); border: 1px solid rgba(217,119,6,0.18); color: var(--amber); }
+        .l3 { width: 52%; background: rgba(8,145,178,0.08); border: 1px solid rgba(8,145,178,0.18); color: var(--cyan); }
+        .l4 { width: 36%; background: rgba(5,150,105,0.08); border: 1px solid rgba(5,150,105,0.18); color: var(--green); }
 
         /* ── GITHUB LINK ── */
         .github-link {
@@ -501,12 +517,10 @@
             background: var(--gradient); color: #fff; text-decoration: none;
             padding: 12px 28px; border-radius: 12px; font-weight: 700;
             font-size: 0.95rem; margin-top: 24px; transition: var(--transition);
-            box-shadow: 0 8px 24px rgba(139,92,246,0.3);
+            box-shadow: 0 8px 24px rgba(99,102,241,0.2);
         }
-        .github-link:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(139,92,246,0.4); }
+        .github-link:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(99,102,241,0.3); }
 
-        /* Scroll note */
-        #notes-text { }
     </style>
 </head>
 <body>
@@ -535,8 +549,7 @@
 <div class="slides-wrapper">
 
     <!-- ── SLIDE 1: CAPA ── -->
-    <section class="slide active" id="s1" data-orb-a="#8b5cf6" data-orb-b="#3b82f6"
-             data-note="Boas-vindas a todos os alunos da Pulse Mais! Hoje vamos falar sobre a diferença entre gerar código descontroladamente e construir software de verdade utilizando IAs. Vamos introduzir o conceito de Spec-as-Code usando o Onion Portable: um framework leve projetado para rodar tanto no navegador comum quanto em IDEs agênticas.">
+    <section class="slide active" id="s1" data-orb-a="#8b5cf6" data-orb-b="#3b82f6">
         <div class="card">
             <div style="text-align:center;">
                 <div class="cover-onion">🧅</div>
@@ -554,8 +567,7 @@
     </section>
 
     <!-- ── SLIDE 2: O CAOS ── -->
-    <section class="slide" id="s2" data-orb-a="#ef4444" data-orb-b="#f59e0b"
-             data-note="Quem nunca abriu o ChatGPT e pediu para ele escrever um código completo? No começo, parece mágico. Mas logo a IA começa a errar a arquitetura, esquecer as regras anteriores e criar bugs difíceis de rastrear. O erro não é da IA — é do nosso fluxo de trabalho. Sem uma âncora de especificação escrita antes do código, a IA fica sem norte.">
+    <section class="slide" id="s2" data-orb-a="#ef4444" data-orb-b="#f59e0b">
         <div class="card">
             <div class="badge badge-red">⚠️ O Problema</div>
             <h2 class="title">A Crise da Geração Direta de Código</h2>
@@ -598,8 +610,7 @@
     </section>
 
     <!-- ── SLIDE 3: SPEC-AS-CODE ── -->
-    <section class="slide" id="s3" data-orb-a="#8b5cf6" data-orb-b="#06b6d4"
-             data-note="A metodologia Spec-as-Code significa tratar a documentação de produto e técnica com a mesma importância e rigor que o código-fonte. Eles vivem no repositório junto com o código. A IA só escreve código se a especificação correspondente estiver aprovada e documentada.">
+    <section class="slide" id="s3" data-orb-a="#8b5cf6" data-orb-b="#06b6d4">
         <div class="card">
             <div class="badge badge-cyan">💡 O Conceito</div>
             <h2 class="title">O que é <span class="cyan-text">Spec-as-Code</span>?</h2>
@@ -658,8 +669,7 @@
     </section>
 
     <!-- ── SLIDE 4: O CÉREBRO ── -->
-    <section class="slide" id="s4" data-orb-a="#8b5cf6" data-orb-b="#10b981"
-             data-note="O Onion Portable foi desenhado para ser portátil. Ele condensa todo o poder do ecossistema Onion em 3 arquivos Markdown simples. Isso permite que qualquer aluno, mesmo em contas gratuitas de IA, possa utilizar a metodologia completa.">
+    <section class="slide" id="s4" data-orb-a="#8b5cf6" data-orb-b="#10b981">
         <div class="card">
             <div class="badge badge-purple">🧅 O Framework</div>
             <h2 class="title">Como funciona o <span class="gradient-text">Onion Portable</span>?</h2>
@@ -695,8 +705,7 @@
     </section>
 
     <!-- ── SLIDE 5: OS 3 ARQUIVOS ── -->
-    <section class="slide" id="s5" data-orb-a="#06b6d4" data-orb-b="#10b981"
-             data-note="Estes são os únicos três arquivos de controle que você precisa colocar no repositório. Eles são pequenos, diretos e contêm o estado atual da verdade do projeto. A IA lê e atualiza esses arquivos conforme o desenvolvimento avança.">
+    <section class="slide" id="s5" data-orb-a="#06b6d4" data-orb-b="#10b981">
         <div class="card">
             <div class="badge badge-cyan">📁 Estrutura</div>
             <h2 class="title">A Tríade Minimalista de Arquivos</h2>
@@ -749,8 +758,7 @@
     </section>
 
     <!-- ── SLIDE 6: @PRODUCT ── -->
-    <section class="slide" id="s6" data-orb-a="#c084fc" data-orb-b="#8b5cf6"
-             data-note="Quando o usuário tem uma ideia, a IA assume a persona de líder de produto (@product). Ela não vai programar nada nessa fase! Ela vai coletar os requisitos e documentar no arquivo de negócio. O código só inicia quando o negócio estiver bem definido e documentado.">
+    <section class="slide" id="s6" data-orb-a="#c084fc" data-orb-b="#8b5cf6">
         <div class="card">
             <div class="badge badge-purple">🧑‍💼 @product</div>
             <h2 class="title">Ciclo de <span class="primary-text">Produto</span> — Especificando o Negócio</h2>
@@ -802,8 +810,7 @@
     </section>
 
     <!-- ── SLIDE 7: @ENGINEER ── -->
-    <section class="slide" id="s7" data-orb-a="#818cf8" data-orb-b="#4f46e5"
-             data-note="Uma vez especificado o produto, a IA muda de chapéu e assume a persona @engineer. Ela desenha o plano técnico completo e só programa depois que você aprovar esse plano. Isso evita refatorações desnecessárias no meio do caminho e garante que o código implementa exatamente o que foi prometido.">
+    <section class="slide" id="s7" data-orb-a="#818cf8" data-orb-b="#4f46e5">
         <div class="card">
             <div class="badge badge-purple">🛠️ @engineer</div>
             <h2 class="title">Ciclo de <span class="gradient-text">Engenharia</span> — O Plano Arquitetural</h2>
@@ -867,8 +874,7 @@
     </section>
 
     <!-- ── SLIDE 8: @META & @DOCS ── -->
-    <section class="slide" id="s8" data-orb-a="#10b981" data-orb-b="#06b6d4"
-             data-note="A persona @meta é ótima para estudar novos conceitos e APIs difíceis antes de implementá-las. A persona @docs resolve a dor de quando já temos um código legado pronto e precisamos gerar a documentação de contexto Onion do zero, preenchendo retroativamente os arquivos de contexto.">
+    <section class="slide" id="s8" data-orb-a="#10b981" data-orb-b="#06b6d4">
         <div class="card">
             <div class="badge badge-green">🧠 Personas de Apoio</div>
             <h2 class="title">@meta & @docs — <span class="green-text">Pesquisa e Sincronismo</span></h2>
@@ -902,8 +908,7 @@
     </section>
 
     <!-- ── SLIDE 9: REGRA DE OURO ── -->
-    <section class="slide" id="s9" data-orb-a="#ef4444" data-orb-b="#f59e0b"
-             data-note="O Onion Portable possui um mecanismo de defesa embutido. Se você tentar pular etapas pedindo o código diretamente, ele vai te dar um alerta amigável de bypass. Você pode forçar se quiser, mas o framework te lembrará de manter a disciplina para não gerar código sem âncora de contexto.">
+    <section class="slide" id="s9" data-orb-a="#ef4444" data-orb-b="#f59e0b">
         <div class="card">
             <div class="badge badge-red">🛡️ A Regra</div>
             <h2 class="title">O Guardião do Fluxo — <span class="red-text">Impedindo Atalhos</span></h2>
@@ -941,8 +946,7 @@
     </section>
 
     <!-- ── SLIDE 10: CENÁRIOS A vs B ── -->
-    <section class="slide" id="s10" data-orb-a="#f59e0b" data-orb-b="#10b981"
-             data-note="Se você estiver no chat web do ChatGPT ou Claude, a IA adaptará a entrega dos arquivos Markdown. Ela se oferece para compactar a estrutura em ZIP para download via Python/Code Interpreter, ou exibir artefatos individuais no Claude. Se estiver em IDEs agênticas como Cursor ou Antigravity, ela assume a escrita direta na máquina.">
+    <section class="slide" id="s10" data-orb-a="#f59e0b" data-orb-b="#10b981">
         <div class="card">
             <div class="badge badge-amber">🌐 Ambientes</div>
             <h2 class="title">Cenário A vs. <span class="green-text">Cenário B</span></h2>
@@ -974,8 +978,7 @@
     </section>
 
     <!-- ── SLIDE 11: DEMO HANDS-ON ── -->
-    <section class="slide" id="s11" data-orb-a="#8b5cf6" data-orb-b="#06b6d4"
-             data-note="Agora vamos abrir o ChatGPT ou a nossa IDE e assistir ao fluxo acontecer ao vivo. Vocês vão notar como a conversa ganha uma qualidade incrível quando a IA atua seguindo esse funil de disciplina. Cada resposta da IA vai ter um propósito e uma âncora documentada.">
+    <section class="slide" id="s11" data-orb-a="#8b5cf6" data-orb-b="#06b6d4">
         <div class="card">
             <div class="badge badge-cyan">🎯 Demo Prática</div>
             <h2 class="title">Demonstração <span class="cyan-text">Hands-On</span> do Fluxo</h2>
@@ -1022,8 +1025,7 @@
     </section>
 
     <!-- ── SLIDE 12: CONCLUSÃO ── -->
-    <section class="slide" id="s12" data-orb-a="#8b5cf6" data-orb-b="#34d399"
-             data-note="Escrever código qualquer IA faz hoje em dia. O que diferencia vocês como alunos da Pulse Mais em 2026 é a capacidade de arquitetar o fluxo de desenvolvimento e liderar a IA de ponta a ponta de forma escalável e sem alucinações. Usem o Onion Portable nos seus desafios e projetos práticos. Muito obrigado!">
+    <section class="slide" id="s12" data-orb-a="#8b5cf6" data-orb-b="#34d399">
         <div class="card">
             <div class="cta-content">
                 <span class="cta-trophy">🏆</span>
@@ -1053,14 +1055,7 @@
 
 </div>
 
-<!-- Notes Drawer -->
-<div class="notes-drawer" id="notes-drawer">
-    <h4>📌 Notas do Instrutor</h4>
-    <p id="notes-text"></p>
-</div>
 
-<!-- Notes Toggle Button -->
-<button class="notes-toggle" onclick="toggleNotes()" id="notes-btn">📌 Notas do Instrutor</button>
 
 <!-- Navigation Bar -->
 <nav class="nav-bar">
@@ -1068,8 +1063,6 @@
         <span class="kbd">←</span>
         <span class="kbd">→</span>
         <span style="margin-left:4px;">para navegar</span>
-        <span style="margin-left:12px;" class="kbd">N</span>
-        <span style="margin-left:4px;">para notas</span>
     </div>
     <div class="progress-bar-wrap">
         <div class="progress-fill" id="progress-fill" style="width:8.33%;"></div>
@@ -1084,14 +1077,10 @@
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
     let current = 0;
-    let notesOpen = false;
-
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const progressFill = document.getElementById('progress-fill');
     const currentNum = document.getElementById('current-num');
-    const notesDrawer = document.getElementById('notes-drawer');
-    const notesText = document.getElementById('notes-text');
 
     function goTo(idx) {
         if (idx < 0 || idx >= totalSlides) return;
@@ -1122,30 +1111,15 @@
         orbA.style.background = slide.dataset.orbA || '#8b5cf6';
         orbB.style.background = slide.dataset.orbB || '#3b82f6';
 
-        // Update notes if open
-        if (notesOpen) updateNotes();
     }
 
     function nextSlide() { goTo(current + 1); }
     function prevSlide() { goTo(current - 1); }
 
-    function updateNotes() {
-        notesText.textContent = slides[current].dataset.note || '';
-    }
-
-    function toggleNotes() {
-        notesOpen = !notesOpen;
-        notesDrawer.classList.toggle('open', notesOpen);
-        document.getElementById('notes-btn').style.background = notesOpen
-            ? 'rgba(139,92,246,0.3)' : 'rgba(139,92,246,0.15)';
-        if (notesOpen) updateNotes();
-    }
-
     // Keyboard controls
     document.addEventListener('keydown', e => {
         if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
         if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
-        if (e.key.toLowerCase() === 'n') toggleNotes();
     });
 
     // Engineer tabs
