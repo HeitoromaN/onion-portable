@@ -444,6 +444,24 @@
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 
+        .section-title {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .section-title h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--white);
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            font-weight: 400;
+        }
+
         label {
             font-size: 0.78rem;
             font-weight: 600;
@@ -1049,8 +1067,8 @@
                                 </span>
                             </div>
                             <select id="lead-segment" onchange="toggleSegment()">
-                                <option value="privado">Setor Privado</option>
-                                <option value="publico">Setor Público (Governo)</option>
+                                <option value="privado" title="Setor privado com foco em ROI e agilidade. Requer CNPJ para validação comercial.">Setor Privado</option>
+                                <option value="publico" title="Setor governamental com exigências regulatórias estritas. Exige SEI e DFD obrigatórios.">Setor Público (Governo)</option>
                             </select>
                         </div>
                     </div>
@@ -1064,9 +1082,9 @@
                                 </span>
                             </div>
                             <select id="lead-revenue">
-                                <option value="baixa">Abaixo de R$ 500k</option>
-                                <option value="media">De R$ 500k a R$ 1.5M</option>
-                                <option value="alta">Acima de R$ 1.5M</option>
+                                <option value="baixa" title="Contratos abaixo de R$ 500k podem não justificar o esforço de pré-vendas. (10 pts)">Abaixo de R$ 500k</option>
+                                <option value="media" title="Contratos de médio valor representam o sweet spot de muitas oportunidades. (20 pts)">De R$ 500k a R$ 1.5M</option>
+                                <option value="alta" title="Contratos de alto valor representam impacto significativo no faturamento. (30 pts)">Acima de R$ 1.5M</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1077,9 +1095,9 @@
                                 </span>
                             </div>
                             <select id="lead-expansion">
-                                <option value="baixa">Baixo Potencial</option>
-                                <option value="media">Médio Potencial</option>
-                                <option value="alta">Alto Potencial (Conta Estratégica)</option>
+                                <option value="baixa" title="Projeto pontual sem perspectiva de expansão. (5 pts)">Baixo Potencial</option>
+                                <option value="media" title="Alguma possibilidade de expansão, mas não garantida. (10 pts)">Médio Potencial</option>
+                                <option value="alta" title="Conta estratégica com roadmap de expansão claro (SOC → COps → Infra). (20 pts)">Alto Potencial (Conta Estratégica)</option>
                             </select>
                         </div>
                     </div>
@@ -1142,10 +1160,108 @@
                                 </span>
                             </div>
                             <select id="lead-director">
-                                <option value="pendente">⏳ Aguardando validação</option>
-                                <option value="aprovado">✅ Aprovado pela Diretoria</option>
+                                <option value="pendente" title="Aguardando aprovação formal da Diretoria de Pré-Vendas (Aprovador RACI).">⏳ Aguardando validação</option>
+                                <option value="aprovado" title="Aprovado formalmente pela Diretoria de Pré-Vendas. Oportunidade pode avançar.">✅ Aprovado pela Diretoria</option>
                             </select>
                             <div class="raci-pill">RACI: Diretoria = Aprovador (A)</div>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <!-- Advanced Scoring Criteria -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <h3>Critérios Avançados de Qualificação</h3>
+                            <span class="section-subtitle">Baseado em KB-03 e Questionários de Discovery</span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <div class="tooltip-wrap">
+                                    <label>Maturidade Tecnológica</label>
+                                    <span class="tooltip-btn" tabindex="0">?
+                                        <div class="tooltip-box">Avalia o nível de maturidade da infraestrutura e processos de TI do cliente. Legado/Reativo indica ambiente desatualizado com processos manuais. Moderno/Proativo indica automação, cloud-native e observabilidade avançada.</div>
+                                    </span>
+                                </div>
+                                <select id="lead-maturity">
+                                    <option value="legado" title="Ambiente desatualizado com processos manuais. Maior esforço de implementação. (5 pts)">Legado/Reativo (5 pts)</option>
+                                    <option value="transicao" title="Híbrido on-prem + cloud, planejando modernização. (10 pts)">Em transição (10 pts)</option>
+                                    <option value="moderno" title="Cloud-native, DevOps, automação, observabilidade avançada. (20 pts)">Moderno/Proativo (20 pts)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="tooltip-wrap">
+                                    <label>Urgência/Timeline</label>
+                                    <span class="tooltip-btn" tabindex="0">?
+                                        <div class="tooltip-box">Define o prazo esperado para fechamento ou início do projeto. Imediato indica necessidade crítica ou janela de oportunidade curta.</div>
+                                    </span>
+                                </div>
+                                <select id="lead-urgency">
+                                    <option value="indefinido" title="Oportunidade imatura ou exploratória. Não justifica investimento imediato. (0 pts)">Sem prazo definido (0 pts)</option>
+                                    <option value="6meses" title="Timeline longa reduz probabilidade de conversão. (5 pts)">6+ meses (5 pts)</option>
+                                    <option value="3meses" title="Timeline razoável permite processo estruturado. (10 pts)">3-6 meses (10 pts)</option>
+                                    <option value="imediato" title="Necessidade crítica ou janela de oportunidade curta. (20 pts)">Imediato/0-3 meses (20 pts)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <div class="tooltip-wrap">
+                                    <label>Complexidade Técnica</label>
+                                    <span class="tooltip-btn" tabindex="0">?
+                                        <div class="tooltip-box">Avalia a complexidade técnica da implementação. Alta complexidade indica multicloud, legacy, integrações complexas ou requisitos específicos que aumentam o valor do projeto.</div>
+                                    </span>
+                                </div>
+                                <select id="lead-complexity">
+                                    <option value="baixa" title="Infraestrutura simples, requisitos básicos. Menor valor diferenciado. (5 pts)">Baixa (5 pts)</option>
+                                    <option value="media" title="Ambiente homogêneo, cloud única, integrações padrão. (10 pts)">Média (10 pts)</option>
+                                    <option value="alta" title="Multicloud, legacy crítico, integrações heterogêneas. (20 pts)">Alta (20 pts)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="tooltip-wrap">
+                                    <label>Risco Regulatório/Compliance</label>
+                                    <span class="tooltip-btn" tabindex="0">?
+                                        <div class="tooltip-box">Avalia requisitos de compliance (LGPD, BACEN, normas governamentais). Alto risco indica forte necessidade de conformidade que aumenta valor do portfólio Clear IT.</div>
+                                    </span>
+                                </div>
+                                <select id="lead-compliance">
+                                    <option value="baixo" title="Baixa exigência regulatória. Oportunidade focada em eficiência operacional. (5 pts)">Baixo (5 pts)</option>
+                                    <option value="medio" title="Requisitos de compliance moderados. Boas práticas necessárias. (10 pts)">Médio (10 pts)</option>
+                                    <option value="alto" title="Requisitos estritos (LGPD, BACEN, normas governamentais). Alto valor diferencial. (20 pts)">Alto (20 pts)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <div class="tooltip-wrap">
+                                    <label>Health Financeiro</label>
+                                    <span class="tooltip-btn" tabindex="0">?
+                                        <div class="tooltip-box">Avalia a saúde financeira do cliente. Forte indica capacidade de investimento e menor risco de inadimplência.</div>
+                                    </span>
+                                </div>
+                                <select id="lead-financial">
+                                    <option value="dificuldade" title="Dificuldades financeiras aumentam risco de não pagamento. (0 pts)">Em dificuldade (0 pts)</option>
+                                    <option value="estavel" title="Estabilidade financeira é aceitável com capacidade moderada. (10 pts)">Estável (10 pts)</option>
+                                    <option value="forte" title="Saúde financeira forte indica capacidade de investimento. (20 pts)">Forte (20 pts)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="tooltip-wrap">
+                                    <label>Relacionamento Existente</label>
+                                    <span class="tooltip-btn" tabindex="0">?
+                                        <div class="tooltip-box">Avalia o histórico de relacionamento com a Clear IT. Parceria estratégica indica confiança estabelecida e maior probabilidade de sucesso.</div>
+                                    </span>
+                                </div>
+                                <select id="lead-relationship">
+                                    <option value="novo" title="Primeiro contato sem histórico. Requer validação completa. (0 pts)">Novo cliente (0 pts)</option>
+                                    <option value="recorrente" title="Histórico positivo com o cliente. Confiança estabelecida. (10 pts)">Cliente recorrente (10 pts)</option>
+                                    <option value="estrategico" title="Parceria estratégica estabelecida. Alta probabilidade de sucesso. (20 pts)">Parceria estratégica (20 pts)</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -1160,7 +1276,7 @@
                 <div class="score-panel">
                     <div class="score-ring" id="score-ring">
                         <span class="score-number" id="score-num">--</span>
-                        <span class="score-max">/100</span>
+                        <span class="score-max">/200</span>
                     </div>
                     <span class="score-tag" id="score-tag" style="color:var(--gray-600)">Sem Análise</span>
                     <p class="score-note" id="score-note">Preencha o formulário e clique em "Calcular Score" para gerar a nota ICP desta oportunidade.</p>
@@ -1791,6 +1907,14 @@ function submitLead() {
     const sei     = document.getElementById('lead-sei').value.trim();
     const dfd     = document.getElementById('lead-dfd').value.trim();
     const cnpj    = document.getElementById('lead-cnpj').value.trim();
+    
+    // New advanced criteria
+    const maturity   = document.getElementById('lead-maturity').value;
+    const urgency    = document.getElementById('lead-urgency').value;
+    const complexity = document.getElementById('lead-complexity').value;
+    const compliance = document.getElementById('lead-compliance').value;
+    const financial  = document.getElementById('lead-financial').value;
+    const relationship = document.getElementById('lead-relationship').value;
 
     const alertBox = document.getElementById('qualify-alerts');
     alertBox.innerHTML = '';
@@ -1810,10 +1934,26 @@ function submitLead() {
     }
 
     let score = 0;
+    
+    // Basic criteria (max 100 pts)
     score += seg === 'publico' ? 40 : 30;
     score += rev === 'alta' ? 30 : rev === 'media' ? 20 : 10;
     score += exp === 'alta' ? 20 : exp === 'media' ? 10 : 5;
     if (bdm) score += 10;
+    
+    // Advanced criteria (max 100 pts)
+    // Maturity: legado(5), transicao(10), moderno(20)
+    score += maturity === 'moderno' ? 20 : maturity === 'transicao' ? 10 : 5;
+    // Urgency: indefinido(0), 6meses(5), 3meses(10), imediato(20)
+    score += urgency === 'imediato' ? 20 : urgency === '3meses' ? 10 : urgency === '6meses' ? 5 : 0;
+    // Complexity: baixa(5), media(10), alta(20)
+    score += complexity === 'alta' ? 20 : complexity === 'media' ? 10 : 5;
+    // Compliance: baixo(5), medio(10), alto(20)
+    score += compliance === 'alto' ? 20 : compliance === 'medio' ? 10 : 5;
+    // Financial: dificuldade(0), estavel(10), forte(20)
+    score += financial === 'forte' ? 20 : financial === 'estavel' ? 10 : 0;
+    // Relationship: novo(0), recorrente(10), estrategico(20)
+    score += relationship === 'estrategico' ? 20 : relationship === 'recorrente' ? 10 : 0;
 
     const ring = document.getElementById('score-ring');
     const numEl = document.getElementById('score-num');
@@ -1823,8 +1963,8 @@ function submitLead() {
     numEl.textContent = score;
 
     let cls, col;
-    if (score >= 80) { cls='Alto Impacto'; col='var(--green)'; }
-    else if (score >= 50) { cls='Médio Impacto'; col='var(--amber)'; }
+    if (score >= 160) { cls='Alto Impacto'; col='var(--green)'; }
+    else if (score >= 100) { cls='Médio Impacto'; col='var(--amber)'; }
     else { cls='Baixo Impacto'; col='var(--red)'; }
 
     tagEl.textContent = cls;
@@ -1832,7 +1972,7 @@ function submitLead() {
     ring.style.borderColor = col;
     ring.style.boxShadow = `0 0 20px ${col}30`;
     numEl.style.color = col;
-    noteEl.textContent = `Score calculado com base no ICP da Clear IT. Oportunidade ${cls.toLowerCase()}.`;
+    noteEl.textContent = `Score calculado com base no ICP da Clear IT (máximo 200 pts). Oportunidade ${cls.toLowerCase()}.`;
 
     if (dir === 'pendente') addAlert('qualify-alerts','warning','Aguardando aprovação formal da Diretoria de Pré-Vendas (Aprovador RACI).');
     else addAlert('qualify-alerts','success','RACI Check: Qualificado pelo BDM (R) e aprovado pela Diretoria (A). Oportunidade pode avançar.');
@@ -1840,7 +1980,7 @@ function submitLead() {
     const statusStr = dir === 'aprovado' ? 'Aprovado' : 'Pendente';
     const segStr    = seg === 'publico' ? 'Público' : 'Privado';
     const existing  = leads.findIndex(l => l.name.toLowerCase() === name.toLowerCase());
-    const entry = { id: existing > -1 ? leads[existing].id : `L-0${leads.length+1}`, name, seg: segStr, score, cls, status: statusStr, badge: score>=80?'badge-green':'badge-amber' };
+    const entry = { id: existing > -1 ? leads[existing].id : `L-0${leads.length+1}`, name, seg: segStr, score, cls, status: statusStr, badge: score>=160?'badge-green':score>=100?'badge-amber':'badge-red' };
 
     // Audit logging
     const fieldsChanged = existing > -1 ? 'score, status' : 'name, segment, score, status';
