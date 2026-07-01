@@ -46,6 +46,7 @@ docs/knowledge-base/
 | :--- | :--- | :--- | :--- |
 | **[KB-08](./design/kb-08-identidade-ia.md)** | Identidade IA | Define a identidade visual, persona e comportamento da IA da Clear IT. | `@product` / `@design` |
 | **[KB-09](./design/kb-09-boas-praticas-cores-modo-claro-escuro.md)** | Boas Práticas de Cores e Temas | Guia completo de cores, paletas e implementação de modo claro/escuro. | `@design` |
+| **[KB-11](./design/kb-11-estruturacao-sites-hierarquia-visual.md)** | Estruturação de Sites e Hierarquia Visual | Diretrizes para estruturação de sites, hierarquia visual, clareza de informações e técnicas de atenção. | `@design` |
 | **[Guia de Paleta de Cores](./design/guia_de_palheta_de_cores.md)** | Paleta de Cores Clear IT | Documentação detalhada da paleta de cores da marca Clear IT. | `@design` |
 
 ### Prompts (Prompts e System Prompts)

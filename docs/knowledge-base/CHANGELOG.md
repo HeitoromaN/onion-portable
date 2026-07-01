@@ -7,6 +7,13 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
+## [2.1] - 01/07/2026
+
+### Adicionados
+- **kb-11-estruturacao-sites-hierarquia-visual.md:** Documento sobre estruturação de sites, hierarquia visual, clareza de informações e técnicas de atenção visual
+
+---
+
 ## [2.0] - 01/07/2026
 
 ### Adicionados
