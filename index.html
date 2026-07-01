@@ -12,33 +12,38 @@
     <style>
         /* ── BRAND TOKENS (Clear IT Identity) ── */
         :root {
-            --bg:          #0a0a0a;
-            --bg-panel:    #111111;
-            --bg-card:     #161616;
-            --bg-input:    #1c1c1c;
-            --border:      rgba(255,255,255,0.08);
-            --border-hover:rgba(255,107,0,0.4);
+            /* Primary Colors - Deep Navy & Clear Blue */
+            --bg:          #0F172A;
+            --bg-panel:    #0A192F;
+            --bg-card:     #1E293B;
+            --bg-input:    #334155;
+            --border:      #E2E8F0;
+            --border-hover:#00A3E0;
 
-            /* Clear IT orange family */
-            --orange:      #ff6b00;
-            --orange-light:#ff8c38;
-            --orange-dim:  rgba(255,107,0,0.12);
-            --orange-glow: rgba(255,107,0,0.20);
+            /* Clear IT brand colors */
+            --primary:     #00A3E0;
+            --primary-light:#00D2FF;
+            --primary-dim: rgba(0,163,224,0.12);
+            --primary-glow: rgba(0,163,224,0.20);
 
-            --white:       #ffffff;
-            --gray-100:    #f4f4f5;
-            --gray-400:    #a1a1aa;
-            --gray-600:    #52525b;
-            --gray-800:    #27272a;
+            --white:       #FFFFFF;
+            --off-white:   #F8FAFC;
+            --gray-100:    #F1F5F9;
+            --gray-400:    #64748B;
+            --gray-600:    #334155;
+            --gray-800:    #1E293B;
 
-            --green:       #22c55e;
-            --green-dim:   rgba(34,197,94,0.12);
-            --amber:       #f59e0b;
-            --amber-dim:   rgba(245,158,11,0.12);
-            --red:         #ef4444;
+            /* Semantic colors for SOC/COps */
+            --green:       #10B981;
+            --green-dim:   rgba(16,185,129,0.12);
+            --amber:       #FACC15;
+            --amber-dim:   rgba(250,204,21,0.12);
+            --primary:      #F97316;
+            --primary-dim:  rgba(249,115,22,0.12);
+            --red:         #EF4444;
             --red-dim:     rgba(239,68,68,0.12);
-            --blue:        #3b82f6;
-            --blue-dim:    rgba(59,130,246,0.12);
+            --blue:        #00A3E0;
+            --blue-dim:    rgba(0,163,224,0.12);
 
             --radius:      10px;
             --radius-sm:   6px;
@@ -72,7 +77,7 @@
             flex-shrink: 0;
             transition: var(--transition);
         }
-        .tooltip-btn:hover { border-color: var(--orange); color: var(--orange); }
+        .tooltip-btn:hover { border-color: var(--primary); color: var(--primary); }
 
         .tooltip-box {
             display: none;
@@ -81,7 +86,7 @@
             left: 0;
             min-width: 240px;
             max-width: 300px;
-            background: #1e1e1e;
+            background: var(--bg-card);
             border: 1px solid var(--border-hover);
             border-radius: var(--radius-sm);
             padding: 10px 12px;
@@ -118,7 +123,7 @@
 
         .brand-mark {
             width: 32px; height: 32px;
-            background: var(--orange);
+            background: var(--primary);
             border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
             font-weight: 900; font-size: 1rem; color: white;
@@ -162,7 +167,7 @@
             margin-bottom: 2px;
         }
         .nav-btn:hover { color: var(--white); background: rgba(255,255,255,0.04); }
-        .nav-btn.active { color: var(--white); background: var(--orange-dim); border-left: 2px solid var(--orange); }
+        .nav-btn.active { color: var(--white); background: var(--primary-dim); border-left: 2px solid var(--primary); }
 
         .nav-icon { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; opacity: 0.8; }
 
@@ -176,7 +181,7 @@
             color: var(--gray-400);
             line-height: 1.5;
         }
-        .squad-tag strong { color: var(--orange); font-weight: 700; }
+        .squad-tag strong { color: var(--primary); font-weight: 700; }
 
         /* ── MAIN CONTENT ── */
         main {
@@ -202,7 +207,7 @@
             letter-spacing: -0.02em;
             line-height: 1.2;
         }
-        .page-header h1 span { color: var(--orange); }
+        .page-header h1 span { color: var(--primary); }
         .page-header p { color: var(--gray-400); font-size: 0.875rem; margin-top: 0.25rem; }
         .header-actions { display: flex; gap: 0.75rem; align-items: center; }
 
@@ -222,11 +227,11 @@
             white-space: nowrap;
         }
         .btn-primary {
-            background: var(--orange);
+            background: var(--primary);
             color: white;
-            border-color: var(--orange);
+            border-color: var(--primary);
         }
-        .btn-primary:hover { background: var(--orange-light); }
+        .btn-primary:hover { background: var(--primary-light); }
         .btn-ghost {
             background: transparent;
             color: var(--gray-400);
@@ -259,14 +264,13 @@
         .kpi-card:hover { border-color: var(--border-hover); }
         .kpi-label { font-size: 0.75rem; color: var(--gray-400); font-weight: 500; margin-bottom: 0.5rem; }
         .kpi-value { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
-        .kpi-value.orange { color: var(--orange); }
+        .kpi-value.orange { color: var(--primary); }
         .kpi-trend { font-size: 0.72rem; color: var(--green); font-weight: 600; margin-top: 0.4rem; }
         .kpi-trend.neutral { color: var(--gray-400); }
 
-        /* ── CARDS ── */
+        /* ── CARD ── */
         .card {
-            background: rgba(22, 22, 22, 0.85);
-            backdrop-filter: blur(12px);
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 1.5rem;
@@ -287,8 +291,8 @@
             text-transform: uppercase;
             padding: 0.2rem 0.5rem;
             border-radius: 20px;
-            background: var(--orange-dim);
-            color: var(--orange);
+            background: var(--primary-dim);
+            color: var(--primary);
             border: 1px solid rgba(255,107,0,0.25);
         }
 
@@ -323,7 +327,7 @@
         .badge-green  { background: var(--green-dim);  color: var(--green);  border: 1px solid rgba(34,197,94,0.2); }
         .badge-amber  { background: var(--amber-dim);  color: var(--amber);  border: 1px solid rgba(245,158,11,0.2); }
         .badge-red    { background: var(--red-dim);    color: var(--red);    border: 1px solid rgba(239,68,68,0.2); }
-        .badge-orange { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(255,107,0,0.25); }
+        .badge-orange { background: var(--primary-dim); color: var(--primary); border: 1px solid rgba(255,107,0,0.25); }
         .badge-blue   { background: var(--blue-dim);   color: var(--blue);   border: 1px solid rgba(59,130,246,0.2); }
 
         /* ── TWO COLUMN WORKSPACE ── */
@@ -360,7 +364,7 @@
             width: 100%;
         }
         input[type="text"]:focus, select:focus, textarea:focus {
-            border-color: var(--orange);
+            border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(255,107,0,0.12);
         }
         select option { background: #1c1c1c; }
@@ -395,7 +399,7 @@
             border-radius: 20px;
             padding: 0.25rem 0.7rem;
             font-size: 0.72rem; font-weight: 700;
-            color: var(--orange);
+            color: var(--primary);
             margin-top: 0.35rem;
         }
 
@@ -428,7 +432,7 @@
             font-size: 0.84rem;
         }
         .domain-item:hover { border-color: rgba(255,107,0,0.3); }
-        .domain-item input[type="checkbox"] { accent-color: var(--orange); width: 15px; height: 15px; cursor: pointer; }
+        .domain-item input[type="checkbox"] { accent-color: var(--primary); width: 15px; height: 15px; cursor: pointer; }
 
         /* ── DISCOVERY OUTPUT ── */
         .discovery-output {
@@ -443,7 +447,7 @@
             color: var(--gray-400);
         }
         .discovery-output .dom-title {
-            color: var(--orange);
+            color: var(--primary);
             font-weight: 700;
             font-size: 0.78rem;
             text-transform: uppercase;
@@ -451,7 +455,7 @@
             margin: 1.25rem 0 0.5rem;
         }
         .discovery-output .q-item {
-            border-left: 2px solid var(--orange-dim);
+            border-left: 2px solid var(--primary-dim);
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
             padding: 0.5rem 0.75rem;
             margin-bottom: 0.5rem;
@@ -491,7 +495,7 @@
             width: 100%;
         }
         .kb-nav:hover { color: var(--white); background: rgba(255,255,255,0.04); }
-        .kb-nav.active { color: var(--white); background: var(--orange-dim); border-left: 2px solid var(--orange); }
+        .kb-nav.active { color: var(--white); background: var(--primary-dim); border-left: 2px solid var(--primary); }
         .kb-body {
             padding: 1.5rem 2rem;
             overflow-y: auto;
@@ -502,10 +506,10 @@
             line-height: 1.7;
         }
         .kb-body h1 { font-size: 1.25rem; font-weight: 800; color: var(--white); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
-        .kb-body h2 { font-size: 0.95rem; font-weight: 700; color: var(--orange); margin: 1.25rem 0 0.5rem; }
+        .kb-body h2 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: 1.25rem 0 0.5rem; }
         .kb-body ul { margin-left: 1.25rem; margin-bottom: 0.75rem; }
         .kb-body li { margin-bottom: 0.35rem; }
-        .kb-body blockquote { background: var(--orange-dim); border-left: 3px solid var(--orange); padding: 0.75rem 1rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 1rem 0; color: var(--gray-100); }
+        .kb-body blockquote { background: var(--primary-dim); border-left: 3px solid var(--primary); padding: 0.75rem 1rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 1rem 0; color: var(--gray-100); }
 
         /* ── KB SEARCH ── */
         .kb-search-wrap {
@@ -525,12 +529,12 @@
         }
         .kb-search-wrap input:focus {
             outline: none;
-            border-color: var(--orange);
-            box-shadow: 0 0 0 2px var(--orange-glow);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-glow);
         }
         .kb-search-wrap input::placeholder { color: var(--gray-600); }
         .kb-nav.hidden { display: none; }
-        .kb-highlight { background: var(--orange-dim); color: var(--orange-light); padding: 0 2px; border-radius: 2px; }
+        .kb-highlight { background: var(--primary-dim); color: var(--primary-light); padding: 0 2px; border-radius: 2px; }
 
         /* ── DIVIDER ── */
         .divider { height: 1px; background: var(--border); margin: 1rem 0; }
@@ -540,6 +544,93 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--gray-800); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--gray-600); }
+
+        /* ── CHAT INTRO CARD ── */
+        .chat-intro {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-panel) 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .chat-intro-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .chat-intro-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--blue) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .chat-intro-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+        .chat-intro-title {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        .chat-intro-description {
+            font-size: 0.875rem;
+            color: var(--gray-400);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .chat-intro-capabilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .chat-intro-cap {
+            background: var(--primary-dim);
+            color: var(--primary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .chat-intro-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 1rem 0;
+        }
+        .chat-intro-prompts {
+            margin-top: 1rem;
+        }
+        .chat-intro-prompts-title {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .chat-intro-prompt {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+            color: var(--gray-100);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 0.4rem;
+        }
+        .chat-intro-prompt:hover {
+            border-color: var(--primary);
+            background: var(--primary-dim);
+        }
 
         /* ── CHAT ─── */
         .chat-message {
@@ -558,7 +649,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: var(--orange-dim);
+            background: var(--primary-dim);
             border: 1px solid rgba(255,107,0,0.3);
             display: flex;
             align-items: center;
@@ -574,13 +665,13 @@
             flex: 1;
         }
         .chat-message.user .chat-content {
-            background: var(--orange-dim);
+            background: var(--primary-dim);
             border-color: rgba(255,107,0,0.3);
         }
         .chat-content strong {
             display: block;
             font-size: 0.8rem;
-            color: var(--orange);
+            color: var(--primary);
             margin-bottom: 0.4rem;
         }
         .chat-content p {
@@ -1162,33 +1253,38 @@
 
         <div class="card" style="display:flex;flex-direction:column;height:calc(100vh - 220px);">
             <div class="chat-container" id="chat-messages" style="flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:1rem;">
-                <div class="chat-message agent">
-                    <div class="chat-avatar">🧅</div>
-                    <div class="chat-content">
-                        <strong>Onion Orquestrador</strong>
-                        <p>Olá! Sou o assistente de pré-vendas e engenharia de soluções da Clear IT. Estou aqui para ajudar você a:</p>
-                        <ul>
-                            <li>Entender o portfólio de soluções (SOC 24/7, COps, Nutanix, Fortinet, Veeam)</li>
-                            <li>Navegar pelos processos RACI e pré-vendas</li>
-                            <li>Identificar o ICP e personas de clientes ideais</li>
-                            <li>Gerar roteiros de discovery técnico e escopos de proposta</li>
-                        </ul>
-                        <p>Minhas respostas são estritamente baseadas nas Knowledge Bases da Clear IT. Se você perguntar sobre serviços fora do portfólio, eu sinalizarei explicitamente.</p>
-                        <p>Como posso ajudar você hoje?</p>
+                <!-- AI Intro Card -->
+                <div class="chat-intro">
+                    <div class="chat-intro-header">
+                        <div class="chat-intro-avatar">🔵</div>
+                        <div>
+                            <div class="chat-intro-name">Clear AI</div>
+                            <div class="chat-intro-title">Assistente de Pré-Vendas e Engenharia de Soluções</div>
+                        </div>
+                    </div>
+                    <div class="chat-intro-description">
+                        Sou a inteligência artificial da Clear IT, especializada em pré-vendas e engenharia de soluções. Minha missão é acelerar o ciclo de pré-vendas, garantir conformidade com o portfólio e reduzir riscos de over-promising.
+                    </div>
+                    <div class="chat-intro-capabilities">
+                        <span class="chat-intro-cap">Portfólio Clear IT</span>
+                        <span class="chat-intro-cap">Processos RACI</span>
+                        <span class="chat-intro-cap">ICP & Personas</span>
+                        <span class="chat-intro-cap">Discovery Técnico</span>
+                        <span class="chat-intro-cap">Escopo de Proposta</span>
+                        <span class="chat-intro-cap">Guardrails de Escopo</span>
+                    </div>
+                    <div class="chat-intro-divider"></div>
+                    <div class="chat-intro-prompts">
+                        <div class="chat-intro-prompts-title">Perguntas Frequentes</div>
+                        <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais são os SLAs do SOC 24/7?')">Quais são os SLAs do SOC 24/7?</div>
+                        <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quem é responsável pela qualificação no RACI?')">Quem é responsável pela qualificação no RACI?</div>
+                        <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais são as exclusões padrão do portfólio?')">Quais são as exclusões padrão do portfólio?</div>
+                        <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais parceiros são homologados?')">Quais parceiros são homologados?</div>
                     </div>
                 </div>
             </div>
 
             <div style="padding:1rem;border-top:1px solid var(--border);">
-                <div style="margin-bottom:0.75rem;">
-                    <span style="font-size:0.75rem;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;">Sugestões:</span>
-                    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;">
-                        <button class="btn btn-ghost" style="font-size:0.75rem;padding:0.3rem 0.6rem;" onclick="sendQuickPrompt('Quais são os SLAs do SOC 24/7?')">SLAs SOC 24/7</button>
-                        <button class="btn btn-ghost" style="font-size:0.75rem;padding:0.3rem 0.6rem;" onclick="sendQuickPrompt('Quem é responsável pela qualificação no RACI?')">RACI Qualificação</button>
-                        <button class="btn btn-ghost" style="font-size:0.75rem;padding:0.3rem 0.6rem;" onclick="sendQuickPrompt('Quais são as exclusões padrão do portfólio?')">Exclusões Padrão</button>
-                        <button class="btn btn-ghost" style="font-size:0.75rem;padding:0.3rem 0.6rem;" onclick="sendQuickPrompt('Quais parceiros são homologados?')">Parceiros Homologados</button>
-                    </div>
-                </div>
                 <div style="display:flex;gap:0.75rem;">
                     <input type="text" id="chat-input" placeholder="Digite sua pergunta..." onkeypress="if(event.key==='Enter')sendMessage()" style="flex:1;">
                     <button class="btn btn-primary" onclick="sendMessage()">Enviar →</button>
@@ -1394,6 +1490,48 @@ const kbData = {
             <li>Persona: Assistente de pré-vendas e engenharia de soluções</li>
             <li>Domínios: Portfólio, RACI, ICP, Discovery</li>
             <li>Guardrails: Alertas sobre serviços fora do escopo</li>
+        </ul>
+        `
+    },
+    'kb-08': {
+        title: 'Identidade da IA (Clear AI)',
+        content: `
+        <h1>Identidade da IA — Clear AI</h1>
+        <p><strong>Nome:</strong> Clear AI — Assistente de Pré-Vendas e Engenharia de Soluções</p>
+        <p><strong>Avatar:</strong> 🔵 — Círculo azul representando clareza, transparência e tecnologia</p>
+        <p><strong>Missão:</strong> Acelerar o ciclo de pré-vendas, garantir conformidade com o portfólio Clear IT e reduzir riscos de over-promising.</p>
+        
+        <h2>Capacidades</h2>
+        <ul>
+            <li>Portfólio Clear IT (SOC 24/7, COps, Nutanix, Fortinet, Veeam, Dynatrace)</li>
+            <li>Processos RACI e fluxo de pré-vendas</li>
+            <li>ICP & Personas de clientes</li>
+            <li>Discovery Técnico e roteiros estruturados</li>
+            <li>Escopo de Proposta (inclusões, SLAs, exclusões)</li>
+            <li>Guardrails de Escopo (detecção de serviços fora do portfólio)</li>
+        </ul>
+        
+        <h2>Comportamento</h2>
+        <ul>
+            <li>Respostas estritamente baseadas em KBs (KB-01 a KB-07)</li>
+            <li>Guardrails de escopo: alerta sobre serviços fora do portfólio</li>
+            <li>Adaptação de perfil: novo usuário, técnico, recorrente</li>
+            <li>Mascaramento de dados sensíveis (CNPJ, CPF, email, telefone, SEI)</li>
+            <li>Sanitização XSS em mensagens do usuário</li>
+        </ul>
+        
+        <h2>Guardrails de Escopo</h2>
+        <p>Quando o usuário pergunta sobre serviços fora do portfólio, Clear AI responde com:</p>
+        <blockquote>⚠️ FORA DO ESCOPO · [Serviço] não é serviço da Clear IT. Esta é uma lacuna a validar com a liderança comercial.</blockquote>
+        
+        <h2>Exclusões Padrão</h2>
+        <ul>
+            <li>Suporte a usuários finais (Service Desk/Field Service)</li>
+            <li>Passagem de cabeamento estruturado ou instalações elétricas</li>
+            <li>Desenvolvimento de software proprietário ou APIs customizadas</li>
+            <li>Manutenção física de hardware legado</li>
+            <li>Locação de impressoras ou periféricos</li>
+            <li>Treinamento de usuários finais</li>
         </ul>
         `
     }
@@ -1851,7 +1989,7 @@ function generateProposal() {
         return;
     }
 
-    let html = `<div style="color:var(--orange);font-weight:700;font-size:1rem;margin-bottom:1rem;">ESCOPO TÉCNICO — ${escapeHtml(leadName)}</div>`;
+    let html = `<div style="color:var(--primary);font-weight:700;font-size:1rem;margin-bottom:1rem;">ESCOPO TÉCNICO — ${escapeHtml(leadName)}</div>`;
     html += '<div style="margin-bottom:1.5rem;">';
     html += '<strong style="color:var(--white);">1. INCLUSÕES (SERVIÇOS NO ESCOPO)</strong><br><br>';
 
@@ -2096,13 +2234,13 @@ function addChatMessage(type, content) {
 
     const avatar = document.createElement('div');
     avatar.className = 'chat-avatar';
-    avatar.textContent = type === 'agent' ? '🧅' : '👤';
+    avatar.textContent = type === 'agent' ? '🔵' : '👤';
 
     const contentDiv = document.createElement('div');
     contentDiv.className = 'chat-content';
     // Allow HTML for agent responses (formatting), escape for user messages
     if (type === 'agent') {
-        contentDiv.innerHTML = `<strong>Onion Orquestrador</strong><p>${content}</p>`;
+        contentDiv.innerHTML = `<strong>Clear AI</strong><p>${content}</p>`;
     } else {
         contentDiv.innerHTML = `<strong>Você</strong><p>${escapeHtml(content)}</p>`;
     }
@@ -2116,18 +2254,33 @@ function addChatMessage(type, content) {
 function clearChat() {
     const container = document.getElementById('chat-messages');
     container.innerHTML = `
-        <div class="chat-message agent">
-            <div class="chat-avatar">🧅</div>
-            <div class="chat-content">
-                <strong>Onion Orquestrador</strong>
-                <p>Olá! Sou o agente IA da Clear IT. Posso ajudar com:</p>
-                <ul>
-                    <li>Portfólio de soluções (SOC, COps, Nutanix, Fortinet, Veeam)</li>
-                    <li>Processos RACI e pré-vendas</li>
-                    <li>ICP e personas de clientes</li>
-                    <li>Discovery técnico e qualificação de leads</li>
-                </ul>
-                <p>Sobre o que você gostaria de saber?</p>
+        <!-- AI Intro Card -->
+        <div class="chat-intro">
+            <div class="chat-intro-header">
+                <div class="chat-intro-avatar">🔵</div>
+                <div>
+                    <div class="chat-intro-name">Clear AI</div>
+                    <div class="chat-intro-title">Assistente de Pré-Vendas e Engenharia de Soluções</div>
+                </div>
+            </div>
+            <div class="chat-intro-description">
+                Sou a inteligência artificial da Clear IT, especializada em pré-vendas e engenharia de soluções. Minha missão é acelerar o ciclo de pré-vendas, garantir conformidade com o portfólio e reduzir riscos de over-promising.
+            </div>
+            <div class="chat-intro-capabilities">
+                <span class="chat-intro-cap">Portfólio Clear IT</span>
+                <span class="chat-intro-cap">Processos RACI</span>
+                <span class="chat-intro-cap">ICP & Personas</span>
+                <span class="chat-intro-cap">Discovery Técnico</span>
+                <span class="chat-intro-cap">Escopo de Proposta</span>
+                <span class="chat-intro-cap">Guardrails de Escopo</span>
+            </div>
+            <div class="chat-intro-divider"></div>
+            <div class="chat-intro-prompts">
+                <div class="chat-intro-prompts-title">Perguntas Frequentes</div>
+                <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais são os SLAs do SOC 24/7?')">Quais são os SLAs do SOC 24/7?</div>
+                <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quem é responsável pela qualificação no RACI?')">Quem é responsável pela qualificação no RACI?</div>
+                <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais são as exclusões padrão do portfólio?')">Quais são as exclusões padrão do portfólio?</div>
+                <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais parceiros são homologados?')">Quais parceiros são homologados?</div>
             </div>
         </div>
     `;
