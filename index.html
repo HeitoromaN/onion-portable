@@ -613,6 +613,48 @@
             color: var(--red);
         }
 
+        /* ── AUDIT LOG ─── */
+        .audit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        .audit-table th,
+        .audit-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .audit-table th {
+            background: var(--bg-input);
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.04em;
+        }
+        .audit-table tr:hover {
+            background: var(--bg-input);
+        }
+        .audit-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .audit-badge.create {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--green);
+        }
+        .audit-badge.update {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--blue);
+        }
+        .audit-badge.delete {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--red);
+        }
+
         /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
             .kpi-grid { grid-template-columns: repeat(2, 1fr); }
@@ -680,6 +722,10 @@
         <button class="nav-btn" id="menu-chat" onclick="switchView('chat')">
             <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
             Conversa com Agente
+        </button>
+        <button class="nav-btn" id="menu-audit" onclick="switchView('audit')">
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            Auditoria
         </button>
     </div>
 
@@ -1056,6 +1102,52 @@
         </div>
     </section>
 
+    <!-- ─── AUDIT (F-04) ─── -->
+    <section id="view-audit" class="view">
+        <div class="page-header">
+            <div>
+                <h1>Auditoria de <span>Modificações</span></h1>
+                <p>Histórico de alterações em leads, discovery e propostas.</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-ghost" onclick="exportAuditLog()">Exportar CSV</button>
+                <button class="btn btn-ghost" onclick="clearAuditLog()">Limpar Log</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div style="margin-bottom:1rem;display:flex;gap:1rem;align-items:center;">
+                <div style="flex:1;">
+                    <input type="text" id="audit-filter" placeholder="Filtrar por lead ou ação..." oninput="renderAuditLog()" style="width:100%;">
+                </div>
+                <select id="audit-type-filter" onchange="renderAuditLog()" style="width:200px;">
+                    <option value="">Todos os tipos</option>
+                    <option value="create">Criação</option>
+                    <option value="update">Atualização</option>
+                    <option value="delete">Exclusão</option>
+                </select>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="audit-table">
+                    <thead>
+                        <tr>
+                            <th>Data/Hora</th>
+                            <th>Ação</th>
+                            <th>Lead</th>
+                            <th>Campos Alterados</th>
+                            <th>Usuário</th>
+                        </tr>
+                    </thead>
+                    <tbody id="audit-body">
+                        <tr>
+                            <td colspan="5" style="text-align:center;color:var(--gray-400);padding:2rem;">Nenhuma modificação registrada ainda.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
     <!-- ─── CHAT (F-05) ─── -->
     <section id="view-chat" class="view">
         <div class="page-header">
@@ -1308,6 +1400,7 @@ const kbData = {
 };
 
 const LEADS_STORAGE_KEY = 'clearit_leads_v1';
+const AUDIT_LOG_KEY = 'clearit_audit_log_v1';
 const DEFAULT_LEADS = [
     { id:"L-01", name:"Superterminais Logística", seg:"Privado", score:85, cls:"Alto Impacto", status:"Aprovado",  badge:"badge-green" },
     { id:"L-02", name:"Expansão Nutanix Gov",     seg:"Público", score:95, cls:"Alto Impacto", status:"Aprovado",  badge:"badge-green" },
@@ -1328,6 +1421,36 @@ function loadLeads() {
 function saveLeads() {
     try { localStorage.setItem(LEADS_STORAGE_KEY, JSON.stringify(leads)); }
     catch (e) { console.warn('Failed to save leads to localStorage', e); }
+}
+
+function loadAuditLog() {
+    try {
+        const raw = localStorage.getItem(AUDIT_LOG_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) return parsed;
+        }
+    } catch (e) { console.warn('Failed to load audit log from localStorage', e); }
+    return [];
+}
+
+function saveAuditLog(log) {
+    try { localStorage.setItem(AUDIT_LOG_KEY, JSON.stringify(log)); }
+    catch (e) { console.warn('Failed to save audit log to localStorage', e); }
+}
+
+function logAudit(action, leadName, fieldsChanged, user = 'BDM') {
+    const log = loadAuditLog();
+    const entry = {
+        timestamp: new Date().toISOString(),
+        action,
+        leadName,
+        fieldsChanged,
+        user
+    };
+    log.unshift(entry);
+    if (log.length > 1000) log.pop(); // Keep last 1000 entries
+    saveAuditLog(log);
 }
 
 function escapeHtml(str) {
@@ -1466,6 +1589,12 @@ function submitLead() {
     const segStr    = seg === 'publico' ? 'Público' : 'Privado';
     const existing  = leads.findIndex(l => l.name.toLowerCase() === name.toLowerCase());
     const entry = { id: existing > -1 ? leads[existing].id : `L-0${leads.length+1}`, name, seg: segStr, score, cls, status: statusStr, badge: score>=80?'badge-green':'badge-amber' };
+
+    // Audit logging
+    const fieldsChanged = existing > -1 ? 'score, status' : 'name, segment, score, status';
+    const action = existing > -1 ? 'update' : 'create';
+    logAudit(action, name, fieldsChanged, bdm);
+
     if (existing > -1) leads[existing] = entry;
     else leads.push(entry);
     saveLeads();
@@ -2065,8 +2194,74 @@ function generateAgentResponse(query) {
     return 'Posso ajudar com perguntas sobre o portfólio Clear IT, processos RACI, ICP, discovery técnico e qualificação de leads. Tente perguntar sobre:<br>• SLAs (SOC, COps)<br>• Parceiros homologados<br>• Exclusões de escopo<br>• Domínios específicos (SOC, COps, Nutanix, Fortinet, Veeam)';
 }
 
+/* ─── AUDIT LOG (F-04) ─── */
+function renderAuditLog() {
+    const body = document.getElementById('audit-body');
+    const filter = document.getElementById('audit-filter').value.toLowerCase();
+    const typeFilter = document.getElementById('audit-type-filter').value;
+    const log = loadAuditLog();
+
+    const filtered = log.filter(entry => {
+        const matchesFilter = !filter || entry.leadName.toLowerCase().includes(filter) || entry.action.toLowerCase().includes(filter);
+        const matchesType = !typeFilter || entry.action === typeFilter;
+        return matchesFilter && matchesType;
+    });
+
+    if (filtered.length === 0) {
+        body.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:2rem;">Nenhuma modificação registrada ainda.</td></tr>';
+        return;
+    }
+
+    body.innerHTML = filtered.map(entry => {
+        const date = new Date(entry.timestamp);
+        const formattedDate = date.toLocaleString('pt-BR');
+        const badgeClass = entry.action;
+        const actionLabel = entry.action === 'create' ? 'Criação' : entry.action === 'update' ? 'Atualização' : 'Exclusão';
+        return `
+            <tr>
+                <td>${escapeHtml(formattedDate)}</td>
+                <td><span class="audit-badge ${badgeClass}">${actionLabel}</span></td>
+                <td><strong>${escapeHtml(entry.leadName)}</strong></td>
+                <td>${escapeHtml(entry.fieldsChanged)}</td>
+                <td>${escapeHtml(entry.user)}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function exportAuditLog() {
+    const log = loadAuditLog();
+    if (log.length === 0) {
+        alert('Nenhum registro para exportar.');
+        return;
+    }
+
+    const headers = ['Data/Hora', 'Ação', 'Lead', 'Campos Alterados', 'Usuário'];
+    const rows = log.map(entry => {
+        const date = new Date(entry.timestamp).toLocaleString('pt-BR');
+        const actionLabel = entry.action === 'create' ? 'Criação' : entry.action === 'update' ? 'Atualização' : 'Exclusão';
+        return [date, actionLabel, entry.leadName, entry.fieldsChanged, entry.user].join(',');
+    });
+
+    const csv = [headers.join(','), ...rows].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `audit_log_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+}
+
+function clearAuditLog() {
+    if (confirm('Tem certeza que deseja limpar todo o histórico de auditoria? Esta ação não pode ser desfeita.')) {
+        localStorage.removeItem(AUDIT_LOG_KEY);
+        renderAuditLog();
+    }
+}
+
 /* ─── INIT ─── */
-window.onload = () => { renderLeads(); initKB(); populateLeadSelect(); };
+window.onload = () => { renderLeads(); initKB(); populateLeadSelect(); renderAuditLog(); };
 </script>
 </body>
 </html>

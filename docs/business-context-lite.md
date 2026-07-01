@@ -24,7 +24,7 @@ O objetivo do produto é transformar a TI corporativa em um motor estratégico a
 | F-01 | Qualificação e Lead Scoring Baseado em ICP | ✅ Feito | Avalia lucratividade, potencial de expansão e adequação ao ICP de Governo/Privado. |
 | F-02 | Geração Assistida de Roteiro de Discovery | ✅ Feito | Cria roteiros dinâmicos com perguntas por domínio (Redes, Cloud, SOC, COps). |
 | F-03 | Recomendação de Escopo de Propostas | ✅ Feito | Sugere templates de escopo técnico, SLAs (SOC 24/7, COps) e exclusões comuns. |
-| F-04 | Auditoria de Modificações e Versionamento | A Fazer | Rastreamento histórico de edições nos dados dos leads e clientes. |
+| F-04 | Auditoria de Modificações e Versionamento | ✅ Feito | Rastreamento histórico de edições nos dados dos leads e clientes. |
 | F-05 | Conversa Livre com Agente IA | ✅ Feito | Interface de chat natural com agente ancorado nas KBs e regras de negócio. |
 
 ---
@@ -68,6 +68,20 @@ O objetivo do produto é transformar a TI corporativa em um motor estratégico a
 * **Critérios de Aceite (CA):**
   * **CA-05:** O sistema gera escopo estruturado (Inclusões, SLAs, Exclusões, Premissas) em menos de 2 minutos após seleção de domínios.
   * **CA-06:** Nenhum serviço fora do portfólio Clear IT aparece como inclusão sem alerta de lacuna explícita.
+
+### F-04: Auditoria de Modificações e Versionamento
+* **História de Usuário:**
+  * **Como** gestor comercial ou engenheiro de soluções da Clear IT,
+  * **Quero** rastrear todas as modificações feitas nos dados de leads e oportunidades,
+  * **Para** garantir accountability, identificar erros e manter histórico de decisões comerciais.
+* **Regras de Negócio (RN):**
+  * **RN-13 (Rastreamento de Mudanças):** Toda modificação em dados de leads deve ser registrada com timestamp, usuário e campos alterados.
+  * **RN-14 (Versionamento de Scripts):** Roteiros de discovery e escopos de proposta devem ter histórico de versões com capacidade de rollback.
+  * **RN-15 (Log de Ações):** Ações críticas (qualificação, geração de proposta) devem ser registradas em log de auditoria.
+* **Critérios de Aceite (CA):**
+  * **CA-10:** O sistema deve exibir histórico de modificações por lead com data/hora e campos alterados.
+  * **CA-11:** O sistema deve permitir comparação entre versões de discovery/proposta.
+  * **CA-12:** O sistema deve exportar log de auditoria em formato CSV para compliance.
 
 ### F-05: Conversa Livre com Agente IA
 * **História de Usuário:**

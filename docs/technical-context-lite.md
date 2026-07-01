@@ -110,3 +110,26 @@ graph TD
 - [x] Adicionar sugestões de perguntas rápidas (quick prompts)
 - [x] Implementar sanitização XSS em mensagens do usuário
 - [x] Testar fluxo completo: perguntas sobre portfólio, processos, lacunas
+
+---
+
+### Plano concluído: Auditoria de Modificações e Versionamento (F-04)
+
+> Spec de negócio preenchida em `business-context-lite.md`. Implementação concluída.
+
+#### Arquivos modificados:
+- `[DONE] index.html` — Nova view "Auditoria" com histórico de modificações e log de ações.
+- `[DONE] docs/business-context-lite.md` — Status atualizado para Feito.
+
+#### Checklist de implementação:
+- [x] Criar view "Auditoria" com tabela de histórico de modificações por lead
+- [x] Implementar sistema de tracking de mudanças:
+  - Registro de timestamp, usuário e campos alterados
+  - Detecção automática de diferenças entre versões
+- [x] Implementar log de auditoria:
+  - Registro de ações críticas (qualificação, geração de proposta)
+  - Filtro por lead, período e tipo de ação
+- [x] Implementar exportação de log em CSV:
+  - Formato compatível com compliance
+  - Incluir todos os campos de auditoria
+- [x] Testar fluxo completo: modificação → registro → visualização → exportação
