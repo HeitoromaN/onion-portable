@@ -1,0 +1,8 @@
+docs/business-context-lite.md
+docs/technical-context-lite.md
+docs/knowledge-base/kb-01-portfolio-solucoes.md
+docs/knowledge-base/kb-02-processo-pre-vendas.md
+docs/knowledge-base/kb-03-personas-icp.md
+docs/knowledge-base/kb-04-discovery-tecnico.md
+docs/knowledge-base/kb-05-ancoragem-portfolio.md
+docs/knowledge-base/README.md

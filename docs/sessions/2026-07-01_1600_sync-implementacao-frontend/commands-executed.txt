@@ -1,0 +1,1 @@
+# git init — falhou: git não encontrado no PATH do sistema

@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear IT — AI Copilot de Pré-Vendas</title>
+    <meta name="description" content="Assistente inteligente de pré-vendas e qualificação de oportunidades — Squad C.4 Zimbra — Clear IT.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ── BRAND TOKENS (Clear IT Identity) ── */
+        :root {
+            --bg:          #0a0a0a;
+            --bg-panel:    #111111;
+            --bg-card:     #161616;
+            --bg-input:    #1c1c1c;
+            --border:      rgba(255,255,255,0.08);
+            --border-hover:rgba(255,107,0,0.4);
+
+            /* Clear IT orange family */
+            --orange:      #ff6b00;
+            --orange-light:#ff8c38;
+            --orange-dim:  rgba(255,107,0,0.12);
+            --orange-glow: rgba(255,107,0,0.20);
+
+            --white:       #ffffff;
+            --gray-100:    #f4f4f5;
+            --gray-400:    #a1a1aa;
+            --gray-600:    #52525b;
+            --gray-800:    #27272a;
+
+            --green:       #22c55e;
+            --green-dim:   rgba(34,197,94,0.12);
+            --amber:       #f59e0b;
+            --amber-dim:   rgba(245,158,11,0.12);
+            --red:         #ef4444;
+            --red-dim:     rgba(239,68,68,0.12);
+            --blue:        #3b82f6;
+            --blue-dim:    rgba(59,130,246,0.12);
+
+            --radius:      10px;
+            --radius-sm:   6px;
+            --transition:  all 0.2s ease;
+            --font:        'Inter', sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--white);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── TOOLTIP SYSTEM ── */
+        .tooltip-wrap { position: relative; display: inline-flex; align-items: center; gap: 6px; }
+
+        .tooltip-btn {
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            background: var(--gray-800);
+            border: 1px solid var(--gray-600);
+            color: var(--gray-400);
+            font-size: 10px; font-weight: 700;
+            cursor: help;
+            display: inline-flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+        .tooltip-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+        .tooltip-box {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 0;
+            min-width: 240px;
+            max-width: 300px;
+            background: #1e1e1e;
+            border: 1px solid var(--border-hover);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            font-size: 0.78rem;
+            color: var(--gray-100);
+            line-height: 1.5;
+            z-index: 999;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+        .tooltip-wrap:hover .tooltip-box { display: block; }
+
+        /* ── SIDEBAR ── */
+        aside {
+            width: 240px;
+            min-width: 240px;
+            background: var(--bg-panel);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1.25rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-mark {
+            width: 32px; height: 32px;
+            background: var(--orange);
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1rem; color: white;
+            flex-shrink: 0;
+        }
+
+        .brand-text { line-height: 1.2; }
+        .brand-text strong { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; }
+        .brand-text span { font-size: 0.72rem; color: var(--gray-400); display: block; }
+
+        .sidebar-section {
+            padding: 1.25rem 1rem 0.5rem;
+        }
+
+        .sidebar-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray-600);
+            margin-bottom: 0.4rem;
+            padding: 0 0.25rem;
+        }
+
+        .nav-btn {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 0.6rem 0.75rem;
+            border-radius: var(--radius-sm);
+            color: var(--gray-400);
+            font-family: var(--font);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: var(--transition);
+            margin-bottom: 2px;
+        }
+        .nav-btn:hover { color: var(--white); background: rgba(255,255,255,0.04); }
+        .nav-btn.active { color: var(--white); background: var(--orange-dim); border-left: 2px solid var(--orange); }
+
+        .nav-icon { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; opacity: 0.8; }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+        .squad-tag {
+            font-size: 0.72rem;
+            color: var(--gray-400);
+            line-height: 1.5;
+        }
+        .squad-tag strong { color: var(--orange); font-weight: 700; }
+
+        /* ── MAIN CONTENT ── */
+        main {
+            flex: 1;
+            min-width: 0;
+            padding: 2rem 2.5rem;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .page-header h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        .page-header h1 span { color: var(--orange); }
+        .page-header p { color: var(--gray-400); font-size: 0.875rem; margin-top: 0.25rem; }
+        .header-actions { display: flex; gap: 0.75rem; align-items: center; }
+
+        /* ── BUTTONS ── */
+        .btn {
+            padding: 0.55rem 1.1rem;
+            border-radius: var(--radius-sm);
+            font-family: var(--font);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            white-space: nowrap;
+        }
+        .btn-primary {
+            background: var(--orange);
+            color: white;
+            border-color: var(--orange);
+        }
+        .btn-primary:hover { background: var(--orange-light); }
+        .btn-ghost {
+            background: transparent;
+            color: var(--gray-400);
+            border-color: var(--border);
+        }
+        .btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.2); }
+
+        /* ── VIEWS ── */
+        .view { display: none; }
+        .view.active { display: block; animation: fadeUp 0.25s ease; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── KPI GRID ── */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+        }
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            transition: var(--transition);
+        }
+        .kpi-card:hover { border-color: var(--border-hover); }
+        .kpi-label { font-size: 0.75rem; color: var(--gray-400); font-weight: 500; margin-bottom: 0.5rem; }
+        .kpi-value { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+        .kpi-value.orange { color: var(--orange); }
+        .kpi-trend { font-size: 0.72rem; color: var(--green); font-weight: 600; margin-top: 0.4rem; }
+        .kpi-trend.neutral { color: var(--gray-400); }
+
+        /* ── CARDS ── */
+        .card {
+            background: rgba(22, 22, 22, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+        .card + .card { margin-top: 1.25rem; }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .card-header h2 { font-size: 1rem; font-weight: 700; }
+        .card-header .card-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            background: var(--orange-dim);
+            color: var(--orange);
+            border: 1px solid rgba(255,107,0,0.25);
+        }
+
+        /* ── TABLE ── */
+        table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+        th {
+            color: var(--gray-400);
+            font-weight: 600;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+        td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        .score-cell { font-weight: 800; font-size: 1.05rem; }
+        .score-high  { color: var(--green); }
+        .score-mid   { color: var(--amber); }
+        .score-low   { color: var(--red); }
+
+        /* ── BADGES ── */
+        .badge {
+            display: inline-flex; align-items: center;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.72rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .badge-green  { background: var(--green-dim);  color: var(--green);  border: 1px solid rgba(34,197,94,0.2); }
+        .badge-amber  { background: var(--amber-dim);  color: var(--amber);  border: 1px solid rgba(245,158,11,0.2); }
+        .badge-red    { background: var(--red-dim);    color: var(--red);    border: 1px solid rgba(239,68,68,0.2); }
+        .badge-orange { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(255,107,0,0.25); }
+        .badge-blue   { background: var(--blue-dim);   color: var(--blue);   border: 1px solid rgba(59,130,246,0.2); }
+
+        /* ── TWO COLUMN WORKSPACE ── */
+        .workspace {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 1.25rem;
+            align-items: start;
+        }
+
+        /* ── FORM ELEMENTS ── */
+        .form-section { display: flex; flex-direction: column; gap: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+        label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        input[type="text"], select, textarea {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.65rem 0.85rem;
+            color: var(--white);
+            font-family: var(--font);
+            font-size: 0.9rem;
+            transition: var(--transition);
+            outline: none;
+            width: 100%;
+        }
+        input[type="text"]:focus, select:focus, textarea:focus {
+            border-color: var(--orange);
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.12);
+        }
+        select option { background: #1c1c1c; }
+        textarea { resize: vertical; min-height: 110px; }
+
+        /* ── SCORE PANEL ── */
+        .score-panel {
+            display: flex; flex-direction: column; align-items: center;
+            padding: 2rem 1rem;
+            gap: 0.75rem;
+            text-align: center;
+        }
+        .score-ring {
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            border: 6px solid var(--border);
+            background: var(--bg-input);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .score-number { font-size: 2.75rem; font-weight: 900; letter-spacing: -0.03em; }
+        .score-max { font-size: 0.72rem; color: var(--gray-400); }
+        .score-tag { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+        .score-note { font-size: 0.8rem; color: var(--gray-400); max-width: 85%; line-height: 1.5; }
+
+        /* ── RACI PILL ── */
+        .raci-pill {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: rgba(255,107,0,0.08);
+            border: 1px solid rgba(255,107,0,0.2);
+            border-radius: 20px;
+            padding: 0.25rem 0.7rem;
+            font-size: 0.72rem; font-weight: 700;
+            color: var(--orange);
+            margin-top: 0.35rem;
+        }
+
+        /* ── ALERTS ── */
+        .alerts-stack { display: flex; flex-direction: column; gap: 0.6rem; }
+        .alert {
+            display: flex; gap: 0.7rem;
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            line-height: 1.5;
+            border: 1px solid transparent;
+        }
+        .alert-icon { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; margin-top: 2px; }
+        .alert.info    { background: var(--blue-dim);   color: #bfdbfe; border-color: rgba(59,130,246,0.25); }
+        .alert.success { background: var(--green-dim);  color: #bbf7d0; border-color: rgba(34,197,94,0.25); }
+        .alert.warning { background: var(--amber-dim);  color: #fde68a; border-color: rgba(245,158,11,0.25); }
+        .alert.danger  { background: var(--red-dim);    color: #fecaca; border-color: rgba(239,68,68,0.25); }
+
+        /* ── CHECKBOXES ── */
+        .domain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+        .domain-item {
+            display: flex; align-items: center; gap: 0.65rem;
+            padding: 0.65rem 0.85rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.84rem;
+        }
+        .domain-item:hover { border-color: rgba(255,107,0,0.3); }
+        .domain-item input[type="checkbox"] { accent-color: var(--orange); width: 15px; height: 15px; cursor: pointer; }
+
+        /* ── DISCOVERY OUTPUT ── */
+        .discovery-output {
+            background: #0d0d0d;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1.25rem;
+            font-size: 0.875rem;
+            line-height: 1.7;
+            max-height: 420px;
+            overflow-y: auto;
+            color: var(--gray-400);
+        }
+        .discovery-output .dom-title {
+            color: var(--orange);
+            font-weight: 700;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin: 1.25rem 0 0.5rem;
+        }
+        .discovery-output .q-item {
+            border-left: 2px solid var(--orange-dim);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 0.5rem 0.75rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255,255,255,0.02);
+            color: var(--gray-100);
+        }
+        .discovery-empty {
+            display: flex; align-items: center; justify-content: center;
+            padding: 3rem 1rem;
+            color: var(--gray-600);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* ── KB VIEWER ── */
+        .kb-layout { display: grid; grid-template-columns: 210px 1fr; gap: 0; height: 580px; }
+        .kb-sidebar {
+            background: var(--bg-input);
+            border-right: 1px solid var(--border);
+            border-radius: var(--radius) 0 0 var(--radius);
+            padding: 0.75rem;
+            overflow-y: auto;
+            display: flex; flex-direction: column; gap: 2px;
+        }
+        .kb-nav {
+            padding: 0.6rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            color: var(--gray-400);
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: var(--font);
+            font-weight: 500;
+            text-align: left;
+            transition: var(--transition);
+            width: 100%;
+        }
+        .kb-nav:hover { color: var(--white); background: rgba(255,255,255,0.04); }
+        .kb-nav.active { color: var(--white); background: var(--orange-dim); border-left: 2px solid var(--orange); }
+        .kb-body {
+            padding: 1.5rem 2rem;
+            overflow-y: auto;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            background: var(--bg-card);
+            color: var(--gray-100);
+            font-size: 0.875rem;
+            line-height: 1.7;
+        }
+        .kb-body h1 { font-size: 1.25rem; font-weight: 800; color: var(--white); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+        .kb-body h2 { font-size: 0.95rem; font-weight: 700; color: var(--orange); margin: 1.25rem 0 0.5rem; }
+        .kb-body ul { margin-left: 1.25rem; margin-bottom: 0.75rem; }
+        .kb-body li { margin-bottom: 0.35rem; }
+        .kb-body blockquote { background: var(--orange-dim); border-left: 3px solid var(--orange); padding: 0.75rem 1rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 1rem 0; color: var(--gray-100); }
+
+        /* ── KB SEARCH ── */
+        .kb-search-wrap {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-input);
+        }
+        .kb-search-wrap input {
+            width: 100%;
+            padding: 0.6rem 0.85rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--white);
+            font-family: var(--font);
+            font-size: 0.85rem;
+        }
+        .kb-search-wrap input:focus {
+            outline: none;
+            border-color: var(--orange);
+            box-shadow: 0 0 0 2px var(--orange-glow);
+        }
+        .kb-search-wrap input::placeholder { color: var(--gray-600); }
+        .kb-nav.hidden { display: none; }
+        .kb-highlight { background: var(--orange-dim); color: var(--orange-light); padding: 0 2px; border-radius: 2px; }
+
+        /* ── DIVIDER ── */
+        .divider { height: 1px; background: var(--border); margin: 1rem 0; }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--gray-800); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gray-600); }
+
+        /* ── CHAT ─── */
+        .chat-message {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 85%;
+        }
+        .chat-message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        .chat-message.agent {
+            align-self: flex-start;
+        }
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--orange-dim);
+            border: 1px solid rgba(255,107,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .chat-content {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.85rem 1rem;
+            flex: 1;
+        }
+        .chat-message.user .chat-content {
+            background: var(--orange-dim);
+            border-color: rgba(255,107,0,0.3);
+        }
+        .chat-content strong {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--orange);
+            margin-bottom: 0.4rem;
+        }
+        .chat-content p {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        .chat-content p:last-child {
+            margin-bottom: 0;
+        }
+        .chat-content ul {
+            margin-left: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .chat-content li {
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* ── FIELD FEEDBACK ─── */
+        .field-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.4rem;
+            min-height: 1.2rem;
+        }
+        .field-feedback.valid {
+            color: var(--green);
+        }
+        .field-feedback.invalid {
+            color: var(--red);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .workspace { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .domain-grid { grid-template-columns: 1fr; }
+            .kb-layout { grid-template-columns: 180px 1fr; height: 480px; }
+        }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            aside {
+                width: 100%;
+                min-width: unset;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .sidebar-section { display: flex; flex-wrap: wrap; gap: 0.25rem; padding: 0.75rem; }
+            .sidebar-label { width: 100%; }
+            .nav-btn { width: auto; flex: 1 1 auto; min-width: 140px; }
+            .sidebar-footer { display: none; }
+            main { padding: 1.25rem 1rem; max-height: none; }
+            .page-header { flex-direction: column; gap: 1rem; }
+            .kpi-grid { grid-template-columns: 1fr 1fr; }
+            .kb-layout { grid-template-columns: 1fr; height: auto; }
+            .kb-sidebar { border-right: none; border-bottom: 1px solid var(--border); max-height: 200px; }
+            table { font-size: 0.78rem; }
+        }
+        @media (max-width: 480px) {
+            .kpi-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside>
+    <div class="sidebar-brand">
+        <div class="brand-mark">C</div>
+        <div class="brand-text">
+            <strong>Clear IT</strong>
+            <span>AI Copilot de Pré-Vendas</span>
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-label">Principal</div>
+        <button class="nav-btn active" id="menu-dash" onclick="switchView('dashboard')">
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            Dashboard
+        </button>
+        <button class="nav-btn" id="menu-qualify" onclick="switchView('qualify')">
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M9 11.75A1.25 1.25 0 107.75 13 1.25 1.25 0 009 11.75zm6 0A1.25 1.25 0 1013.75 13 1.25 1.25 0 0015 11.75zM12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm0-4c-2.33 0-4.31-1.46-5.11-3.5h10.22C16.31 14.54 14.33 16 12 16z"/></svg>
+            Qualificar Lead
+        </button>
+        <button class="nav-btn" id="menu-discovery" onclick="switchView('discovery')">
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            Discovery Técnico
+        </button>
+        <button class="nav-btn" id="menu-proposal" onclick="switchView('proposal')">
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            Gerar Proposta
+        </button>
+        <button class="nav-btn" id="menu-chat" onclick="switchView('chat')">
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+            Conversa com Agente
+        </button>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-label">Recursos</div>
+        <button class="nav-btn" id="menu-kb" onclick="switchView('kb')">
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
+            Base de Conhecimento
+        </button>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="squad-tag">
+            <strong>Squad C.4 Zimbra</strong><br>
+            Pré-Vendas & Engenharia<br>
+            Clear IT · 2026
+        </div>
+    </div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<main>
+
+    <!-- ─── DASHBOARD ─── -->
+    <section id="view-dashboard" class="view active">
+        <div class="page-header">
+            <div>
+                <h1>Visão Geral <span>Pré-Vendas</span></h1>
+                <p>Métricas de eficiência operacional com o AI Copilot ativo.</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="switchView('qualify')">+ Nova Oportunidade</button>
+            </div>
+        </div>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Tempo de Preparação</div>
+                <div class="kpi-value orange">10 min</div>
+                <div class="kpi-trend">↓ 83% menos (era 60 min)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Briefings Completos</div>
+                <div class="kpi-value orange">92%</div>
+                <div class="kpi-trend">↑ 52 pp (era 40%)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Retrabalho Técnico</div>
+                <div class="kpi-value orange">8%</div>
+                <div class="kpi-trend">↓ 22 pp (era 30%)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Leads Qualificados</div>
+                <div class="kpi-value orange" id="kpi-total">3</div>
+                <div class="kpi-trend neutral">Sessão atual</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Oportunidades Recentes</h2>
+                <span class="card-badge">Ao Vivo</span>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Segmento</th>
+                        <th>Score ICP</th>
+                        <th>Classificação</th>
+                        <th>Status RACI</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="leads-body"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ─── QUALIFY (F-01) ─── -->
+    <section id="view-qualify" class="view">
+        <div class="page-header">
+            <div>
+                <h1>Qualificar <span>Oportunidade</span></h1>
+                <p>Avalie leads com base no ICP e nas regras da Matriz RACI da Clear IT.</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-ghost" onclick="switchView('dashboard')">← Voltar</button>
+                <button class="btn btn-primary" onclick="submitLead()">Calcular Score →</button>
+            </div>
+        </div>
+
+        <div class="workspace">
+            <!-- Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Dados da Oportunidade</h2>
+                </div>
+                <div class="form-section">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="tooltip-wrap">
+                                <label>Nome da Oportunidade *</label>
+                                <span class="tooltip-btn" tabindex="0">?
+                                    <div class="tooltip-box">Nome do cliente ou projeto. Ex: "Superterminais Logística" ou "Expansão Nutanix Gov". Usado para identificar o lead no sistema.</div>
+                                </span>
+                            </div>
+                            <input type="text" id="lead-name" placeholder="Ex: Superterminais Logística">
+                        </div>
+                        <div class="form-group">
+                            <div class="tooltip-wrap">
+                                <label>Segmento *</label>
+                                <span class="tooltip-btn" tabindex="0">?
+                                    <div class="tooltip-box">Define o perfil regulatório do cliente. "Setor Público" exige campos adicionais (SEI/DFD) obrigatórios por lei. "Setor Privado" requer CNPJ para validação comercial.</div>
+                                </span>
+                            </div>
+                            <select id="lead-segment" onchange="toggleSegment()">
+                                <option value="privado">Setor Privado</option>
+                                <option value="publico">Setor Público (Governo)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="tooltip-wrap">
+                                <label>Lucratividade Estimada *</label>
+                                <span class="tooltip-btn" tabindex="0">?
+                                    <div class="tooltip-box">Valor do contrato anual estimado (ARR). Um dos três pilares de scoring ICP: Lucratividade + Expansão + Alinhamento Estratégico. Contratos acima de R$1,5M recebem pontuação máxima.</div>
+                                </span>
+                            </div>
+                            <select id="lead-revenue">
+                                <option value="baixa">Abaixo de R$ 500k</option>
+                                <option value="media">De R$ 500k a R$ 1.5M</option>
+                                <option value="alta">Acima de R$ 1.5M</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="tooltip-wrap">
+                                <label>Potencial de Expansão *</label>
+                                <span class="tooltip-btn" tabindex="0">?
+                                    <div class="tooltip-box">Avalia se existe oportunidade de upsell ou cross-sell após o fechamento inicial. "Alto Potencial" indica conta estratégica com possibilidade de crescimento contratual ao longo do tempo (ex: SOC → COps → Infra).</div>
+                                </span>
+                            </div>
+                            <select id="lead-expansion">
+                                <option value="baixa">Baixo Potencial</option>
+                                <option value="media">Médio Potencial</option>
+                                <option value="alta">Alto Potencial (Conta Estratégica)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Privado -->
+                    <div id="field-cnpj" class="form-group">
+                        <div class="tooltip-wrap">
+                            <label>CNPJ do Cliente</label>
+                            <span class="tooltip-btn" tabindex="0">?
+                                <div class="tooltip-box">Obrigatório para validação de crédito e due diligence comercial em clientes privados. Permite consultar o porte da empresa e evitar fraudes de representação.</div>
+                            </span>
+                        </div>
+                        <input type="text" id="lead-cnpj" placeholder="00.000.000/0000-00" maxlength="18" oninput="maskCNPJ(this)" onblur="validateCNPJ(this)">
+                        <div id="cnpj-feedback" class="field-feedback"></div>
+                    </div>
+
+                    <!-- Público -->
+                    <div id="fields-publico" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <div class="tooltip-wrap">
+                                    <label>Número do Processo SEI *</label>
+                                    <span class="tooltip-btn" tabindex="0">?
+                                        <div class="tooltip-box">O SEI (Sistema Eletrônico de Informações) é obrigatório para compras governamentais no Brasil. Sem este número, a oportunidade não pode ser formalizada em contrato público.</div>
+                                    </span>
+                                </div>
+                                <input type="text" id="lead-sei" placeholder="Ex: 23087.012345/2026-99" maxlength="13" oninput="maskSEI(this)" onblur="validateSEI(this)">
+                                <div id="sei-feedback" class="field-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <div class="tooltip-wrap">
+                                    <label>Documento DFD *</label>
+                                    <span class="tooltip-btn" tabindex="0">?
+                                        <div class="tooltip-box">O DFD (Documento de Formalização de Demanda) é o instrumento que formaliza a necessidade de aquisição no setor público. É pré-requisito para abertura de licitação ou contratação direta.</div>
+                                    </span>
+                                </div>
+                                <input type="text" id="lead-dfd" placeholder="Ex: DFD Nº 14/2026" maxlength="500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="tooltip-wrap">
+                                <label>BDM Responsável *</label>
+                                <span class="tooltip-btn" tabindex="0">?
+                                    <div class="tooltip-box">O BDM (Business Development Manager) é o Responsável (R) pela qualificação segundo a Matriz RACI da Clear IT. Deve ser preenchido com o nome do profissional que conduz esta análise.</div>
+                                </span>
+                            </div>
+                            <input type="text" id="lead-bdm" value="Heitor Feitosa">
+                            <div class="raci-pill">RACI: BDM = Responsável (R)</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="tooltip-wrap">
+                                <label>Validação da Diretoria *</label>
+                                <span class="tooltip-btn" tabindex="0">?
+                                    <div class="tooltip-box">A Diretoria de Pré-Vendas é o Aprovador (A) na Matriz RACI. Sem a aprovação formal da diretoria, a oportunidade não pode avançar para a fase de proposta técnica.</div>
+                                </span>
+                            </div>
+                            <select id="lead-director">
+                                <option value="pendente">⏳ Aguardando validação</option>
+                                <option value="aprovado">✅ Aprovado pela Diretoria</option>
+                            </select>
+                            <div class="raci-pill">RACI: Diretoria = Aprovador (A)</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Score panel -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Resultado do Copilot</h2>
+                </div>
+                <div class="score-panel">
+                    <div class="score-ring" id="score-ring">
+                        <span class="score-number" id="score-num">--</span>
+                        <span class="score-max">/100</span>
+                    </div>
+                    <span class="score-tag" id="score-tag" style="color:var(--gray-600)">Sem Análise</span>
+                    <p class="score-note" id="score-note">Preencha o formulário e clique em "Calcular Score" para gerar a nota ICP desta oportunidade.</p>
+                </div>
+                <div class="divider"></div>
+                <div class="alerts-stack" id="qualify-alerts"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── DISCOVERY (F-02) ─── -->
+    <section id="view-discovery" class="view">
+        <div class="page-header">
+            <div>
+                <h1>Discovery <span>Técnico</span></h1>
+                <p>Gere roteiros estruturados e detecte riscos e lacunas de portfólio automaticamente.</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-ghost" onclick="clearDiscovery()">Limpar</button>
+                <button class="btn btn-primary" onclick="generateScript()">Gerar Roteiro →</button>
+            </div>
+        </div>
+
+        <div class="workspace">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Configuração do Discovery</h2>
+                </div>
+                <div class="form-section">
+                    <div class="form-group">
+                        <div class="tooltip-wrap">
+                            <label>Domínios Tecnológicos</label>
+                            <span class="tooltip-btn" tabindex="0">?
+                                <div class="tooltip-box">Selecione todos os domínios que o cliente mencionou ou que fazem parte da oportunidade. O Copilot irá gerar perguntas específicas para cada domínio selecionado.</div>
+                            </span>
+                        </div>
+                        <div class="domain-grid">
+                            <label class="domain-item"><input type="checkbox" id="dom-obs" checked> Observabilidade (Dynatrace)</label>
+                            <label class="domain-item"><input type="checkbox" id="dom-soc" checked> SOC 24/7 (Logsign SIEM)</label>
+                            <label class="domain-item"><input type="checkbox" id="dom-infra"> Infra Hiperconvergente (Nutanix)</label>
+                            <label class="domain-item"><input type="checkbox" id="dom-cyber"> Cibersegurança (Fortinet NGFW)</label>
+                            <label class="domain-item"><input type="checkbox" id="dom-cops"> Operações Cognitivas (COps)</label>
+                            <label class="domain-item"><input type="checkbox" id="dom-backup"> Backup & Resiliência (Veeam)</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="tooltip-wrap">
+                            <label>Notas do Account Manager / Briefing Inicial</label>
+                            <span class="tooltip-btn" tabindex="0">?
+                                <div class="tooltip-box">Cole aqui qualquer anotação prévia passada pelo AM sobre o cliente. O Copilot irá analisar o texto em busca de palavras-chave que ativem alertas críticos (ex: "190", "ransomware", "sem backup") e de serviços fora do portfólio (ex: "cabeamento", "service desk").</div>
+                            </span>
+                        </div>
+                        <textarea id="disc-notes" placeholder="Ex: Cliente do setor financeiro, 500 colaboradores, sem suporte ativo há 3 anos. Mencionou ransomware no ano passado. Quer modernizar infra..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>Roteiro & Alertas do Copilot</h2>
+                </div>
+                <div class="alerts-stack" id="disc-alerts" style="margin-bottom: 1rem;"></div>
+                <div class="discovery-output" id="disc-output">
+                    <div class="discovery-empty">Selecione domínios e clique em "Gerar Roteiro →"</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── PROPOSAL (F-03) ─── -->
+    <section id="view-proposal" class="view">
+        <div class="page-header">
+            <div>
+                <h1>Gerar <span>Proposta</span></h1>
+                <p>Recomendação de escopo técnico com SLAs, inclusões e exclusões padrão.</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-ghost" onclick="clearProposal()">Limpar</button>
+                <button class="btn btn-primary" onclick="generateProposal()">Gerar Escopo →</button>
+            </div>
+        </div>
+
+        <div class="workspace">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Configuração da Proposta</h2>
+                </div>
+                <div class="form-section">
+                    <div class="form-group">
+                        <div class="tooltip-wrap">
+                            <label>Nome da Oportunidade</label>
+                            <span class="tooltip-btn" tabindex="0">?
+                                <div class="tooltip-box">Selecione uma oportunidade qualificada do Dashboard ou digite o nome manualmente. O escopo será personalizado com base no contexto.</div>
+                            </span>
+                        </div>
+                        <select id="prop-lead-select" onchange="loadLeadToProposal()">
+                            <option value="">-- Selecione uma oportunidade --</option>
+                        </select>
+                        <input type="text" id="prop-lead-name" placeholder="Ou digite o nome manualmente">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="tooltip-wrap">
+                            <label>Notas Adicionais (Opcional)</label>
+                            <span class="tooltip-btn" tabindex="0">?
+                                <div class="tooltip-box">Adicione notas sobre requisitos específicos do cliente. O Copilot irá detectar itens fora do escopo (ex: desenvolvimento customizado, cabeamento, service desk).</div>
+                            </span>
+                        </div>
+                        <textarea id="prop-notes" placeholder="Ex: Cliente mencionou necessidade de desenvolvimento de ERP customizado..."></textarea>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="form-group">
+                        <div class="tooltip-wrap">
+                            <label>Domínios de Serviço</label>
+                            <span class="tooltip-btn" tabindex="0">?
+                                <div class="tooltip-box">Selecione os domínios que farão parte da proposta. O Copilot irá gerar SLAs, inclusões e exclusões específicas para cada domínio selecionado.</div>
+                            </span>
+                        </div>
+                        <div class="domain-grid">
+                            <label class="domain-item"><input type="checkbox" id="prop-soc"> SOC 24/7 (Security Operations Center)</label>
+                            <label class="domain-item"><input type="checkbox" id="prop-cops"> COps 24/7 (Cognitive Operations)</label>
+                            <label class="domain-item"><input type="checkbox" id="prop-infra"> Infraestrutura Hiperconvergente (Nutanix)</label>
+                            <label class="domain-item"><input type="checkbox" id="prop-cyber"> Cibersegurança (Fortinet NGFW)</label>
+                            <label class="domain-item"><input type="checkbox" id="prop-backup"> Backup & Resiliência (Veeam)</label>
+                            <label class="domain-item"><input type="checkbox" id="prop-obs"> Observabilidade (Dynatrace)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>Escopo Gerado</h2>
+                    <button class="btn btn-ghost" style="font-size:0.75rem;padding:0.3rem 0.6rem;" onclick="copyProposal()">📋 Copiar</button>
+                </div>
+                <div class="alerts-stack" id="prop-alerts" style="margin-bottom: 1rem;"></div>
+                <div class="discovery-output" id="prop-output">
+                    <div class="discovery-empty">Configure os domínios e clique em "Gerar Escopo →"</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── CHAT (F-05) ─── -->
+    <section id="view-chat" class="view">
+        <div class="page-header">
+            <div>
+                <h1>Conversa com <span>Agente IA</span></h1>
+                <p>Pergunte sobre portfólio, processos, ICP e discovery — ancorado nas KBs Clear IT.</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-ghost" onclick="clearChat()">Limpar Conversa</button>
+            </div>
+        </div>
+
+        <div class="card" style="display:flex;flex-direction:column;height:calc(100vh - 220px);">
+            <div class="chat-container" id="chat-messages" style="flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:1rem;">
+                <div class="chat-message agent">
+                    <div class="chat-avatar">🧅</div>
+                    <div class="chat-content">
+                        <strong>Onion Orquestrador</strong>
+                        <p>Olá! Sou o assistente de pré-vendas e engenharia de soluções da Clear IT. Estou aqui para ajudar você a:</p>
+                        <ul>
+                            <li>Entender o portfólio de soluções (SOC 24/7, COps, Nutanix, Fortinet, Veeam)</li>
+                            <li>Navegar pelos processos RACI e pré-vendas</li>
+                            <li>Identificar o ICP e personas de clientes ideais</li>
+                            <li>Gerar roteiros de discovery técnico e escopos de proposta</li>
+                        </ul>
+                        <p>Minhas respostas são estritamente baseadas nas Knowledge Bases da Clear IT. Se você perguntar sobre serviços fora do portfólio, eu sinalizarei explicitamente.</p>
+                        <p>Como posso ajudar você hoje?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding:1rem;border-top:1px solid var(--border);">
+                <div style="margin-bottom:0.75rem;">
+                    <span style="font-size:0.75rem;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;">Sugestões:</span>
+                    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;">
+                        <button class="btn btn-ghost" style="font-size:0.75rem;padding:0.3rem 0.6rem;" onclick="sendQuickPrompt('Quais são os SLAs do SOC 24/7?')">SLAs SOC 24/7</button>
+                        <button class="btn btn-ghost" style="font-size:0.75rem;padding:0.3rem 0.6rem;" onclick="sendQuickPrompt('Quem é responsável pela qualificação no RACI?')">RACI Qualificação</button>
+                        <button class="btn btn-ghost" style="font-size:0.75rem;padding:0.3rem 0.6rem;" onclick="sendQuickPrompt('Quais são as exclusões padrão do portfólio?')">Exclusões Padrão</button>
+                        <button class="btn btn-ghost" style="font-size:0.75rem;padding:0.3rem 0.6rem;" onclick="sendQuickPrompt('Quais parceiros são homologados?')">Parceiros Homologados</button>
+                    </div>
+                </div>
+                <div style="display:flex;gap:0.75rem;">
+                    <input type="text" id="chat-input" placeholder="Digite sua pergunta..." onkeypress="if(event.key==='Enter')sendMessage()" style="flex:1;">
+                    <button class="btn btn-primary" onclick="sendMessage()">Enviar →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── KNOWLEDGE BASE ─── -->
+    <section id="view-kb" class="view">
+        <div class="page-header">
+            <div>
+                <h1>Base de <span>Conhecimento</span></h1>
+                <p>Portfólio, processos, personas e prompts de IA — ancorados e auditados.</p>
+            </div>
+        </div>
+        <div class="card" style="padding:0; overflow:hidden;">
+            <div class="kb-search-wrap">
+                <input type="search" id="kb-search" placeholder="Buscar na base de conhecimento (portfólio, RACI, ICP, discovery...)" oninput="searchKB(this.value)">
+            </div>
+            <div class="kb-layout">
+                <div class="kb-sidebar" id="kb-menu"></div>
+                <div class="kb-body" id="kb-body"></div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script>
+/* ─── DATA ─── */
+const kbData = {
+    "kb-01": {
+        title: "KB-01 · Portfólio & Parceiros",
+        content: `
+        <h1>Portfólio de Soluções da Clear IT</h1>
+        <h2>Infraestrutura</h2>
+        <ul>
+            <li><strong>Nuvem Híbrida & Multinuvem:</strong> AWS, Oracle, Azure, Nutanix, Kubernetes, IA Factory.</li>
+            <li><strong>Hiperconvergência Nutanix:</strong> NX-3155-G9, NX-8055-G9, NX-8150-G10 com licenças NCI Ultimate.</li>
+            <li><strong>Backup & Recovery:</strong> Veeam Availability Suite + ExaGrid, suporte 60 meses NBD 24x7.</li>
+            <li><strong>Armazenamento:</strong> Lenovo DM3010H, 241TiB líquidos por storage, 24x7 NBD.</li>
+        </ul>
+        <h2>Cibersegurança</h2>
+        <ul>
+            <li><strong>NGFW Fortinet:</strong> FortiGate-100F em HA Ativo/Passivo com licença UTP 36 meses.</li>
+            <li><strong>EDR:</strong> SentinelOne para endpoints.</li>
+            <li><strong>Gestão de Vulnerabilidades:</strong> Nessus Pro (até 2.000 ativos, CVSS v3.1).</li>
+            <li><strong>Phishing & Conscientização:</strong> KnowBe4 / Fortiphish (até 300 usuários).</li>
+        </ul>
+        <h2>SOC 24x7</h2>
+        <ul>
+            <li>SIEM Logsign SaaS · SOAR · UEBA · Threat Intelligence nativos.</li>
+            <li>SLA P1: Detecção ≤30min | Resposta ≤2h.</li>
+            <li>SLA P2: Detecção ≤45min | Resposta ≤4h.</li>
+            <li>Playbooks MITRE ATT&CK + NIST 800-61.</li>
+        </ul>
+        <h2>COps 24x7x365</h2>
+        <ul>
+            <li>Nível 0: Autorrecuperação automática.</li>
+            <li>N1/N2/N3 remotos + TAM com IA/LLM + SDM.</li>
+            <li>ITIL V4, relatórios Diários/Semanais/Mensais.</li>
+            <li>90 dias de estabilização sem penalidades.</li>
+        </ul>
+        <h2>Parceiros Homologados</h2>
+        <blockquote>Nutanix · Exagrid · Veeam · Lenovo · Arista · AWS · Fortinet · SentinelOne · Commvault · Dynatrace · Juniper · Illumio · KnowBe4 · Rainforest · Gigamon · Quest · Riverbed · Ayko · Positivo Servers · Zadara</blockquote>
+        `
+    },
+    "kb-02": {
+        title: "KB-02 · Processo & RACI",
+        content: `
+        <h1>Processo de Pré-Vendas e Matriz RACI</h1>
+        <h2>Fluxo Comercial</h2>
+        <ul>
+            <li>Captação → Qualificação → Discovery → Proposta → Negociação → Fechamento</li>
+        </ul>
+        <h2>RACI Chave</h2>
+        <ul>
+            <li><strong>Qualificação da Oportunidade:</strong> BDM (R) · Diretoria Pré-Vendas (A) · Vendedor AM (C)</li>
+            <li><strong>Proposta Técnica:</strong> Pré-Vendas (R) · BDM (A)</li>
+            <li><strong>Margem & Precificação:</strong> Price Manager GES (R) · Diretoria Comercial (A)</li>
+        </ul>
+        <h2>SLAs do SOC (referência contratual)</h2>
+        <blockquote>P1 Crítica: Detecção ≤30min, Resposta ≤2h<br>P2 Alta: Detecção ≤45min, Resposta ≤4h<br>P3 Média: Detecção ≤90min, Resposta ≤8h<br>P4 Baixa: Detecção ≤120min, Resposta ≤16h</blockquote>
+        `
+    },
+    "kb-03": {
+        title: "KB-03 · ICP & Personas",
+        content: `
+        <h1>Ideal Customer Profile e Personas</h1>
+        <h2>ICP Setor Público</h2>
+        <ul>
+            <li><strong>Tomadores:</strong> Secretários, Gerentes de TI, Diretores de Infra.</li>
+            <li><strong>Dores:</strong> Infraestrutura legada, risco de paralisação, compliance obrigatório, licitações e processo SEI.</li>
+        </ul>
+        <h2>ICP Setor Privado</h2>
+        <ul>
+            <li><strong>Tomadores:</strong> CIO, CTO, Gerente de Infra.</li>
+            <li><strong>Dores:</strong> Custo alto de cloud, excesso de fornecedores, incidentes de segurança, escalabilidade.</li>
+        </ul>
+        <h2>Personas</h2>
+        <ul>
+            <li><strong>Carlos Mendes (Gerente Gov):</strong> "Não posso deixar o sistema parar."</li>
+            <li><strong>Fernanda Oliveira (CIO):</strong> "Preciso transformar TI em estratégia."</li>
+            <li><strong>Rafael Lima (CISO):</strong> "Preciso descobrir problemas antes que aconteçam."</li>
+        </ul>
+        `
+    },
+    "kb-04": {
+        title: "KB-04 · Discovery Técnico",
+        content: `
+        <h1>Questionários de Discovery Técnico</h1>
+        <h2>Observabilidade</h2>
+        <ul>
+            <li>Qual é a cobertura atual de monitoramento (infra, APM, RUM)?</li>
+            <li>Qual o MTTD e MTTR para incidentes de aplicação?</li>
+            <li>Existe análise de causa raiz automatizada?</li>
+        </ul>
+        <h2>SOC / Segurança</h2>
+        <ul>
+            <li>Existe SIEM com correlação de logs de nuvem e endpoint?</li>
+            <li>A equipe cobre 24x7 sem terceirização?</li>
+            <li>Existe playbook formal de resposta a incidentes?</li>
+        </ul>
+        <h2>Infraestrutura</h2>
+        <ul>
+            <li>Quantos servidores físicos e VMs existem?</li>
+            <li>Qual a volumetria total de storage e taxa de crescimento?</li>
+            <li>Qual o RTO e RPO exigidos pelos sistemas críticos?</li>
+        </ul>
+        `
+    },
+    "kb-05": {
+        title: "KB-05 · Ancoragem de Portfólio",
+        content: `
+        <h1>Ancoragem de Portfólio em Agentes Classificadores</h1>
+        <h2>Regra de Ouro</h2>
+        <blockquote>"Você NUNCA afirma que a Clear IT oferece algo que não está no portfólio. Quando a oportunidade pede algo fora do portfólio, responda: '[Serviço X] está fora do portfólio atual da Clear IT. Esta é uma lacuna a validar.'"</blockquote>
+        <h2>Exclusões Explícitas (fora do escopo)</h2>
+        <ul>
+            <li>Suporte a usuários finais (Service Desk / Field Service)</li>
+            <li>Passagem de cabeamento estruturado ou instalações elétricas</li>
+            <li>Desenvolvimento de software proprietário ou APIs customizadas</li>
+            <li>Manutenção física de hardware legado</li>
+            <li>Auditoria de licenças de terceiros fora da proposta</li>
+        </ul>
+        `
+    },
+    "kb-06": {
+        title: "KB-06 · Validação e Formatação de Campos",
+        content: `
+        <h1>Validação e Formatação de Campos de Entrada</h1>
+        <h2>Objetivo</h2>
+        <p>Padrões de validação, formatação e limitação de caracteres para campos de entrada no sistema Onion Portable.</p>
+        <h2>Documentos Brasileiros</h2>
+        <ul>
+            <li><strong>CNPJ:</strong> Formato XX.XXX.XXX/XXXX-XX (14 dígitos), validação oficial da Receita Federal</li>
+            <li><strong>CPF:</strong> Formato XXX.XXX.XXX-XX (11 dígitos), validação oficial da Receita Federal</li>
+            <li><strong>Processo SEI:</strong> Formato XXXXXX-XXXXXXX (13 dígitos), obrigatório para setor público</li>
+        </ul>
+        <h2>Limitação de Caracteres</h2>
+        <ul>
+            <li>Nome da Oportunidade: 3-100 caracteres</li>
+            <li>CNPJ: 14-18 caracteres (com/sem pontuação)</li>
+            <li>Processo SEI: 13 caracteres</li>
+            <li>Notas Discovery/Proposta: até 2000 caracteres</li>
+        </ul>
+        <h2>Validações em Tempo Real</h2>
+        <ul>
+            <li>Feedback visual para campos válidos/inválidos</li>
+            <li>Máscaras automáticas durante digitação</li>
+            <li>Sanitização XSS para campos de texto</li>
+        </ul>
+        `
+    },
+    "kb-07": {
+        title: "KB-07 · IAs de Auxílio em Sites",
+        content: `
+        <h1>Inteligências Artificiais de Auxílio em Sites</h1>
+        <h2>Objetivo</h2>
+        <p>Diretrizes para implementação e comportamento de IAs de auxílio (chatbots, assistentes virtuais, copilots) em sites corporativos.</p>
+        <h2>Princípios Fundamentais</h2>
+        <ul>
+            <li><strong>Transparência:</strong> Identificação clara como sistema automatizado</li>
+            <li><strong>Consistência:</strong> Comportamento previsível e confiável</li>
+            <li><strong>Empatia:</strong> Reconhecimento de frustração e oferta de alternativas</li>
+        </ul>
+        <h2>Alinhamento com Imagem da Empresa</h2>
+        <ul>
+            <li>Avatar e interface consistentes com identidade visual</li>
+            <li>Reflexo dos valores corporativos (inovação, confiança, excelência)</li>
+            <li>Posicionamento adequado (Premium, Acessível, Técnico)</li>
+        </ul>
+        <h2>Reconhecimento de Perfil do Usuário</h2>
+        <ul>
+            <li><strong>Novo usuário:</strong> Orientação básica, explicações detalhadas</li>
+            <li><strong>Usuário recorrente:</strong> Eficiência, respostas diretas</li>
+            <li><strong>Usuário técnico:</strong> Jargão técnico, detalhes específicos</li>
+            <li><strong>Usuário não-técnico:</strong> Linguagem simples, analogias</li>
+        </ul>
+        <h2>Caso Específico: Onion Orquestrador</h2>
+        <ul>
+            <li>Persona: Assistente de pré-vendas e engenharia de soluções</li>
+            <li>Domínios: Portfólio, RACI, ICP, Discovery</li>
+            <li>Guardrails: Alertas sobre serviços fora do escopo</li>
+        </ul>
+        `
+    }
+};
+
+const LEADS_STORAGE_KEY = 'clearit_leads_v1';
+const DEFAULT_LEADS = [
+    { id:"L-01", name:"Superterminais Logística", seg:"Privado", score:85, cls:"Alto Impacto", status:"Aprovado",  badge:"badge-green" },
+    { id:"L-02", name:"Expansão Nutanix Gov",     seg:"Público", score:95, cls:"Alto Impacto", status:"Aprovado",  badge:"badge-green" },
+    { id:"L-03", name:"Lote 02 Modernização TR",  seg:"Público", score:60, cls:"Médio Impacto",status:"Pendente",  badge:"badge-amber" }
+];
+
+function loadLeads() {
+    try {
+        const raw = localStorage.getItem(LEADS_STORAGE_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length) return parsed;
+        }
+    } catch (e) { console.warn('Failed to load leads from localStorage', e); }
+    return DEFAULT_LEADS.slice();
+}
+
+function saveLeads() {
+    try { localStorage.setItem(LEADS_STORAGE_KEY, JSON.stringify(leads)); }
+    catch (e) { console.warn('Failed to save leads to localStorage', e); }
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+let leads = loadLeads();
+
+/* ─── NAVIGATION ─── */
+function switchView(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    document.getElementById('menu-' + name).classList.add('active');
+}
+
+/* ─── SEGMENT TOGGLE ─── */
+function toggleSegment() {
+    const pub = document.getElementById('lead-segment').value === 'publico';
+    document.getElementById('field-cnpj').style.display = pub ? 'none' : 'flex';
+    document.getElementById('fields-publico').style.display = pub ? 'block' : 'none';
+}
+
+/* ─── LEAD TABLE RENDER ─── */
+function renderLeads() {
+    const body = document.getElementById('leads-body');
+    body.innerHTML = '';
+    leads.forEach(l => {
+        const scoreClass = l.score >= 80 ? 'score-high' : l.score >= 50 ? 'score-mid' : 'score-low';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><strong>${escapeHtml(l.name)}</strong></td>
+            <td>${escapeHtml(l.seg)}</td>
+            <td class="score-cell ${scoreClass}">${l.score}</td>
+            <td><span class="badge ${l.score >= 80 ? 'badge-green' : 'badge-amber'}">${escapeHtml(l.cls)}</span></td>
+            <td><span class="badge ${l.status==='Aprovado'?'badge-green':'badge-amber'}">${escapeHtml(l.status)}</span></td>
+            <td></td>
+        `;
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-ghost';
+        btn.style.cssText = 'padding:0.3rem 0.7rem;font-size:0.75rem;margin-right:0.25rem';
+        btn.textContent = 'Discovery →';
+        btn.onclick = () => loadToDiscovery(l.name);
+        tr.lastElementChild.appendChild(btn);
+
+        const btn2 = document.createElement('button');
+        btn2.className = 'btn btn-ghost';
+        btn2.style.cssText = 'padding:0.3rem 0.7rem;font-size:0.75rem';
+        btn2.textContent = 'Proposta →';
+        btn2.onclick = () => loadToProposal(l.name);
+        tr.lastElementChild.appendChild(btn2);
+
+        body.appendChild(tr);
+    });
+    document.getElementById('kpi-total').textContent = leads.length;
+}
+
+function loadToDiscovery(name) {
+    document.getElementById('disc-notes').value = `Briefing para: ${name}\nProblema principal: \nInfraestrutura atual: `;
+    switchView('discovery');
+}
+
+function loadToProposal(name) {
+    document.getElementById('prop-lead-name').value = name;
+    // Try to select in dropdown
+    const select = document.getElementById('prop-lead-select');
+    for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === name) {
+            select.selectedIndex = i;
+            break;
+        }
+    }
+    switchView('proposal');
+}
+
+/* ─── QUALIFY / SCORING (F-01) ─── */
+function submitLead() {
+    const name    = document.getElementById('lead-name').value.trim();
+    const seg     = document.getElementById('lead-segment').value;
+    const rev     = document.getElementById('lead-revenue').value;
+    const exp     = document.getElementById('lead-expansion').value;
+    const bdm     = document.getElementById('lead-bdm').value.trim();
+    const dir     = document.getElementById('lead-director').value;
+    const sei     = document.getElementById('lead-sei').value.trim();
+    const dfd     = document.getElementById('lead-dfd').value.trim();
+    const cnpj    = document.getElementById('lead-cnpj').value.trim();
+
+    const alertBox = document.getElementById('qualify-alerts');
+    alertBox.innerHTML = '';
+
+    let hasErr = false;
+    if (!name)  { addAlert('qualify-alerts','danger','O nome da oportunidade é obrigatório.'); hasErr=true; }
+    if (!bdm)   { addAlert('qualify-alerts','danger','O campo BDM Responsável é obrigatório.'); hasErr=true; }
+    if (seg==='publico' && !sei) { addAlert('qualify-alerts','danger','Setor Público exige o número do Processo SEI.'); hasErr=true; }
+    if (seg==='publico' && !dfd) { addAlert('qualify-alerts','danger','Setor Público exige o Documento DFD.'); hasErr=true; }
+    if (seg==='privado' && !cnpj) addAlert('qualify-alerts','warning','CNPJ ausente. Recomendado para validação comercial.');
+
+    if (hasErr) {
+        document.getElementById('score-num').textContent = '--';
+        document.getElementById('score-tag').textContent = 'Erro no formulário';
+        document.getElementById('score-tag').style.color = 'var(--red)';
+        return;
+    }
+
+    let score = 0;
+    score += seg === 'publico' ? 40 : 30;
+    score += rev === 'alta' ? 30 : rev === 'media' ? 20 : 10;
+    score += exp === 'alta' ? 20 : exp === 'media' ? 10 : 5;
+    if (bdm) score += 10;
+
+    const ring = document.getElementById('score-ring');
+    const numEl = document.getElementById('score-num');
+    const tagEl = document.getElementById('score-tag');
+    const noteEl = document.getElementById('score-note');
+
+    numEl.textContent = score;
+
+    let cls, col;
+    if (score >= 80) { cls='Alto Impacto'; col='var(--green)'; }
+    else if (score >= 50) { cls='Médio Impacto'; col='var(--amber)'; }
+    else { cls='Baixo Impacto'; col='var(--red)'; }
+
+    tagEl.textContent = cls;
+    tagEl.style.color = col;
+    ring.style.borderColor = col;
+    ring.style.boxShadow = `0 0 20px ${col}30`;
+    numEl.style.color = col;
+    noteEl.textContent = `Score calculado com base no ICP da Clear IT. Oportunidade ${cls.toLowerCase()}.`;
+
+    if (dir === 'pendente') addAlert('qualify-alerts','warning','Aguardando aprovação formal da Diretoria de Pré-Vendas (Aprovador RACI).');
+    else addAlert('qualify-alerts','success','RACI Check: Qualificado pelo BDM (R) e aprovado pela Diretoria (A). Oportunidade pode avançar.');
+
+    const statusStr = dir === 'aprovado' ? 'Aprovado' : 'Pendente';
+    const segStr    = seg === 'publico' ? 'Público' : 'Privado';
+    const existing  = leads.findIndex(l => l.name.toLowerCase() === name.toLowerCase());
+    const entry = { id: existing > -1 ? leads[existing].id : `L-0${leads.length+1}`, name, seg: segStr, score, cls, status: statusStr, badge: score>=80?'badge-green':'badge-amber' };
+    if (existing > -1) leads[existing] = entry;
+    else leads.push(entry);
+    saveLeads();
+    renderLeads();
+    populateLeadSelect(); // Update proposal dropdown when leads change
+}
+
+/* ─── DISCOVERY / SCRIPT GEN (F-02) ─── */
+function generateScript() {
+    const notes = document.getElementById('disc-notes').value.toLowerCase();
+    const out = document.getElementById('disc-output');
+    const alertPanel = document.getElementById('disc-alerts');
+    out.innerHTML = '';
+    alertPanel.innerHTML = '';
+
+    let html = '';
+    let domCount = 0;
+
+    if (document.getElementById('dom-obs').checked) {
+        domCount++;
+        html += `<div class="dom-title">Observabilidade — Dynatrace / APM</div>`;
+        html += q('Qual é a cobertura de monitoramento de infraestrutura e existe APM nas aplicações críticas?');
+        html += q('Qual é o MTTD (tempo de detecção) e MTTR (tempo de recuperação) médio para incidentes de aplicação?');
+        html += q('Existe análise de causa raiz automatizada e correlação entre camadas de infra, app e negócio?');
+    }
+    if (document.getElementById('dom-soc').checked) {
+        domCount++;
+        html += `<div class="dom-title">SOC 24x7 — Logsign SIEM</div>`;
+        html += q('Existe SIEM ativo com correlação de logs de nuvem, rede e endpoints em tempo real?');
+        html += q('A equipe atual possui capacidade de resposta a incidentes críticos fora do horário comercial?');
+        html += q('Há playbooks formais baseados em MITRE ATT&CK para os principais tipos de incidente?');
+    }
+    if (document.getElementById('dom-infra').checked) {
+        domCount++;
+        html += `<div class="dom-title">Infraestrutura — Nutanix / Lenovo</div>`;
+        html += q('Quantos servidores físicos e VMs existem no ambiente de produção? Qual o hipervisor atual?');
+        html += q('Qual a volumetria total de storage utilizada e qual a taxa de crescimento anual dos dados?');
+        html += q('Existe redundância de energia, rede e storage? Há site de contingência ou DR ativo?');
+    }
+    if (document.getElementById('dom-cyber').checked) {
+        domCount++;
+        html += `<div class="dom-title">Cibersegurança — Fortinet NGFW</div>`;
+        html += q('Como é feito o controle de acesso e existe MFA implementado em sistemas críticos?');
+        html += q('Filiais ou postos remotos utilizam SD-WAN segura ou VPN com controle de identidade?');
+        html += q('Há gestão de vulnerabilidades com varreduras periódicas e planos de correção documentados?');
+    }
+    if (document.getElementById('dom-cops').checked) {
+        domCount++;
+        html += `<div class="dom-title">Operações Cognitivas — COps 24x7x365</div>`;
+        html += q('Existe monitoramento preditivo e automação de autorrecuperação (Nível 0) para incidentes recorrentes?');
+        html += q('Qual ferramenta de ITSM centraliza os chamados operacionais e há CMDB atualizado?');
+        html += q('Quais áreas do cliente serão impactadas pelo serviço e quais são os SLOs esperados?');
+    }
+    if (document.getElementById('dom-backup').checked) {
+        domCount++;
+        html += `<div class="dom-title">Backup & Resiliência — Veeam / ExaGrid</div>`;
+        html += q('Qual é o RTO e RPO exigido pelos sistemas críticos? Os backups são testados com restore periódico?');
+        html += q('Existe cópia offsite ou em nuvem, ou o backup é exclusivamente local/no mesmo ambiente?');
+        html += q('Há histórico de falhas ou lentidão nos processos de backup e recovery nos últimos 12 meses?');
+    }
+
+    if (domCount === 0) {
+        out.innerHTML = '<div class="discovery-empty">Selecione ao menos um domínio antes de gerar o roteiro.</div>';
+        return;
+    }
+
+    // Keyword-based alerts
+    let alertCount = 0;
+    if (notes.includes('190') || notes.includes('copom')) {
+        addAlert('disc-alerts','danger','ALERTA CRÍTICO · Ambiente de Segurança Pública (COPOM/190): Exige monitoramento ininterrupto COps 24x7 com SLA de autorrecuperação (Nível 0). Indisponibilidade tem impacto direto na segurança da população.');
+        alertCount++;
+    }
+    if (notes.includes('ransomware') || notes.includes('ataque') || notes.includes('sequestro')) {
+        addAlert('disc-alerts','warning','OPORTUNIDADE · Histórico de ransomware detectado. Priorize FortiGate NGFW + EDR SentinelOne + SOC 24x7 com playbooks de contenção MITRE.');
+        alertCount++;
+    }
+    if (notes.includes('backup lento') || notes.includes('backup manual') || notes.includes('sem backup') || notes.includes('perda de dado')) {
+        addAlert('disc-alerts','warning','OPORTUNIDADE · Fragilidade de backup identificada. Apresente ExaGrid + Veeam com RTO em 30 segundos (case SEFAZ Acre).');
+        alertCount++;
+    }
+    // Out-of-scope guardrails
+    if (notes.includes('cabeamento') || notes.includes('infraestrutura fisica') || notes.includes('elétrica')) {
+        addAlert('disc-alerts','danger','FORA DO ESCOPO · Passagem de cabeamento estruturado ou instalações elétricas é uma exclusão explícita do portfólio Clear IT. Remova este item da proposta.');
+        alertCount++;
+    }
+    if (notes.includes('service desk') || notes.includes('suporte a usuario') || notes.includes('field service')) {
+        addAlert('disc-alerts','danger','FORA DO ESCOPO · Suporte a usuários finais (Service Desk/Field) não é serviço da Clear IT. Sinalize esta lacuna ao cliente e à diretoria comercial.');
+        alertCount++;
+    }
+    if (notes.includes('desenvolvimento de') || notes.includes('software customizado') || notes.includes('api personalizada')) {
+        addAlert('disc-alerts','danger','FORA DO ESCOPO · Desenvolvimento de software ou APIs customizadas é exclusão contratual padrão da Clear IT. Esta é uma lacuna a validar.');
+        alertCount++;
+    }
+    if (notes.includes('locação de impressoras') || notes.includes('locacao de impressoras') || notes.includes('impressoras')) {
+        addAlert('disc-alerts','danger','FORA DO ESCOPO · Locação e gestão de impressoras não faz parte do portfólio Clear IT. Remova este item da proposta.');
+        alertCount++;
+    }
+    if (notes.includes('treinamento end user') || notes.includes('treinamento de usuarios') || notes.includes('capacitação de usuários')) {
+        addAlert('disc-alerts','danger','FORA DO ESCOPO · Treinamento de usuários finais (end user) não é serviço da Clear IT. Sinalize esta lacuna ao cliente.');
+        alertCount++;
+    }
+    if (alertCount === 0) {
+        addAlert('disc-alerts','info','Análise preditiva: Nenhuma violação de escopo ou brecha crítica detectada nas notas iniciais.');
+    }
+
+    out.innerHTML = html;
+}
+
+function q(text) {
+    return `<div class="q-item">${text}</div>`;
+}
+
+function clearDiscovery() {
+    document.getElementById('disc-notes').value = '';
+    document.getElementById('disc-output').innerHTML = '<div class="discovery-empty">Selecione domínios e clique em "Gerar Roteiro →"</div>';
+    document.getElementById('disc-alerts').innerHTML = '';
+}
+
+/* ─── ALERTS HELPER ─── */
+function addAlert(containerId, type, text) {
+    const el = document.getElementById(containerId);
+    const paths = {
+        danger:  'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z',
+        warning: 'M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z',
+        success: 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z',
+        info:    'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'
+    };
+    const div = document.createElement('div');
+    div.className = `alert ${type}`;
+    div.innerHTML = `<svg class="alert-icon" viewBox="0 0 24 24" fill="currentColor"><path d="${paths[type]}"/></svg><span>${escapeHtml(text)}</span>`;
+    el.appendChild(div);
+}
+
+/* ─── KB SEARCH ─── */
+function stripHtml(html) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || '';
+}
+
+function highlightText(text, query) {
+    if (!query) return escapeHtml(text);
+    const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return escapeHtml(text).replace(re, '<span class="kb-highlight">$1</span>');
+}
+
+function showKB(key, query) {
+    const body = document.getElementById('kb-body');
+    const plain = stripHtml(kbData[key].content);
+    body.innerHTML = query ? highlightText(plain, query) : kbData[key].content;
+}
+
+function searchKB(query) {
+    const q = query.trim().toLowerCase();
+    let firstVisible = null;
+    document.querySelectorAll('.kb-nav').forEach(btn => {
+        const key = btn.dataset.kbKey;
+        const item = kbData[key];
+        const haystack = (item.title + ' ' + stripHtml(item.content)).toLowerCase();
+        const match = !q || haystack.includes(q);
+        btn.classList.toggle('hidden', !match);
+        if (match && !firstVisible) firstVisible = key;
+    });
+    if (firstVisible) {
+        document.querySelectorAll('.kb-nav').forEach(b => b.classList.remove('active'));
+        const activeBtn = document.querySelector(`.kb-nav[data-kb-key="${firstVisible}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+        showKB(firstVisible, q);
+    }
+}
+
+/* ─── KB INIT ─── */
+function initKB() {
+    const menu = document.getElementById('kb-menu');
+    const body = document.getElementById('kb-body');
+    let first = true;
+    for (const key in kbData) {
+        const btn = document.createElement('button');
+        btn.className = `kb-nav${first?' active':''}`;
+        btn.dataset.kbKey = key;
+        btn.textContent = kbData[key].title;
+        btn.onclick = () => {
+            document.querySelectorAll('.kb-nav').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const searchVal = document.getElementById('kb-search').value.trim().toLowerCase();
+            showKB(key, searchVal);
+        };
+        menu.appendChild(btn);
+        if (first) { body.innerHTML = kbData[key].content; first = false; }
+    }
+}
+
+/* ─── PROPOSAL GENERATOR (F-03) ─── */
+function populateLeadSelect() {
+    const select = document.getElementById('prop-lead-select');
+    select.innerHTML = '<option value="">-- Selecione uma oportunidade --</option>';
+    leads.forEach(l => {
+        const opt = document.createElement('option');
+        opt.value = l.name;
+        opt.textContent = `${l.name} (Score: ${l.score})`;
+        select.appendChild(opt);
+    });
+}
+
+function loadLeadToProposal() {
+    const select = document.getElementById('prop-lead-select');
+    const nameInput = document.getElementById('prop-lead-name');
+    nameInput.value = select.value;
+}
+
+function generateProposal() {
+    const leadName = document.getElementById('prop-lead-name').value.trim() || 'Oportunidade';
+    const notes = document.getElementById('prop-notes').value.toLowerCase();
+    const out = document.getElementById('prop-output');
+    const alertPanel = document.getElementById('prop-alerts');
+    out.innerHTML = '';
+    alertPanel.innerHTML = '';
+
+    // Out-of-scope guardrails (KB-05 compliance)
+    let gapCount = 0;
+    if (notes.includes('cabeamento') || notes.includes('infraestrutura fisica') || notes.includes('elétrica')) {
+        addAlert('prop-alerts','danger','FORA DO ESCOPO · Passagem de cabeamento estruturado ou instalações elétricas é uma exclusão explícita do portfólio Clear IT. Remova este item da proposta.');
+        gapCount++;
+    }
+    if (notes.includes('service desk') || notes.includes('suporte a usuario') || notes.includes('field service')) {
+        addAlert('prop-alerts','danger','FORA DO ESCOPO · Suporte a usuários finais (Service Desk/Field) não é serviço da Clear IT. Sinalize esta lacuna ao cliente e à diretoria comercial.');
+        gapCount++;
+    }
+    if (notes.includes('desenvolvimento de') || notes.includes('software customizado') || notes.includes('api personalizada') || notes.includes('erp customizado')) {
+        addAlert('prop-alerts','danger','FORA DO ESCOPO · Desenvolvimento de software ou APIs customizadas é exclusão contratual padrão da Clear IT. Esta é uma lacuna a validar.');
+        gapCount++;
+    }
+    if (notes.includes('locação de impressoras') || notes.includes('locacao de impressoras') || notes.includes('impressoras')) {
+        addAlert('prop-alerts','danger','FORA DO ESCOPO · Locação e gestão de impressoras não faz parte do portfólio Clear IT. Remova este item da proposta.');
+        gapCount++;
+    }
+    if (notes.includes('treinamento end user') || notes.includes('treinamento de usuarios') || notes.includes('capacitação de usuários')) {
+        addAlert('prop-alerts','danger','FORA DO ESCOPO · Treinamento de usuários finais (end user) não é serviço da Clear IT. Sinalize esta lacuna ao cliente.');
+        gapCount++;
+    }
+
+    const domains = {
+        soc: document.getElementById('prop-soc').checked,
+        cops: document.getElementById('prop-cops').checked,
+        infra: document.getElementById('prop-infra').checked,
+        cyber: document.getElementById('prop-cyber').checked,
+        backup: document.getElementById('prop-backup').checked,
+        obs: document.getElementById('prop-obs').checked
+    };
+
+    const selectedCount = Object.values(domains).filter(Boolean).length;
+    if (selectedCount === 0) {
+        out.innerHTML = '<div class="discovery-empty">Selecione ao menos um domínio de serviço.</div>';
+        return;
+    }
+
+    let html = `<div style="color:var(--orange);font-weight:700;font-size:1rem;margin-bottom:1rem;">ESCOPO TÉCNICO — ${escapeHtml(leadName)}</div>`;
+    html += '<div style="margin-bottom:1.5rem;">';
+    html += '<strong style="color:var(--white);">1. INCLUSÕES (SERVIÇOS NO ESCOPO)</strong><br><br>';
+
+    if (domains.soc) {
+        html += '<strong>SOC 24/7 — Security Operations Center</strong><br>';
+        html += '• SIEM Logsign SaaS com correlação em tempo real<br>';
+        html += '• SOAR + UEBA + Threat Intelligence nativos<br>';
+        html += '• Playbooks MITRE ATT&CK e NIST 800-61<br>';
+        html += '• Monitoramento 24x7x365 com analistas N1, N2 e N3<br>';
+        html += '• SLA P1: Detecção ≤30min | Resposta ≤2h<br>';
+        html += '• SLA P2: Detecção ≤45min | Resposta ≤4h<br>';
+        html += '• SLA P3: Detecção ≤90min | Resposta ≤8h<br><br>';
+    }
+    if (domains.cops) {
+        html += '<strong>COps 24/7 — Cognitive Operations Center</strong><br>';
+        html += '• Monitoramento preditivo com AIOps<br>';
+        html += '• Nível 0: Autorrecuperação automática de incidentes recorrentes<br>';
+        html += '• N1/N2/N3: Analistas remotos com TAM e SDM dedicados<br>';
+        html += '• Observabilidade full-stack (infra, aplicação, negócio)<br>';
+        html += '• Relatórios Diários, Semanais e Mensais (ITIL V4)<br>';
+        html += '• 90 dias de estabilização sem penalidades contratuais<br><br>';
+    }
+    if (domains.infra) {
+        html += '<strong>Infraestrutura Hiperconvergente — Nutanix</strong><br>';
+        html += '• Servidores Nutanix NX-3155-G9 ou NX-8055-G9 com NVMe/HDD<br>';
+        html += '• Licenciamento NCI Ultimate com orquestração<br>';
+        html += '• Storage Lenovo DM3010H (241TiB líquidos)<br>';
+        html += '• Suporte 24x7 NBD (60 meses)<br><br>';
+    }
+    if (domains.cyber) {
+        html += '<strong>Cibersegurança — Fortinet NGFW</strong><br>';
+        html += '• Firewalls FortiGate-100F em HA Ativo/Passivo<br>';
+        html += '• Licença UTP 36 meses (UTM + IPS + AV)<br>';
+        html += '• EDR SentinelOne para endpoints<br>';
+        html += '• Gestão de vulnerabilidades Nessus Pro (até 2.000 ativos)<br>';
+        html += '• Phishing & Conscientização KnowBe4 (até 300 usuários)<br><br>';
+    }
+    if (domains.backup) {
+        html += '<strong>Backup & Resiliência — Veeam + ExaGrid</strong><br>';
+        html += '• Veeam Availability Suite com granularidade de RTO/RPO<br>';
+        html += '• ExaGrid para landing zone de backups<br>';
+        html += '• Suporte 60 meses NBD 24x7<br>';
+        html += '• Restore test automatizado<br><br>';
+    }
+    if (domains.obs) {
+        html += '<strong>Observabilidade — Dynatrace</strong><br>';
+        html += '• APM (Application Performance Monitoring)<br>';
+        html += '• Infraestrutura monitoring full-stack<br>';
+        html += '• Análise de causa raiz automatizada<br>';
+        html += '• RUM (Real User Monitoring)<br><br>';
+    }
+
+    html += '</div>';
+
+    html += '<div style="margin-bottom:1.5rem;">';
+    html += '<strong style="color:var(--white);">2. SLAS CONTRATUAIS (REFERÊNCIA)</strong><br><br>';
+    if (domains.soc) {
+        html += '<strong>SOC 24/7:</strong><br>';
+        html += 'P1 (Crítica): Detecção ≤30min, Resposta ≤2h<br>';
+        html += 'P2 (Alta): Detecção ≤45min, Resposta ≤4h<br>';
+        html += 'P3 (Média): Detecção ≤90min, Resposta ≤8h<br>';
+        html += 'P4 (Baixa): Detecção ≤120min, Resposta ≤16h<br><br>';
+    }
+    if (domains.cops) {
+        html += '<strong>COps 24/7:</strong><br>';
+        html += 'N0 (Automação): Resposta imediata (autorrecuperação)<br>';
+        html += 'N1 (Triagem): Resposta ≤15min<br>';
+        html += 'N2 (Análise): Resposta ≤1h<br>';
+        html += 'N3 (Resolução): Resposta ≤4h<br><br>';
+    }
+    html += '</div>';
+
+    html += '<div style="margin-bottom:1.5rem;">';
+    html += '<strong style="color:var(--white);">3. EXCLUSÕES PADRÃO (FORA DO ESCOPO)</strong><br><br>';
+    html += '• Suporte a usuários finais (Service Desk / Field Service local)<br>';
+    html += '• Passagem de cabeamento estruturado ou instalações elétricas<br>';
+    html += '• Desenvolvimento de software proprietário ou APIs customizadas<br>';
+    html += '• Manutenção física de hardware legado não homologado<br>';
+    html += '• Locação de impressoras ou periféricos<br>';
+    html += '• Treinamento de usuários finais (end user training)<br>';
+    html += '• Auditoria de licenças de terceiros fora da proposta<br>';
+    html += '</div>';
+
+    html += '<div style="margin-bottom:1rem;">';
+    html += '<strong style="color:var(--white);">4. PREMISSAS</strong><br><br>';
+    html += '• Cliente fornece acesso administrativo aos ambientes<br>';
+    html += '• Conectividade mínima exigida conforme especificação técnica<br>';
+    html += '• Documentação de rede e sistemas disponibilizada pelo cliente<br>';
+    html += '</div>';
+
+    out.innerHTML = html;
+
+    // Portfolio compliance check
+    addAlert('prop-alerts', 'success', 'Escopo gerado em conformidade com KB-01 (Portfólio) e KB-05 (Ancoragem). Todos os serviços listados fazem parte do catálogo oficial Clear IT.');
+}
+
+function clearProposal() {
+    document.getElementById('prop-lead-select').value = '';
+    document.getElementById('prop-lead-name').value = '';
+    document.getElementById('prop-notes').value = '';
+    document.querySelectorAll('#view-proposal input[type="checkbox"]').forEach(cb => cb.checked = false);
+    document.getElementById('prop-output').innerHTML = '<div class="discovery-empty">Configure os domínios e clique em "Gerar Escopo →"</div>';
+    document.getElementById('prop-alerts').innerHTML = '';
+}
+
+function copyProposal() {
+    const out = document.getElementById('prop-output');
+    if (!out.innerText || out.innerText.includes('Configure os domínios')) {
+        addAlert('prop-alerts', 'warning', 'Gere o escopo primeiro antes de copiar.');
+        return;
+    }
+    navigator.clipboard.writeText(out.innerText).then(() => {
+        addAlert('prop-alerts', 'success', 'Escopo copiado para a área de transferência!');
+    }).catch(() => {
+        addAlert('prop-alerts', 'danger', 'Erro ao copiar. Tente selecionar manualmente.');
+    });
+}
+
+/* ─── FIELD MASKING & VALIDATION (KB-06) ─── */
+function maskCNPJ(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 14) value = value.slice(0, 14);
+    value = value.replace(/^(\d{2})(\d)/, '$1.$2')
+                 .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+                 .replace(/\.(\d{3})(\d)/, '.$1/$2')
+                 .replace(/(\d{4})(\d)/, '$1-$2');
+    input.value = value;
+}
+
+function validateCNPJ(input) {
+    const feedback = document.getElementById('cnpj-feedback');
+    const value = input.value.replace(/\D/g, '');
+
+    if (value.length === 0) {
+        feedback.textContent = '';
+        feedback.className = 'field-feedback';
+        return;
+    }
+
+    if (value.length !== 14) {
+        feedback.textContent = 'CNPJ incompleto';
+        feedback.className = 'field-feedback invalid';
+        return;
+    }
+
+    // CNPJ validation algorithm (simplified)
+    const weights1 = [5,4,3,2,9,8,7,6,5,4,3,2];
+    const weights2 = [6,5,4,3,2,9,8,7,6,5,4,3,2];
+
+    const calcDigit = (numbers, weights) => {
+        let sum = 0;
+        for (let i = 0; i < numbers.length; i++) {
+            sum += numbers[i] * weights[i];
+        }
+        const remainder = sum % 11;
+        return remainder < 2 ? 0 : 11 - remainder;
+    };
+
+    const numbers = value.split('').map(Number);
+    const digit1 = calcDigit(numbers.slice(0, 12), weights1);
+    const digit2 = calcDigit(numbers.slice(0, 13), weights2);
+
+    if (digit1 === numbers[12] && digit2 === numbers[13]) {
+        feedback.textContent = 'CNPJ válido';
+        feedback.className = 'field-feedback valid';
+    } else {
+        feedback.textContent = 'CNPJ inválido';
+        feedback.className = 'field-feedback invalid';
+    }
+}
+
+function maskSEI(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 13) value = value.slice(0, 13);
+    if (value.length > 6) {
+        value = value.slice(0, 6) + '-' + value.slice(6);
+    }
+    input.value = value;
+}
+
+function validateSEI(input) {
+    const feedback = document.getElementById('sei-feedback');
+    const value = input.value.replace(/\D/g, '');
+
+    if (value.length === 0) {
+        feedback.textContent = '';
+        feedback.className = 'field-feedback';
+        return;
+    }
+
+    if (value.length === 13) {
+        feedback.textContent = 'Formato SEI válido';
+        feedback.className = 'field-feedback valid';
+    } else {
+        feedback.textContent = 'Formato SEI deve ter 13 dígitos (XXXXXX-XXXXXXX)';
+        feedback.className = 'field-feedback invalid';
+    }
+}
+
+/* ─── CHAT AGENT (F-05) ─── */
+function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const message = input.value.trim();
+    if (!message) return;
+
+    addChatMessage('user', message);
+    input.value = '';
+
+    // Simulate agent processing
+    setTimeout(() => {
+        const response = generateAgentResponse(message);
+        addChatMessage('agent', response);
+    }, 500);
+}
+
+function sendQuickPrompt(prompt) {
+    document.getElementById('chat-input').value = prompt;
+    sendMessage();
+}
+
+function addChatMessage(type, content) {
+    const container = document.getElementById('chat-messages');
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `chat-message ${type}`;
+
+    const avatar = document.createElement('div');
+    avatar.className = 'chat-avatar';
+    avatar.textContent = type === 'agent' ? '🧅' : '👤';
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'chat-content';
+    // Allow HTML for agent responses (formatting), escape for user messages
+    if (type === 'agent') {
+        contentDiv.innerHTML = `<strong>Onion Orquestrador</strong><p>${content}</p>`;
+    } else {
+        contentDiv.innerHTML = `<strong>Você</strong><p>${escapeHtml(content)}</p>`;
+    }
+
+    msgDiv.appendChild(avatar);
+    msgDiv.appendChild(contentDiv);
+    container.appendChild(msgDiv);
+    container.scrollTop = container.scrollHeight;
+}
+
+function clearChat() {
+    const container = document.getElementById('chat-messages');
+    container.innerHTML = `
+        <div class="chat-message agent">
+            <div class="chat-avatar">🧅</div>
+            <div class="chat-content">
+                <strong>Onion Orquestrador</strong>
+                <p>Olá! Sou o agente IA da Clear IT. Posso ajudar com:</p>
+                <ul>
+                    <li>Portfólio de soluções (SOC, COps, Nutanix, Fortinet, Veeam)</li>
+                    <li>Processos RACI e pré-vendas</li>
+                    <li>ICP e personas de clientes</li>
+                    <li>Discovery técnico e qualificação de leads</li>
+                </ul>
+                <p>Sobre o que você gostaria de saber?</p>
+            </div>
+        </div>
+    `;
+}
+
+function generateAgentResponse(query) {
+    const q = query.toLowerCase();
+
+    // Profile detection (KB-07)
+    let userProfile = 'general';
+    if (q.includes('detalhe') || q.includes('explic') || q.includes('como funciona') || q.includes('o que é')) {
+        userProfile = 'new'; // User seeking detailed explanations
+    } else if (q.includes('sla') || q.includes('valor') || q.includes('preço') || q.includes('tempo')) {
+        userProfile = 'technical'; // User seeking specific technical data
+    } else if (q.includes('rápido') || q.includes('resumo') || q.includes('lista')) {
+        userProfile = 'recurrent'; // User seeking efficiency
+    }
+
+    // Out-of-scope guardrails (KB-05)
+    if (q.includes('service desk') || q.includes('suporte a usuario') || q.includes('field service')) {
+        return '⚠️ FORA DO ESCOPO · Suporte a usuários finais (Service Desk/Field) não é serviço da Clear IT. Esta é uma lacuna a validar com a liderança comercial.';
+    }
+    if (q.includes('cabeamento') || q.includes('infraestrutura fisica') || q.includes('elétrica')) {
+        return '⚠️ FORA DO ESCOPO · Passagem de cabeamento estruturado ou instalações elétricas é uma exclusão explícita do portfólio Clear IT.';
+    }
+    if (q.includes('desenvolvimento de') || q.includes('software customizado') || q.includes('api personalizada') || q.includes('erp customizado')) {
+        return '⚠️ FORA DO ESCOPO · Desenvolvimento de software ou APIs customizadas é exclusão contratual padrão da Clear IT. Esta é uma lacuna a validar.';
+    }
+    if (q.includes('locação de impressoras') || q.includes('locacao de impressoras') || q.includes('impressoras')) {
+        return '⚠️ FORA DO ESCOPO · Locação e gestão de impressoras não faz parte do portfólio Clear IT.';
+    }
+    if (q.includes('treinamento end user') || q.includes('treinamento de usuarios') || q.includes('capacitação de usuários')) {
+        return '⚠️ FORA DO ESCOPO · Treinamento de usuários finais (end user) não é serviço da Clear IT.';
+    }
+
+    // KB-based responses with profile adaptation
+    if (q.includes('sla') && (q.includes('soc') || q.includes('security'))) {
+        const response = userProfile === 'new'
+            ? 'Os SLAs do SOC 24/7 definem os tempos de resposta para incidentes de segurança. O sistema classifica incidentes em 4 níveis (P1 a P4), onde P1 é o mais crítico. Isso garante que incidentes graves sejam tratados com prioridade máxima, protegendo a infraestrutura do cliente.'
+            : 'Os SLAs do SOC 24/7 são:<br>• P1 (Crítica): Detecção ≤30min, Resposta ≤2h<br>• P2 (Alta): Detecção ≤45min, Resposta ≤4h<br>• P3 (Média): Detecção ≤90min, Resposta ≤8h<br>• P4 (Baixa): Detecção ≤120min, Resposta ≤16h<br><br>Baseado em KB-02 (Processo de Pré-Vendas).';
+        return response;
+    }
+    if (q.includes('sla') && q.includes('cops')) {
+        const response = userProfile === 'new'
+            ? 'Os SLAs do COps 24/7 incluem um nível de automação (N0) que permite autorrecuperação de incidentes comuns, reduzindo a necessidade de intervenção humana. Para casos que exigem análise humana, existem níveis N1 a N3 com tempos de resposta progressivos.'
+            : 'Os SLAs do COps 24/7 são:<br>• N0 (Automação): Resposta imediata (autorrecuperação)<br>• N1 (Triagem): Resposta ≤15min<br>• N2 (Análise): Resposta ≤1h<br>• N3 (Resolução): Resposta ≤4h<br><br>Baseado em KB-01 (Portfólio de Soluções).';
+        return response;
+    }
+    if (q.includes('raci') && q.includes('qualifica')) {
+        return 'Na Matriz RACI da Clear IT, a qualificação de oportunidades é:<br>• <strong>Responsável (R):</strong> BDM (Business Development Manager)<br>• <strong>Aprovador (A):</strong> Diretoria de Pré-Vendas<br>• <strong>Consultado (C):</strong> Vendedor AM e Diretoria Comercial<br><br>Baseado em KB-02 (Processo de Pré-Vendas).';
+    }
+    if (q.includes('exclus') || q.includes('fora do escopo')) {
+        return 'As exclusões padrão do portfólio Clear IT são:<br>• Suporte a usuários finais (Service Desk/Field Service)<br>• Passagem de cabeamento estruturado ou instalações elétricas<br>• Desenvolvimento de software proprietário ou APIs customizadas<br>• Manutenção física de hardware legado<br>• Locação de impressoras ou periféricos<br>• Treinamento de usuários finais<br><br>Baseado em KB-01 e KB-05 (Ancoragem de Portfólio).';
+    }
+    if (q.includes('parceiro') || q.includes('homolog')) {
+        return 'Os parceiros homologados da Clear IT incluem:<br>• Nutanix · Exagrid · Veeam · Lenovo · Arista<br>• AWS · Fortinet · SentinelOne · Commvault · Dynatrace<br>• Juniper · Illumio · KnowBe4 · Rainforest · Gigamon<br>• Quest · Riverbed · Ayko · Positivo Servers · Zadara<br><br>Baseado em KB-01 (Portfólio de Soluções).';
+    }
+    if (q.includes('soc') || q.includes('security operations')) {
+        return 'O SOC 24/7 da Clear IT oferece:<br>• SIEM Logsign SaaS com correlação em tempo real<br>• SOAR + UEBA + Threat Intelligence nativos<br>• Playbooks MITRE ATT&CK e NIST 800-61<br>• Monitoramento 24x7x365 com analistas N1, N2 e N3<br><br>Baseado em KB-01 (Portfólio de Soluções).';
+    }
+    if (q.includes('cops') || q.includes('cognitive operations')) {
+        return 'O COps 24/7x365 da Clear IT oferece:<br>• Monitoramento preditivo com AIOps<br>• Nível 0: Autorrecuperação automática<br>• N1/N2/N3: Analistas remotos com TAM e SDM<br>• Observabilidade full-stack (infra, aplicação, negócio)<br>• Relatórios Diários, Semanais e Mensais (ITIL V4)<br><br>Baseado em KB-01 (Portfólio de Soluções).';
+    }
+    if (q.includes('nutanix') || q.includes('infra') || q.includes('hiperconverg')) {
+        return 'A solução de Infraestrutura Hiperconvergente Nutanix inclui:<br>• Servidores Nutanix NX-3155-G9 ou NX-8055-G9 com NVMe/HDD<br>• Licenciamento NCI Ultimate com orquestração<br>• Storage Lenovo DM3010H (241TiB líquidos)<br>• Suporte 24x7 NBD (60 meses)<br><br>Baseado em KB-01 (Portfólio de Soluções).';
+    }
+    if (q.includes('fortinet') || q.includes('firewall') || q.includes('ngfw')) {
+        return 'A solução de Cibersegurança Fortinet inclui:<br>• Firewalls FortiGate-100F em HA Ativo/Passivo<br>• Licença UTP 36 meses (UTM + IPS + AV)<br>• EDR SentinelOne para endpoints<br>• Gestão de vulnerabilidades Nessus Pro (até 2.000 ativos)<br><br>Baseado em KB-01 (Portfólio de Soluções).';
+    }
+    if (q.includes('veeam') || q.includes('backup') || q.includes('exagrid')) {
+        return 'A solução de Backup & Resiliência inclui:<br>• Veeam Availability Suite com granularidade de RTO/RPO<br>• ExaGrid para landing zone de backups<br>• Suporte 60 meses NBD 24x7<br>• Restore test automatizado<br><br>Baseado em KB-01 (Portfólio de Soluções).';
+    }
+    if (q.includes('icp') || q.includes('ideal customer')) {
+        return 'O ICP (Ideal Customer Profile) da Clear IT inclui:<br><strong>Setor Público:</strong> Secretários, Gerentes de TI, Diretores de Infra. Dores: infra legada, risco de paralisação, compliance.<br><strong>Setor Privado:</strong> CIO, CTO, Gerente de Infra. Dores: custo alto de cloud, excesso de fornecedores, incidentes de segurança.<br><br>Baseado em KB-03 (ICP & Personas).';
+    }
+    if (q.includes('discovery') || q.includes('roteiro')) {
+        return 'O Discovery Técnico gera roteiros por domínio:<br>• Observabilidade (Dynatrace)<br>• SOC 24/7 (Logsign SIEM)<br>• Infraestrutura (Nutanix/Lenovo)<br>• Cibersegurança (Fortinet NGFW)<br>• Operações Cognitivas (COps)<br>• Backup & Resiliência (Veeam)<br><br>Baseado em KB-04 (Discovery Técnico).';
+    }
+
+    // Default response with helpful suggestions
+    return 'Posso ajudar com perguntas sobre o portfólio Clear IT, processos RACI, ICP, discovery técnico e qualificação de leads. Tente perguntar sobre:<br>• SLAs (SOC, COps)<br>• Parceiros homologados<br>• Exclusões de escopo<br>• Domínios específicos (SOC, COps, Nutanix, Fortinet, Veeam)';
+}
+
+/* ─── INIT ─── */
+window.onload = () => { renderLeads(); initKB(); populateLeadSelect(); };
+</script>
+</body>
+</html>

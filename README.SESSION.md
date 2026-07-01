@@ -8,8 +8,7 @@ Este diretório armazena o histórico e o progresso de cada sessão de desenvolv
 
 | ID | Data e Hora | Tópico/Funcionalidade | Objetivo Principal | Link |
 |---|---|---|---|---|
-| S-01 | 2026-07-01 14:55 | Consolidação de Contextos e KB | Estruturar a base de conhecimento de pré-vendas e preencher arquivos básicos de contexto. | [Ver Sessão](2026-07-01_1455_consolidacao-contextos/README.md) |
-| S-02 | 2026-07-01 16:00 | Sync e Implementação Frontend | Sincronizar docs com código, fechar gaps técnicos e preparar F-03. | [Ver Sessão](2026-07-01_1600_sync-implementacao-frontend/README.md) |
+| - | - | - | - | - |
 
 
 ---

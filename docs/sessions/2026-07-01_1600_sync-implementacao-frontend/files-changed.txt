@@ -1,0 +1,11 @@
+.cursor/rules/onion.md
+docs/business-context-lite.md
+docs/sessions/2026-07-01_1600_sync-implementacao-frontend/README.md
+docs/sessions/2026-07-01_1600_sync-implementacao-frontend/changes.md
+docs/sessions/2026-07-01_1600_sync-implementacao-frontend/context.md
+docs/sessions/2026-07-01_1600_sync-implementacao-frontend/decisions.md
+docs/sessions/2026-07-01_1600_sync-implementacao-frontend/files-changed.txt
+docs/sessions/2026-07-01_1600_sync-implementacao-frontend/notes.md
+docs/sessions/README.md
+docs/technical-context-lite.md
+index.html
