@@ -130,11 +130,15 @@ Mensagens do usuário são sanitizadas via `escapeHtml()` antes de renderizaçã
 
 ## 7. Diretrizes de Design
 
-### Cores (Baseadas em Identidade Visual Clear IT)
+### Cores (Baseadas em Identidade Visual Clear IT - KB-09)
 - **Primary:** `#00A3E0` (Clear Blue/Cyan)
-- **Background:** `#0F172A` (Deep Navy)
-- **Card Background:** Gradiente linear de `#1E293B` para `#0A192F`
-- **Text:** `#FFFFFF` (branco) e `#64748B` (cinza secundário)
+- **Primary Dark:** `#0077A3`
+- **Background:** `#0F172A` (Deep Navy) - Dark Mode
+- **Background:** `#FFFFFF` (White) - Light Mode
+- **Card Background:** Gradiente linear de `#1E293B` para `#0A192F` (Dark Mode)
+- **Card Background:** `#FFFFFF` (Light Mode)
+- **Text:** `#FFFFFF` (branco) e `#64748B` (cinza secundário) - Dark Mode
+- **Text:** `#1E293B` (navy escuro) e `#64748B` (cinza secundário) - Light Mode
 
 ### Fontes
 - **Principal:** Inter (Google Fonts)
@@ -167,7 +171,8 @@ Mensagens do usuário são sanitizadas via `escapeHtml()` antes de renderizaçã
 
 ---
 
-**Versão:** 1.0  
+**Versão:** 1.1  
 **Data:** 01/07/2026  
 **Status:** Produção  
-**Baseado em:** KB-01 a KB-07, Guia de Identidade Visual Clear IT
+**Baseado em:** KB-01 a KB-07, KB-09, Guia de Identidade Visual Clear IT  
+**Atualizações:** Adicionado suporte a modo claro/escuro (KB-09)

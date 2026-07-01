@@ -343,49 +343,123 @@ if (!localStorage.getItem('theme')) {
 
 ## 7. Exemplo Completo de Implementação
 
-### 7.1. CSS Variables (tokens/colors.css)
+### 7.1. CSS Variables (tokens/colors.css) - Implementação Onion Portable
 ```css
 :root {
-  /* Brand Colors */
-  --brand-primary: #00A3E0;
-  --brand-primary-light: #00D2FF;
-  --brand-primary-dark: #0077A3;
-  
-  /* Neutral Colors - Light Mode */
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F8FAFC;
-  --bg-tertiary: #F1F5F9;
-  
-  --text-primary: #1E293B;
-  --text-secondary: #64748B;
-  --text-tertiary: #94A3B8;
-  
-  --border-color: #E2E8F0;
-  --border-color-hover: #CBD5E1;
-  
+  /* Brand Colors - Clear IT */
+  --primary:     #00A3E0;
+  --primary-light:#00D2FF;
+  --primary-dark: #0077A3;
+  --primary-dim: rgba(0,163,224,0.12);
+  --primary-glow: rgba(0,163,224,0.20);
+
+  /* Neutral Colors - Dark Mode (Default) */
+  --bg:          #0F172A;
+  --bg-panel:    #0A192F;
+  --bg-card:     #1E293B;
+  --bg-input:    #334155;
+  --border:      #E2E8F0;
+  --border-hover:#00A3E0;
+
+  --white:       #FFFFFF;
+  --off-white:   #F8FAFC;
+  --gray-100:    #F1F5F9;
+  --gray-200:    #E2E8F0;
+  --gray-300:    #CBD5E1;
+  --gray-400:    #94A3B8;
+  --gray-500:    #64748B;
+  --gray-600:    #475569;
+  --gray-700:    #334155;
+  --gray-800:    #1E293B;
+  --gray-900:    #0F172A;
+
   /* Semantic Colors */
-  --color-success: #10B981;
-  --color-warning: #FACC15;
-  --color-error: #EF4444;
-  --color-info: #3B82F6;
+  --green:       #10B981;
+  --green-dim:   rgba(16,185,129,0.12);
+  --amber:       #FACC15;
+  --amber-dim:   rgba(250,204,21,0.12);
+  --orange:      #F97316;
+  --orange-dim:  rgba(249,115,22,0.12);
+  --red:         #EF4444;
+  --red-dim:     rgba(239,68,68,0.12);
+  --blue:        #00A3E0;
+  --blue-dim:    rgba(0,163,224,0.12);
+
+  /* Transitions */
+  --transition:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Light Mode Theme */
+[data-theme="light"] {
+  --bg:          #FFFFFF;
+  --bg-panel:    #F8FAFC;
+  --bg-card:     #FFFFFF;
+  --bg-input:    #F1F5F9;
+  --border:      #E2E8F0;
+  --border-hover:#00A3E0;
+
+  --white:       #1E293B;
+  --off-white:   #334155;
+  --gray-100:    #F8FAFC;
+  --gray-200:    #E2E8F0;
+  --gray-300:    #CBD5E1;
+  --gray-400:    #94A3B8;
+  --gray-500:    #64748B;
+  --gray-600:    #475569;
+  --gray-700:    #334155;
+  --gray-800:    #1E293B;
+  --gray-900:    #0F172A;
+}
+
+/* Dark Mode Theme (Explicit) */
 [data-theme="dark"] {
-  /* Neutral Colors - Dark Mode */
-  --bg-primary: #0F172A;
-  --bg-secondary: #1E293B;
-  --bg-tertiary: #334155;
-  
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-tertiary: #64748B;
-  
-  --border-color: #334155;
-  --border-color-hover: #475569;
+  --bg:          #0F172A;
+  --bg-panel:    #0A192F;
+  --bg-card:     #1E293B;
+  --bg-input:    #334155;
+  --border:      #334155;
+  --border-hover:#00A3E0;
+
+  --white:       #FFFFFF;
+  --off-white:   #F8FAFC;
+  --gray-100:    #F1F5F9;
+  --gray-200:    #E2E8F0;
+  --gray-300:    #CBD5E1;
+  --gray-400:    #94A3B8;
+  --gray-500:    #64748B;
+  --gray-600:    #475569;
+  --gray-700:    #334155;
+  --gray-800:    #1E293B;
+  --gray-900:    #0F172A;
+}
+
+/* System preference detection */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg:          #FFFFFF;
+    --bg-panel:    #F8FAFC;
+    --bg-card:     #FFFFFF;
+    --bg-input:    #F1F5F9;
+    --border:      #E2E8F0;
+    --border-hover:#00A3E0;
+
+    --white:       #1E293B;
+    --off-white:   #334155;
+    --gray-100:    #F8FAFC;
+    --gray-200:    #E2E8F0;
+    --gray-300:    #CBD5E1;
+    --gray-400:    #94A3B8;
+    --gray-500:    #64748B;
+    --gray-600:    #475569;
+    --gray-700:    #334155;
+    --gray-800:    #1E293B;
+    --gray-900:    #0F172A;
+  }
 }
 ```
 
-### 7.2. JavaScript (theme-toggle.js)
+### 7.2. JavaScript (theme-toggle.js) - Implementação Onion Portable
 ```javascript
 function toggleTheme() {
   const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -393,25 +467,58 @@ function toggleTheme() {
   
   document.documentElement.setAttribute('data-theme', newTheme);
   localStorage.setItem('theme', newTheme);
+  
+  // Update icon
+  updateThemeIcon(newTheme);
 }
 
 function initTheme() {
   const savedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   
-  const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+  let theme = savedTheme;
+  if (!theme) {
+    theme = prefersDark ? 'dark' : 'light';
+  }
+  
   document.documentElement.setAttribute('data-theme', theme);
+  updateThemeIcon(theme);
 }
+
+function updateThemeIcon(theme) {
+  const icon = document.getElementById('theme-icon');
+  if (theme === 'dark') {
+    // Moon icon for dark mode
+    icon.innerHTML = `
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    `;
+  } else {
+    // Sun icon for light mode
+    icon.innerHTML = `
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    `;
+  }
+}
+
+// Listen for system preference changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+  if (!localStorage.getItem('theme')) {
+    const theme = e.matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeIcon(theme);
+  }
+});
 
 // Inicializar
 initTheme();
-
-// Listener para mudança de preferência do sistema
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-  if (!localStorage.getItem('theme')) {
-    document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-  }
-});
 ```
 
 ---

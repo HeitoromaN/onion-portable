@@ -47,7 +47,7 @@ function validarCPF(cpf) {
 - **Validação:** Verificação de formato e comprimento
 - **Máscara de entrada:** Automática após 6 dígitos
 - **Exemplo:** `123456-1234567`
-- **Limite de caracteres:** 13
+- **Limite de caracteres:** 14 (13 dígitos + 1 hífen)
 
 ### 2.2. Documentos Comerciais
 
@@ -101,7 +101,7 @@ function validarCPF(cpf) {
 | BDM Responsável | Texto | 2 | 100 | Sim |
 | Diretoria Aprovação | Select | - | - | Sim |
 | CNPJ | Texto | 14 | 18 | Não (Privado) |
-| Processo SEI | Texto | 13 | 13 | Sim (Público) |
+| Processo SEI | Texto | 13 | 14 | Sim (Público) |
 | DFD | Texto | 1 | 500 | Sim (Público) |
 | Notas Discovery | Textarea | 0 | 2000 | Não |
 | Notas Proposta | Textarea | 0 | 2000 | Não |
@@ -205,7 +205,8 @@ function removeSpecialChars(input, allowedChars = null) {
 
 ---
 
-**Versão:** 1.0  
+**Versão:** 1.1  
 **Data:** 01/07/2026  
 **Responsável:** @engineer  
-**Status:** Ativo
+**Status:** Ativo  
+**Atualizações:** Corrigido maxlength do campo SEI para 14 caracteres (13 dígitos + 1 hífen)
