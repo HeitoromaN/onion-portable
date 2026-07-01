@@ -23,23 +23,29 @@
             /* Clear IT brand colors */
             --primary:     #00A3E0;
             --primary-light:#00D2FF;
+            --primary-dark: #0077A3;
             --primary-dim: rgba(0,163,224,0.12);
             --primary-glow: rgba(0,163,224,0.20);
 
             --white:       #FFFFFF;
             --off-white:   #F8FAFC;
             --gray-100:    #F1F5F9;
-            --gray-400:    #64748B;
-            --gray-600:    #334155;
+            --gray-200:    #E2E8F0;
+            --gray-300:    #CBD5E1;
+            --gray-400:    #94A3B8;
+            --gray-500:    #64748B;
+            --gray-600:    #475569;
+            --gray-700:    #334155;
             --gray-800:    #1E293B;
+            --gray-900:    #0F172A;
 
             /* Semantic colors for SOC/COps */
             --green:       #10B981;
             --green-dim:   rgba(16,185,129,0.12);
             --amber:       #FACC15;
             --amber-dim:   rgba(250,204,21,0.12);
-            --primary:      #F97316;
-            --primary-dim:  rgba(249,115,22,0.12);
+            --orange:      #F97316;
+            --orange-dim:  rgba(249,115,22,0.12);
             --red:         #EF4444;
             --red-dim:     rgba(239,68,68,0.12);
             --blue:        #00A3E0;
@@ -47,8 +53,77 @@
 
             --radius:      10px;
             --radius-sm:   6px;
-            --transition:  all 0.2s ease;
+            --transition:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
             --font:        'Inter', sans-serif;
+        }
+
+        /* Light Mode Theme */
+        [data-theme="light"] {
+            --bg:          #FFFFFF;
+            --bg-panel:    #F8FAFC;
+            --bg-card:     #FFFFFF;
+            --bg-input:    #F1F5F9;
+            --border:      #E2E8F0;
+            --border-hover:#00A3E0;
+
+            --white:       #1E293B;
+            --off-white:   #334155;
+            --gray-100:    #F8FAFC;
+            --gray-200:    #E2E8F0;
+            --gray-300:    #CBD5E1;
+            --gray-400:    #94A3B8;
+            --gray-500:    #64748B;
+            --gray-600:    #475569;
+            --gray-700:    #334155;
+            --gray-800:    #1E293B;
+            --gray-900:    #0F172A;
+        }
+
+        /* Dark Mode Theme (Default) */
+        [data-theme="dark"] {
+            --bg:          #0F172A;
+            --bg-panel:    #0A192F;
+            --bg-card:     #1E293B;
+            --bg-input:    #334155;
+            --border:      #334155;
+            --border-hover:#00A3E0;
+
+            --white:       #FFFFFF;
+            --off-white:   #F8FAFC;
+            --gray-100:    #F1F5F9;
+            --gray-200:    #E2E8F0;
+            --gray-300:    #CBD5E1;
+            --gray-400:    #94A3B8;
+            --gray-500:    #64748B;
+            --gray-600:    #475569;
+            --gray-700:    #334155;
+            --gray-800:    #1E293B;
+            --gray-900:    #0F172A;
+        }
+
+        /* System preference detection */
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme]) {
+                --bg:          #FFFFFF;
+                --bg-panel:    #F8FAFC;
+                --bg-card:     #FFFFFF;
+                --bg-input:    #F1F5F9;
+                --border:      #E2E8F0;
+                --border-hover:#00A3E0;
+
+                --white:       #1E293B;
+                --off-white:   #334155;
+                --gray-100:    #F8FAFC;
+                --gray-200:    #E2E8F0;
+                --gray-300:    #CBD5E1;
+                --gray-400:    #94A3B8;
+                --gray-500:    #64748B;
+                --gray-600:    #475569;
+                --gray-700:    #334155;
+                --gray-800:    #1E293B;
+                --gray-900:    #0F172A;
+            }
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -175,6 +250,9 @@
             margin-top: auto;
             padding: 1rem 1.25rem;
             border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         .squad-tag {
             font-size: 0.72rem;
@@ -182,6 +260,29 @@
             line-height: 1.5;
         }
         .squad-tag strong { color: var(--primary); font-weight: 700; }
+
+        /* ── THEME TOGGLE ── */
+        .theme-toggle {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+            color: var(--gray-400);
+        }
+        .theme-toggle:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-dim);
+        }
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
 
         /* ── MAIN CONTENT ── */
         main {
@@ -650,7 +751,7 @@
             height: 36px;
             border-radius: 50%;
             background: var(--primary-dim);
-            border: 1px solid rgba(255,107,0,0.3);
+            border: 1px solid var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -666,7 +767,7 @@
         }
         .chat-message.user .chat-content {
             background: var(--primary-dim);
-            border-color: rgba(255,107,0,0.3);
+            border-color: var(--primary);
         }
         .chat-content strong {
             display: block;
@@ -834,6 +935,19 @@
             Pré-Vendas & Engenharia<br>
             Clear IT · 2026
         </div>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema">
+            <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        </button>
     </div>
 </aside>
 
@@ -2430,8 +2544,65 @@ function clearAuditLog() {
     }
 }
 
+/* ─── THEME TOGGLE ─── */
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    // Update icon
+    updateThemeIcon(newTheme);
+}
+
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    let theme = savedTheme;
+    if (!theme) {
+        theme = prefersDark ? 'dark' : 'light';
+    }
+    
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeIcon(theme);
+}
+
+function updateThemeIcon(theme) {
+    const icon = document.getElementById('theme-icon');
+    if (theme === 'dark') {
+        // Moon icon for dark mode
+        icon.innerHTML = `
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        `;
+    } else {
+        // Sun icon for light mode
+        icon.innerHTML = `
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        `;
+    }
+}
+
+// Listen for system preference changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) {
+        const theme = e.matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        updateThemeIcon(theme);
+    }
+});
+
 /* ─── INIT ─── */
-window.onload = () => { renderLeads(); initKB(); populateLeadSelect(); renderAuditLog(); };
+window.onload = () => { initTheme(); renderLeads(); initKB(); populateLeadSelect(); renderAuditLog(); };
 </script>
 </body>
 </html>
