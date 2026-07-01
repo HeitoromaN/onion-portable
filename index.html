@@ -2052,6 +2052,20 @@ function validateSEI(input) {
 }
 
 /* ─── CHAT AGENT (F-05) ─── */
+function maskSensitiveData(text) {
+    // Mask CNPJ
+    text = text.replace(/\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/g, '[CNPJ_MASCARADO]');
+    // Mask CPF
+    text = text.replace(/\d{3}\.\d{3}\.\d{3}-\d{2}/g, '[CPF_MASCARADO]');
+    // Mask Email
+    text = text.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '[EMAIL_MASCARADO]');
+    // Mask Phone
+    text = text.replace(/\(\d{2}\)\s*\d{4,5}-\d{4}/g, '[TELEFONE_MASCARADO]');
+    // Mask SEI
+    text = text.replace(/\d{6}-\d{7}/g, '[SEI_MASCARADO]');
+    return text;
+}
+
 function sendMessage() {
     const input = document.getElementById('chat-input');
     const message = input.value.trim();
@@ -2060,9 +2074,12 @@ function sendMessage() {
     addChatMessage('user', message);
     input.value = '';
 
+    // Mask sensitive data before sending to LLM
+    const maskedMessage = maskSensitiveData(message);
+
     // Simulate agent processing
     setTimeout(() => {
-        const response = generateAgentResponse(message);
+        const response = generateAgentResponse(maskedMessage);
         addChatMessage('agent', response);
     }, 500);
 }

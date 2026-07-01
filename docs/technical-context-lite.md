@@ -109,6 +109,13 @@ graph TD
   - Referenciar dados de oportunidades quando pertinente
 - [x] Adicionar sugestões de perguntas rápidas (quick prompts)
 - [x] Implementar sanitização XSS em mensagens do usuário
+- [ ] Implementar mascaramento de dados sensíveis antes de chamadas LLM:
+  - Regex para CNPJ: `\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}` → `[CNPJ_MASCARADO]`
+  - Regex para CPF: `\d{3}\.\d{3}\.\d{3}-\d{2}` → `[CPF_MASCARADO]`
+  - Regex para email: `[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}` → `[EMAIL_MASCARADO]`
+  - Regex para telefone: `\(\d{2}\)\s*\d{4,5}-\d{4}` → `[TELEFONE_MASCARADO]`
+  - Regex para SEI: `\d{6}-\d{7}` → `[SEI_MASCARADO]`
+  - Função `maskSensitiveData(text)` aplicada antes de `generateAgentResponse()`
 - [x] Testar fluxo completo: perguntas sobre portfólio, processos, lacunas
 
 ---
