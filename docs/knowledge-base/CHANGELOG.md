@@ -7,6 +7,23 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
+## [2.2] - 01/07/2026
+
+### Adicionados
+- **update-readme.ps1:** Script PowerShell para geração automática do README da Knowledge Base
+- Seção de automação no KB-GUIDE.md com instruções de uso
+
+### Alterados
+- **KB-GUIDE.md:** Atualizado para versão 1.1 com seção de automação
+- **README.md:** Agora gerado automaticamente pelo script, não deve ser editado manualmente
+
+### Melhorias
+- Script lê metadados de todos os KBs e gera README estruturado
+- Suporte a execução manual com flag -Force
+- Metadados obrigatórios definidos para funcionamento do script
+
+---
+
 ## [2.1] - 01/07/2026
 
 ### Adicionados
