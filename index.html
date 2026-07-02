@@ -80,6 +80,24 @@
             --gray-900:    #0F172A;
         }
 
+        /* KB Viewer - Light Mode Overrides */
+        [data-theme="light"] .kb-nav {
+            color: var(--gray-700);
+        }
+        [data-theme="light"] .kb-nav:hover {
+            color: var(--white);
+            background: rgba(0,0,0,0.04);
+        }
+        [data-theme="light"] .kb-body {
+            color: var(--gray-800);
+        }
+        [data-theme="light"] .kb-body h1 {
+            color: var(--white);
+        }
+        [data-theme="light"] .kb-body blockquote {
+            color: var(--gray-800);
+        }
+
         /* Dark Mode Theme (Default) */
         [data-theme="dark"] {
             --bg:          #0F172A;
@@ -603,7 +621,7 @@
             padding: 0.6rem 0.75rem;
             border-radius: var(--radius-sm);
             font-size: 0.82rem;
-            color: var(--gray-400);
+            color: var(--white);
             cursor: pointer;
             background: none;
             border: none;
@@ -613,14 +631,14 @@
             transition: var(--transition);
             width: 100%;
         }
-        .kb-nav:hover { color: var(--white); background: rgba(255,255,255,0.04); }
+        .kb-nav:hover { color: var(--white); background: rgba(0,0,0,0.04); }
         .kb-nav.active { color: var(--white); background: var(--primary-dim); border-left: 2px solid var(--primary); }
         .kb-body {
             padding: 1.5rem 2rem;
             overflow-y: auto;
             border-radius: 0 var(--radius) var(--radius) 0;
             background: var(--bg-card);
-            color: var(--gray-100);
+            color: var(--white);
             font-size: 0.875rem;
             line-height: 1.7;
         }
@@ -628,7 +646,7 @@
         .kb-body h2 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: 1.25rem 0 0.5rem; }
         .kb-body ul { margin-left: 1.25rem; margin-bottom: 0.75rem; }
         .kb-body li { margin-bottom: 0.35rem; }
-        .kb-body blockquote { background: var(--primary-dim); border-left: 3px solid var(--primary); padding: 0.75rem 1rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 1rem 0; color: var(--gray-100); }
+        .kb-body blockquote { background: var(--primary-dim); border-left: 3px solid var(--primary); padding: 0.75rem 1rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 1rem 0; color: var(--white); }
 
         /* ── KB SEARCH ── */
         .kb-search-wrap {
