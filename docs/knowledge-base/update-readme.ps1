@@ -1,13 +1,15 @@
 # Script PowerShell para atualizar automaticamente o README da Knowledge Base
-# Este script lê todos os arquivos KB e gera o README.md com a estrutura atualizada
+# Execute este script sempre que adicionar, remover ou modificar arquivos KB
 
-param([switch]$Force = $false)
+# Ir para o diretório do script
+Set-Location $PSScriptRoot
+
+# Executar a atualização
+Write-Host "Atualizando README da Knowledge Base..." -ForegroundColor Cyan
 
 # Caminhos
-$scriptPath = $PSScriptRoot
-$rootPath = Split-Path -Parent (Split-Path -Parent $scriptPath)
-$kbPath = Join-Path $rootPath "docs\knowledge-base"
-$readmePath = Join-Path $kbPath "README.md"
+$kbPath = "."
+$readmePath = ".\README.md"
 
 # Função para extrair metadados de um arquivo KB
 function Get-KBMetadata {
@@ -55,7 +57,7 @@ function Get-KBMetadata {
         Responsible = $responsible
         Version = $version
         Path = $filePath
-        RelativePath = $filePath.Replace($rootPath + "\", "").Replace("\", "/")
+        RelativePath = $filePath.Replace((Get-Location).Path + "\", "").Replace("\", "/")
     }
 }
 
@@ -104,8 +106,9 @@ Este diretório armazena a base de conhecimento consolidada sobre o ecossistema 
 ```
 docs/knowledge-base/
 ├── KB-GUIDE.md                    # Guia de versionamento e boas práticas
-├── README.md                      # Este documento - Índice principal (gerado automaticamente)
+├── README.md                      # Este documento - Índice principal
 ├── CHANGELOG.md                   # Histórico de alterações
+├── update-readme.ps1              # Script para atualizar este README automaticamente
 ├── core/                          # Conceitos fundamentais
 ├── technical/                     # Documentação técnica
 ├── design/                        # Identidade visual e UI
@@ -114,7 +117,7 @@ docs/knowledge-base/
 ```
 
 > [!NOTE]
-> Este README é gerado automaticamente pelo script `update-readme.ps1`. Não edite manualmente - suas alterações serão sobrescritas. Para atualizar, execute o script ou faça commit (hook automático).
+> Este README é gerado automaticamente pelo script `update-readme.ps1`. Para atualizar, execute: `.\update-readme.ps1`
 
 ---
 
@@ -205,27 +208,16 @@ Documentos mantidos para histórico técnico e referência. Não devem ser usado
 
 - **[KB-GUIDE.md](./KB-GUIDE.md):** Guia completo de versionamento, boas práticas e manutenção da Knowledge Base
 - **[CHANGELOG.md](./CHANGELOG.md):** Histórico detalhado de todas as alterações na KB
-- **[update-readme.ps1](./update-readme.ps1):** Script PowerShell para gerar este README automaticamente
 
 ---
 
-## 🚀 Como Contribuir
+## 🚀 Como Atualizar o README
 
-### Processo de Atualização
+Sempre que adicionar, remover ou modificar arquivos KB:
 
-1. Consulte o **[KB-GUIDE.md](./KB-GUIDE.md)** para entender as diretrizes
-2. Identifique a categoria correta (core, technical, design, prompts)
-3. Siga o template padrão de estrutura
-4. Atualize a versão e o CHANGELOG.md
-5. Execute `./update-readme.ps1` para atualizar o README automaticamente
-6. Commit suas alterações (o hook pre-commit atualizará o README se necessário)
-
-### Versionamento
-
-Todos os documentos KB seguem versionamento semântico (X.Y.Z):
-- **X (Major):** Mudanças estruturais significativas
-- **Y (Minor):** Adição de seções, atualizações de conteúdo
-- **Z (Patch):** Correções menores, ajustes de formatação
+1. Execute o script: `.\update-readme.ps1`
+2. O README será atualizado automaticamente
+3. Commit as alterações
 
 ---
 
@@ -242,83 +234,25 @@ Todos os documentos KB seguem a estrutura padrão:
 6. Referências
 7. Cabeçalho de Versão
 
-### Nomenclatura
-
-- **Arquivos KB:** `kb-XX-descricao.md`
-- **Arquivos de suporte:** `nome-descritivo.md`
-- **Diretórios:** minúsculas, sem espaços
-
 ### Metadados Obrigatórios
 
-Para que o script de geração funcione corretamente, cada KB deve conter:
-- Título no formato: `# KB-XX: Título do Documento`
-- Seção `## 1. Visão Geral` com descrição breve
-- Cabeçalho de versão com `Responsável: @persona`
-
----
-
-## 🔧 Automação
-
-### Git Hook Pre-Commit
-
-Um hook pre-commit é instalado automaticamente para atualizar o README sempre que houver mudanças na knowledge base. Para desativar, use a flag `--no-verify` ao fazer commit:
-
-```bash
-git commit --no-verify -m "mensagem"
-```
-
-### Geração Manual
-
-Para atualizar o README manualmente:
-
-```powershell
-cd docs/knowledge-base
-.\update-readme.ps1
-```
-
-Para forçar atualização mesmo sem mudanças:
-
-```powershell
-.\update-readme.ps1 -Force
-```
+Para que o script funcione, cada KB deve conter:
+- Título: `# KB-XX: Título do Documento`
+- Seção: `## 1. Visão Geral` com descrição
+- Versão: `**Responsável:** @persona` no cabeçalho
 
 ---
 
 > [!NOTE]
-> Para mais detalhes sobre manutenção, versionamento e boas práticas, consulte o **[KB-GUIDE.md](./KB-GUIDE.md)**.
+> Para mais detalhes sobre manutenção e boas práticas, consulte o **[KB-GUIDE.md](./KB-GUIDE.md)**.
 
 ---
 
 **Última Atualização:** $(Get-Date -Format "dd/MM/yyyy HH:mm")  
-**Versão da KB:** $kbVersion  
-**Gerado por:** update-readme.ps1
+**Versão da KB:** $kbVersion
 "@
 
     return $content
-}
-
-# Verificar se há mudanças na KB
-function Has-KBChanges {
-    $gitPath = Join-Path $rootPath ".git"
-    if (-not (Test-Path $gitPath)) {
-        return $true  # Se não for git, sempre atualizar
-    }
-    
-    try {
-        $gitOutput = & git -C $rootPath status --porcelain $kbPath 2>&1
-        return $gitOutput -ne ""
-    } catch {
-        return $true  # Se git falhar, atualizar mesmo assim
-    }
-}
-
-# Main
-Write-Host "Escaneando Knowledge Base em: $kbPath" -ForegroundColor Cyan
-
-# Verificar mudanças se não for força
-if (-not $Force -and -not (Has-KBChanges)) {
-    Write-Host "Nenhuma mudança detectada na Knowledge Base. Use -Force para atualizar mesmo assim." -ForegroundColor Green
-    exit 0
 }
 
 # Ler arquivos KB
@@ -329,10 +263,7 @@ if ($kbFiles.Count -eq 0) {
     exit 1
 }
 
-Write-Host "Encontrados $($kbFiles.Count) arquivos KB:" -ForegroundColor Green
-foreach ($kb in $kbFiles) {
-    Write-Host "   - KB-$($kb.Number): $($kb.Title)" -ForegroundColor Gray
-}
+Write-Host "Encontrados $($kbFiles.Count) arquivos KB" -ForegroundColor Green
 
 # Determinar versão da KB (baseado no CHANGELOG)
 $changelogPath = Join-Path $kbPath "CHANGELOG.md"
@@ -340,10 +271,10 @@ if (Test-Path $changelogPath) {
     if ((Get-Content $changelogPath -Raw) -match "## \[(\d+\.\d+)\]") {
         $kbVersion = $matches[1]
     } else {
-        $kbVersion = "2.1"
+        $kbVersion = "2.2"
     }
 } else {
-    $kbVersion = "2.1"
+    $kbVersion = "2.2"
 }
 
 # Gerar conteúdo
@@ -354,8 +285,3 @@ $newContent = Generate-ReadmeContent -kbFiles $kbFiles -kbVersion $kbVersion
 Set-Content -Path $readmePath -Value $newContent -Encoding UTF8
 
 Write-Host "README.md atualizado com sucesso!" -ForegroundColor Green
-Write-Host "Total de KBs: $($kbFiles.Count)" -ForegroundColor Gray
-Write-Host "Core: $(($kbFiles | Where-Object { $_.Category -eq 'core' }).Count)" -ForegroundColor Gray
-Write-Host "Technical: $(($kbFiles | Where-Object { $_.Category -eq 'technical' }).Count)" -ForegroundColor Gray
-Write-Host "Design: $(($kbFiles | Where-Object { $_.Category -eq 'design' }).Count)" -ForegroundColor Gray
-Write-Host "Prompts: $(($kbFiles | Where-Object { $_.Category -eq 'prompts' }).Count)" -ForegroundColor Gray

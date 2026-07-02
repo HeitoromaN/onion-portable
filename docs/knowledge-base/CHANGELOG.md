@@ -7,6 +7,19 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
+## [2.3] - 01/07/2026
+
+### Simplificados
+- **update-readme.ps1:** Script simplificado para execução direta no diretório sem parâmetros complexos
+- Removidos hooks git complexos que causavam problemas de compatibilidade
+- Instruções de uso simplificadas: apenas executar `.\update-readme.ps1` no diretório
+
+### Alterados
+- **KB-GUIDE.md:** Atualizado para versão 1.2 com instruções diretas e simplificadas
+- **README.md:** Atualizado com instruções simplificadas de uso
+
+---
+
 ## [2.2] - 01/07/2026
 
 ### Adicionados

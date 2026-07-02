@@ -314,38 +314,27 @@ O README.md da Knowledge Base é gerado automaticamente pelo script `update-read
 - Lê todos os arquivos KB dos diretórios (core, technical, design, prompts)
 - Extrai metadados (título, descrição, responsável, versão)
 - Gera o README.md com a estrutura atualizada
-- Atualiza automaticamente a versão e timestamp
+- Atualiza automaticamente o timestamp
 
-### 10.2. Git Hook Pre-Commit
+### 10.2. Como Usar
 
-Um hook pre-commit é instalado em `.git/hooks/pre-commit` para executar automaticamente o script sempre que houver mudanças na knowledge base.
+**Para atualizar o README:**
 
-**Comportamento:**
-- Detecta mudanças em `docs/knowledge-base/`
-- Executa `update-readme.ps1` automaticamente
-- Adiciona o README atualizado ao commit
+1. Vá para o diretório da knowledge-base:
+   ```powershell
+   cd docs\knowledge-base
+   ```
 
-**Para desativar o hook:**
-```bash
-git commit --no-verify -m "mensagem"
-```
+2. Execute o script:
+   ```powershell
+   .\update-readme.ps1
+   ```
 
-### 10.3. Execução Manual
+3. O README será atualizado automaticamente
 
-Para atualizar o README manualmente:
+**Simples assim:** Sempre que adicionar, remover ou modificar arquivos KB, execute o script.
 
-```powershell
-cd docs/knowledge-base
-.\update-readme.ps1
-```
-
-Para forçar atualização mesmo sem mudanças:
-
-```powershell
-.\update-readme.ps1 -Force
-```
-
-### 10.4. Metadados Obrigatórios
+### 10.3. Metadados Obrigatórios
 
 Para que o script funcione corretamente, cada KB deve conter:
 
@@ -388,7 +377,7 @@ Descrição breve do documento...
 
 ---
 
-**Versão:** 1.1  
+**Versão:** 1.2  
 **Data:** 01/07/2026  
 **Status:** Produção  
-**Atualizações:** Adicionada seção de automação com script update-readme.ps1 e git hook pre-commit para geração automática do README
+**Atualizações:** Simplificada seção de automação com instruções diretas. Script agora executa diretamente no diretório sem parâmetros complexos.
