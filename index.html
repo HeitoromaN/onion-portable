@@ -98,6 +98,95 @@
             color: var(--gray-800);
         }
 
+        /* Navigation - Light Mode Overrides */
+        [data-theme="light"] .nav-btn {
+            color: var(--gray-700);
+        }
+        [data-theme="light"] .nav-btn:hover {
+            color: var(--primary);
+            background: rgba(0,163,224,0.08);
+        }
+        [data-theme="light"] .nav-btn.active {
+            color: var(--primary);
+            background: rgba(0,163,224,0.12);
+            border-left: 2px solid var(--primary);
+        }
+        [data-theme="light"] .sidebar-label {
+            color: var(--gray-500);
+        }
+        [data-theme="light"] .brand-text span {
+            color: var(--gray-500);
+        }
+        [data-theme="light"] .squad-tag {
+            color: var(--gray-600);
+        }
+
+        /* Cards - Light Mode Overrides */
+        [data-theme="light"] .card {
+            background: #FFFFFF;
+            border-color: var(--gray-200);
+        }
+        [data-theme="light"] .card:hover {
+            border-color: var(--primary);
+        }
+
+        /* Inputs - Light Mode Overrides */
+        [data-theme="light"] input, [data-theme="light"] select, [data-theme="light"] textarea {
+            background: #FFFFFF;
+            border-color: var(--gray-200);
+            color: var(--gray-800);
+        }
+        [data-theme="light"] input:focus, [data-theme="light"] select:focus, [data-theme="light"] textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-glow);
+        }
+        [data-theme="light"] input::placeholder, [data-theme="light"] select::placeholder {
+            color: var(--gray-400);
+        }
+
+        /* Labels - Light Mode Overrides */
+        [data-theme="light"] label {
+            color: var(--gray-700);
+        }
+
+        /* KPI Cards - Light Mode Overrides */
+        [data-theme="light"] .kpi-card {
+            background: #FFFFFF;
+            border-color: var(--gray-200);
+        }
+        [data-theme="light"] .kpi-label {
+            color: var(--gray-500);
+        }
+        [data-theme="light"] .kpi-trend.neutral {
+            color: var(--gray-400);
+        }
+
+        /* Buttons - Light Mode Overrides */
+        [data-theme="light"] .btn-ghost {
+            color: var(--gray-600);
+            border-color: var(--gray-300);
+        }
+        [data-theme="light"] .btn-ghost:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Table - Light Mode Overrides */
+        [data-theme="light"] th {
+            color: var(--gray-600);
+            border-bottom-color: var(--gray-300);
+        }
+        [data-theme="light"] td {
+            border-bottom-color: var(--gray-100);
+        }
+        [data-theme="light"] tr:hover td {
+            background: var(--gray-50);
+        }
+
+        /* Navigation - Dark Mode Refinements */
+        .nav-btn:hover { color: var(--white); background: rgba(0,0,0,0.04); }
+        .nav-btn.active { color: var(--white); background: var(--primary-dim); border-left: 2px solid var(--primary); }
+
         /* Dark Mode Theme (Default) */
         [data-theme="dark"] {
             --bg:          #0F172A;
@@ -259,8 +348,6 @@
             transition: var(--transition);
             margin-bottom: 2px;
         }
-        .nav-btn:hover { color: var(--white); background: rgba(255,255,255,0.04); }
-        .nav-btn.active { color: var(--white); background: var(--primary-dim); border-left: 2px solid var(--primary); }
 
         .nav-icon { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; opacity: 0.8; }
 
