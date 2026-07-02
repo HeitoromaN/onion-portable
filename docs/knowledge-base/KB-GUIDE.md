@@ -305,15 +305,82 @@ Sempre usar caminhos relativos:
 
 ---
 
-## 10. Ferramentas e Recursos
+## 10. Automação
 
-### 10.1. Validação
+### 10.1. Geração Automática do README
+
+O README.md da Knowledge Base é gerado automaticamente pelo script `update-readme.ps1`. Este script:
+
+- Lê todos os arquivos KB dos diretórios (core, technical, design, prompts)
+- Extrai metadados (título, descrição, responsável, versão)
+- Gera o README.md com a estrutura atualizada
+- Atualiza automaticamente a versão e timestamp
+
+### 10.2. Git Hook Pre-Commit
+
+Um hook pre-commit é instalado em `.git/hooks/pre-commit` para executar automaticamente o script sempre que houver mudanças na knowledge base.
+
+**Comportamento:**
+- Detecta mudanças em `docs/knowledge-base/`
+- Executa `update-readme.ps1` automaticamente
+- Adiciona o README atualizado ao commit
+
+**Para desativar o hook:**
+```bash
+git commit --no-verify -m "mensagem"
+```
+
+### 10.3. Execução Manual
+
+Para atualizar o README manualmente:
+
+```powershell
+cd docs/knowledge-base
+.\update-readme.ps1
+```
+
+Para forçar atualização mesmo sem mudanças:
+
+```powershell
+.\update-readme.ps1 -Force
+```
+
+### 10.4. Metadados Obrigatórios
+
+Para que o script funcione corretamente, cada KB deve conter:
+
+**Formato de Título:**
+```markdown
+# KB-XX: Título do Documento
+```
+
+**Seção de Visão Geral:**
+```markdown
+## 1. Visão Geral
+Descrição breve do documento...
+```
+
+**Cabeçalho de Versão:**
+```markdown
+---
+**Versão:** 1.0
+**Data:** DD/MM/YYYY
+**Status:** Produção
+**Responsável:** @persona
+**Atualizações:** Descrição
+```
+
+---
+
+## 11. Ferramentas e Recursos
+
+### 11.1. Validação
 
 - Verificar links quebrados
 - Validar sintaxe Markdown
 - Testar código de exemplo
 
-### 10.2. Ferramentas Recomendadas
+### 11.2. Ferramentas Recomendadas
 
 - **Markdown Linter:** Para validação de sintaxe
 - **Link Checker:** Para verificar links quebrados
@@ -321,7 +388,7 @@ Sempre usar caminhos relativos:
 
 ---
 
-**Versão:** 1.0  
+**Versão:** 1.1  
 **Data:** 01/07/2026  
 **Status:** Produção  
-**Atualizações:** Documento inicial de guia de versionamento
+**Atualizações:** Adicionada seção de automação com script update-readme.ps1 e git hook pre-commit para geração automática do README
