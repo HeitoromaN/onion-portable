@@ -110,5 +110,5 @@ Para que o script funcione, cada KB deve conter:
 
 ---
 
-**Ãšltima AtualizaÃ§Ã£o:** 01/07/2026 22:54  
-**VersÃ£o da KB:** 2.2
+**Ãšltima AtualizaÃ§Ã£o:** 02/07/2026 12:00  
+**VersÃ£o da KB:** 2.3
