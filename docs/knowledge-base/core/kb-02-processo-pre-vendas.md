@@ -7,6 +7,18 @@ Este documento define as regras de responsabilidade e as fases do ciclo comercia
 
 ---
 
+## 1.1. Contexto Histórico (Cenário Legado)
+Antes da implementação do processo estruturado e do AI Copilot, o ciclo de pré-vendas apresentava os seguintes gargalos:
+
+* **Processo Manual e Fragmentado:** A construção de perguntas de levantamento dependia da interpretação manual do briefing e de consultas a múltiplas fontes
+* **Dependência de Especialistas:** A qualidade da descoberta técnica estava atrelada à experiência individual de cada profissional, gerando variação de qualidade e falta de padronização
+* **Retrabalho e Ineficiência:** Perguntas incompletas durante a primeira reunião geravam novas rodadas com os clientes, ajustes frequentes de escopo e reabertura de discussões técnicas
+* **Desalinhamento de Comunicação:** A ausência de um padrão único dificultava o alinhamento de expectativas entre a equipe de vendas, pré-vendas, operação (pós-vendas) e o cliente final
+
+**Fonte:** KB-12: Baseline de Casos e Validação MVP (30 casos reais de clientes)
+
+---
+
 ## 2. Conceitos Chave
 * **Qualificação de Oportunidade:** Fase inicial conduzida pelo BDM com suporte técnico para validar o potencial de receita, orçamento e viabilidade da conta.
 * **Elaboração da Proposta Técnica:** Construção do escopo, dimensionamento de hardware/licenças e desenho de arquiteturas pelo time de Engenharia de Soluções.
@@ -35,3 +47,20 @@ Este documento define as regras de responsabilidade e as fases do ciclo comercia
 > **Pontos de Atenção no Fluxo de Trabalho:**
 > * Evitar a passagem de briefings de oportunidades sem informações comerciais básicas no CRM (AMs devem preencher todos os dados mandatórios antes da distribuição).
 > * Não avançar para o desenho de soluções complexas sem a validação do BDM e alinhamento de preço preliminar com o fabricante.
+
+---
+
+## 5. Referências
+- **KB-01:** Portfólio de Soluções Clear IT
+- **KB-03:** ICP e Personas
+- **KB-04:** Discovery Técnico
+- **KB-12:** Baseline de Casos e Validação MVP (contexto histórico e 30 casos reais)
+- **business-context-lite.md:** Especificações de Features e dores do cliente
+
+---
+
+**Versão:** 1.1  
+**Data:** 05/07/2026  
+**Status:** Produção  
+**Responsável:** @product  
+**Atualizações:** Adicionada seção 1.1 com contexto histórico do cenário legado (KB-12).

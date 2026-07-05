@@ -17,6 +17,18 @@ O objetivo do produto é transformar a TI corporativa em um motor estratégico a
 
 ---
 
+## 2.1. Validação do MVP (Baseline de Casos)
+As features F-01 (Lead Scoring) e F-02 (Discovery) foram validadas com base em **30 casos reais de clientes** consolidados no histórico comercial da Clear IT. Estes casos servem como baseline para o MVP e representam os cenários típicos que o AI Copilot deve ser capaz de interpretar e processar.
+
+**Fonte de validação:** KB-12: Baseline de Casos e Validação MVP
+
+**Cenários validados incluem:**
+- Setores: Logística, Saúde, Educação, Governo, Varejo, Indústria, Financeiro, Tecnologia, Energia, Construção, Hotelaria, Mineração, Alimentos, Seguros, Transporte, Agronegócio, Distribuição
+- Tecnologias: VMware, Fortinet, Veeam, Dell, Cisco, Microsoft, Nutanix, AWS, Azure, HPE, NetApp, SolarWinds, PRTG, Zabbix, Symantec
+- Dores típicas: Storage sem suporte, backup inadequado, monitoramento reativo, VPN lenta, endpoints vulneráveis, switches obsoletos, compliance regulatório
+
+---
+
 ## 3. Backlog de Épicos e Features
 
 | ID | Título | Status | Notas |

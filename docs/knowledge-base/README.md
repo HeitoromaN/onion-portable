@@ -34,6 +34,7 @@ docs/knowledge-base/
 | **[KB-02](core/kb-02-processo-pre-vendas.md)** | Processo de Pré-Vendas e Matriz RACI | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
 | **[KB-03](core/kb-03-personas-icp.md)** | Ideal Customer Profile (ICP) e Personas da Clear IT | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
 | **[KB-10](core/kb-10-classificacoes-oportunidades.md)** | Classificações de Oportunidades e Critérios de Qualificação | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
+| **[KB-12](core/kb-12-baseline-casos-mvp.md)** | Baseline de Casos e Validação MVP — Pré-Vendas Clear IT | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
 ### Technical (DocumentaÃ§Ã£o TÃ©cnica)
 
 | CÃ³digo | Artigo de Conhecimento | DescriÃ§Ã£o | ResponsÃ¡vel | VersÃ£o |
@@ -110,5 +111,5 @@ Para que o script funcione, cada KB deve conter:
 
 ---
 
-**Ãšltima AtualizaÃ§Ã£o:** 02/07/2026 12:00  
+**Ãšltima AtualizaÃ§Ã£o:** 05/07/2026 14:59  
 **VersÃ£o da KB:** 2.3

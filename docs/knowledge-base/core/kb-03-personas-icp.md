@@ -40,7 +40,7 @@ O sistema de qualificação utiliza uma escala de 0 a 200 pontos, dividida em cr
 
 ## 4. Exemplos Práticos
 
-### Personas de Compra Mapeadas
+### 4.1. Personas de Compra Mapeadas
 1. **Carlos Mendes (Gerente de Infraestrutura Governamental):**
    * *Objetivos:* Evitar indisponibilidade de serviços essenciais à população e garantir proteção de dados do Estado.
    * *Principal Dor:* Infraestrutura legada e riscos em caso de falha de backup/ataques de ransomware.
@@ -53,6 +53,45 @@ O sistema de qualificação utiliza uma escala de 0 a 200 pontos, dividida em cr
    * *Objetivos:* Mitigar vulnerabilidades em tempo real, atingir compliance regulatório (LGPD) e monitorar superfícies expostas.
    * *Principal Dor:* Falta de recursos para cobrir monitoramento 24x7.
    * *Discurso:* "Preciso descobrir problemas antes que ocorram."
+
+### 4.2. Casos Reais de Clientes (Baseline MVP)
+Os 30 casos abaixo representam o histórico comercial consolidado e servem como exemplos práticos de aplicação do ICP:
+
+**Setor Público (ICP Governamental):**
+- **Univ. Horizonte (Educação):** Ausência de cópia imutável ou site alternativo para recuperação (Backup Exec, NAS)
+- **Jurídica Prime (Jurídico):** Contas privilegiadas compartilhadas sem auditoria/controle (AD local)
+- **CredMais (Financeiro):** Projeto de compliance para controle de acessos privilegiados (Active Directory)
+- **Lex Prime (Jurídico):** Solução legada e revisão mandatória das políticas de proteção (Backup Exec)
+
+**Setor Privado (ICP Corporativo):**
+- **Alfa Logística (Logística):** Storage sem suporte; aplicações críticas lentas em picos (VMware, Dell PowerEdge)
+- **Vida Plena (Hospital):** Auditoria recomendou evolução da proteção de acessos remotos (Microsoft Defender, VPN SSL)
+- **SuperCompra (Varejo):** Switches fora da garantia e falhas de cobertura Wi-Fi (Cisco Catalyst 2960)
+- **Metal Forte (Metalurgia):** Parque no fim do ciclo de vida; necessidade de modernização (VMware, Blade HPE Gen9)
+- **AgroCampo (Agronegócio):** Dificuldade em monitorar serviços distribuídos multicloud/híbrido (Azure, VMware)
+- **Energia Verde (Energia):** Monitoramento básico; tempo alto para achar causa-raiz de falhas (SolarWinds)
+- **Const. Horizonte (Construção):** Reclamações de experiência de uso no acesso remoto via VPN (FortiGate, VPN IPsec)
+- **Farmalife (Farmacêutica):** Requisitos regulatórios exigem revisão de proteção de dados (Veeam, ExaGrid)
+- **AutoSteel (Indústria):** Gargalos no ambiente e storage no limite de capacidade (VMware, HPE ProLiant, NetApp)
+- **Clínicas Vida (Saúde):** Necessidade de fortalecer endpoints contra ataques direcionados (FortiGate, Microsoft Defender)
+- **MegaShop (Varejo):** Reclamações sobre cobertura de Wi-Fi e switches obsoletos (Cisco Catalyst, Aruba Wi-Fi)
+- **UniBrasil (Educação):** Busca por visão mais completa para reduzir indisponibilidade (PRTG)
+- **Cargo Express (Logística):** Abertura de novos CDs exige revisão de continuidade de negócio (Veeam)
+- **Solar Tech (Energia):** Operação multicloud com dificuldades em monitorar saúde dos serviços (AWS, Azure)
+- **BioLab (Farmacêutica):** Crescimento da operação exigindo revisão de virtualização (Hyper-V, Dell PowerEdge)
+- **Construmax (Construção):** Aumento de chamados de suporte para acesso remoto corporativo (Cisco VPN)
+- **Rede Sol (Hotelaria):** Instabilidades frequentes na rede sem fio de hóspedes/operação (HPE Aruba)
+- **MineraSul (Mineração):** Monitoramento reativo que não detecta impactos na aplicação (Zabbix)
+- **Sabor Real (Alimentos):** Storage principal se aproximando do fim do suporte oficial (Dell EMC Unity)
+- **Alpha Seguros (Seguros):** Aumento de tentativas de acesso indevido em identidades (Microsoft 365)
+- **CloudX (Tecnologia):** Necessidade de visibilidade operacional em ambiente hiperconvergente (Nutanix)
+- **Via Norte (Transporte):** Dificuldade para administrar switches distribuídos geograficamente (FortiSwitch)
+- **AgroVale (Agronegócio):** Demanda de alta disponibilidade para novos sistemas de gestão (VMware, Cisco)
+- **Metal Prime (Indústria):** Antivírus legado incapaz de atender necessidades atuais de proteção (Symantec Endpoint)
+- **DistribuiMax (Distribuição):** Implantação de estratégia corporativa unificada de backup (Dell PowerStore)
+- **Hosp. Santa Clara (Saúde):** Modernização para alta disponibilidade clínica e cibersegurança (VMware, FortiGate)
+
+*Para detalhes completos dos 30 casos, consulte KB-12: Baseline de Casos e Validação MVP*
 
 ---
 
@@ -71,11 +110,12 @@ O sistema de qualificação utiliza uma escala de 0 a 200 pontos, dividida em cr
 - **KB-04:** Discovery Técnico
 - **KB-05:** Ancoragem de Portfólio
 - **KB-10:** Classificações de Oportunidades e Critérios de Qualificação
+- **KB-12:** Baseline de Casos e Validação MVP (30 casos reais de clientes)
 - **Questionários de Qualificação:** Documento com perguntas estruturadas por domínio
 
 ---
 
-**Versão:** 2.1  
-**Data:** 01/07/2026  
+**Versão:** 2.2  
+**Data:** 05/07/2026  
 **Status:** Produção  
-**Atualizações:** Removido campo de Persona do formulário (uso interno). Critérios avançados ajustados para 6 campos (maturidade, urgência, complexidade, compliance, financeiro, relacionamento). Adicionada referência ao KB-10.
+**Atualizações:** Removido campo de Persona do formulário (uso interno). Critérios avançados ajustados para 6 campos (maturidade, urgência, complexidade, compliance, financeiro, relacionamento). Adicionada referência ao KB-10. Adicionados 30 casos reais de clientes como exemplos práticos de ICP (KB-12).
