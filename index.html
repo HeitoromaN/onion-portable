@@ -973,7 +973,8 @@
         .chat-message {
             display: flex;
             gap: 0.75rem;
-            max-width: 85%;
+            max-width: 65%;
+            margin-bottom: 1.75rem;
             animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .chat-message.user {
@@ -1098,21 +1099,26 @@
             flex-shrink: 0;
         }
         .chat-content {
-            background: var(--bg-input);
+            background: #0F172A;
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 0.85rem 1rem;
-            flex: 1;
         }
         .chat-message.user .chat-content {
-            background: var(--primary-dim);
-            border-color: var(--primary);
+            background: #1E293B;
+            border-color: #334155;
         }
         .chat-content strong {
             display: block;
             font-size: 0.8rem;
-            color: var(--primary);
+            color: var(--gray-400);
             margin-bottom: 0.4rem;
+        }
+        .chat-message.agent .chat-content strong {
+            color: var(--primary-light);
+        }
+        .chat-message.user .chat-content strong {
+            color: var(--copilot);
         }
         .chat-content p {
             font-size: 0.875rem;
