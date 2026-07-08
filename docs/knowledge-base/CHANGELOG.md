@@ -7,6 +7,19 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
+## [2.5] - 08/07/2026
+
+### Adicionados
+- **Conexão IA (API Bridge):** Painel de configurações na barra lateral do chat para alternar entre simulação e conexão direta com endpoint HTTP POST e chaves de API secretas.
+- **Micro-interações:** Indicador visual de digitação (typing indicator) com transição de status dinâmico (Análise, KBs, ICP, Geração).
+- **Animações de Transição:** Animações nativas em CSS para fade-in nas trocas de tela e nas mensagens entrantes.
+
+### Alterados
+- **Paleta de Cores (Update-02):** Cores alteradas para os padrões recomendados de alta estética digital baseados no dark-mode moderno (Background #020617, Primário #2563EB, etc).
+- **Arredondamento de Bordas:** Mudança global do contorno de cards e caixas de 10px para 20px para suavização da interface.
+
+---
+
 ## [2.4] - 08/07/2026
 
 ### Adicionados

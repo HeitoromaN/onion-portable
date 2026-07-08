@@ -12,24 +12,24 @@
     <style>
         /* ── BRAND TOKENS (Clear IT Identity) ── */
         :root {
-            /* Primary Colors - Deep Navy & Cyber Cyan */
-            --bg:          #030712;
-            --bg-panel:    #0B132B;
-            --bg-card:     #111827;
-            --bg-input:    #1F2937;
-            --border:      #374151;
-            --border-hover:#00F0FF;
+            /* Primary Colors - Deep Navy & Cyber Blue */
+            --bg:          #020617;
+            --bg-panel:    #0F172A;
+            --bg-card:     #0F172A;
+            --bg-input:    #1E293B;
+            --border:      #1E293B;
+            --border-hover:#3B82F6;
 
-            /* Clear IT brand colors (Neon Cyber Cyan & Copilot Violet) */
-            --primary:     #00F0FF;
-            --primary-light:#67E8F9;
-            --primary-dark: #0891B2;
-            --primary-dim: rgba(0,240,255,0.08);
-            --primary-glow: rgba(0,240,255,0.15);
-            --copilot:     #8B5CF6;
-            --copilot-glow:rgba(139,92,246,0.20);
+            /* Brand & Accent Colors (Update-02) */
+            --primary:     #2563EB;
+            --primary-light:#3B82F6;
+            --primary-dark: #1D4ED8;
+            --primary-dim: rgba(37,99,235,0.08);
+            --primary-glow: rgba(37,99,235,0.15);
+            --copilot:     #7C3AED;
+            --copilot-glow:rgba(124,58,237,0.20);
 
-            --white:       #FFFFFF;
+            --white:       #F8FAFC;
             --off-white:   #F8FAFC;
             --gray-100:    #F1F5F9;
             --gray-200:    #E2E8F0;
@@ -42,19 +42,19 @@
             --gray-900:    #0F172A;
 
             /* Semantic colors for SOC/COps */
-            --green:       #10B981;
-            --green-dim:   rgba(16,185,129,0.12);
+            --green:       #22C55E;
+            --green-dim:   rgba(34,197,94,0.12);
             --amber:       #FACC15;
             --amber-dim:   rgba(250,204,21,0.12);
             --orange:      #F97316;
             --orange-dim:  rgba(249,115,22,0.12);
             --red:         #EF4444;
             --red-dim:     rgba(239,68,68,0.12);
-            --blue:        #00A3E0;
-            --blue-dim:    rgba(0,163,224,0.12);
+            --blue:        #2563EB;
+            --blue-dim:    rgba(37,99,235,0.12);
 
-            --radius:      10px;
-            --radius-sm:   6px;
+            --radius:      20px;
+            --radius-sm:   10px;
             --transition:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
             --font:        'Inter', sans-serif;
@@ -939,11 +939,42 @@
             background: var(--primary-dim);
         }
 
+        /* ── ANIMATIONS ── */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes typingPulse {
+            0%, 80%, 100% { transform: scale(0.5); opacity: 0.3; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        .view.active {
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
         /* ── CHAT ─── */
         .chat-message {
             display: flex;
             gap: 0.75rem;
             max-width: 85%;
+            animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .chat-message.user {
             align-self: flex-end;
@@ -952,6 +983,108 @@
         .chat-message.agent {
             align-self: flex-start;
         }
+        
+        /* ── TYPING / PROCESSING INDICATOR ─── */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.85rem 1rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            color: var(--gray-400);
+            max-width: fit-content;
+            margin-top: 0.5rem;
+            align-self: flex-start;
+            animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: typingPulse 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        /* ── WORKSPACE TOOLBAR & SETTINGS ── */
+        .workspace-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-panel);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+        .workspace-header-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .workspace-header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .workspace-icon-btn {
+            width: 36px; height: 36px;
+            border: 1px solid var(--border);
+            background: var(--bg-input);
+            border-radius: var(--radius-sm);
+            color: var(--gray-400);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition-fast);
+        }
+        .workspace-icon-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-dim); }
+        .ai-status-pill {
+            font-size: 0.7rem; font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            color: var(--gray-400);
+        }
+        .ai-status-pill.live { color: var(--green); border-color: rgba(34,197,94,0.3); background: var(--green-dim); }
+        .ai-status-pill.mock { color: var(--copilot); border-color: rgba(124,58,237,0.3); background: rgba(124,58,237,0.1); }
+        .settings-drawer {
+            display: none;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(15,23,42,0.95);
+            backdrop-filter: blur(12px);
+        }
+        .settings-drawer.open { display: block; animation: fadeInUp 0.25s ease; }
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 900px;
+        }
+        .settings-grid label { font-size: 0.72rem; color: var(--gray-500); display: block; margin-bottom: 4px; }
+        .settings-grid input, .settings-grid select {
+            width: 100%; padding: 0.5rem 0.75rem;
+            background: var(--bg-input); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); color: var(--white); font-size: 0.8rem;
+        }
+        .agent-route-badge {
+            display: inline-block;
+            font-size: 0.65rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 0.35rem;
+            background: rgba(124,58,237,0.15);
+            color: var(--copilot);
+            border: 1px solid rgba(124,58,237,0.25);
+        }
+        body.dev-modules aside { display: flex !important; }
+        body.dev-modules main { padding: 2rem 2.5rem; }
+
         .chat-avatar {
             width: 36px;
             height: 36px;
@@ -1198,15 +1331,50 @@
 
     <!-- ─── WORKSPACE CHAT (F-06) ─── -->
     <section id="view-chat" class="view active" style="height: 100vh; display: flex; flex-direction: column;">
-        <!-- Chat Header -->
-        <div style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); background: var(--bg-panel);">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; color: white;">C</div>
+        <div class="workspace-header">
+            <div class="workspace-header-left">
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), var(--copilot)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem; color: white;">C</div>
                 <div>
-                    <div style="font-weight: 700; font-size: 1.1rem; color: var(--white);">Clear AI</div>
-                    <div style="font-size: 0.85rem; color: var(--gray-400);">Workspace Inteligente do Consultor</div>
+                    <div style="font-weight: 700; font-size: 1rem; color: var(--white);">Clear AI</div>
+                    <div style="font-size: 0.78rem; color: var(--gray-400);">O que você recebeu do cliente hoje?</div>
+                </div>
+                <span id="ai-status-pill" class="ai-status-pill mock">Modo Simulado</span>
+            </div>
+            <div class="workspace-header-actions">
+                <button class="workspace-icon-btn" onclick="toggleSettingsDrawer()" title="Conexão IA (API Bridge)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                </button>
+                <button class="workspace-icon-btn" onclick="toggleDevModules()" title="Módulos legados (dev)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </button>
+                <button class="workspace-icon-btn" onclick="toggleTheme()" title="Alternar tema">
+                    <svg id="workspace-theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/></svg>
+                </button>
+                <button class="workspace-icon-btn" onclick="clearChat()" title="Limpar conversa">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="settings-drawer" class="settings-drawer">
+            <div class="settings-grid">
+                <div>
+                    <label for="ai-mode">Modo IA</label>
+                    <select id="ai-mode" onchange="toggleAiMode(); saveAiConfig();">
+                        <option value="mock">Simulado (KB local)</option>
+                        <option value="real">API Real (Backend + OpenAI)</option>
+                    </select>
+                </div>
+                <div id="ai-config-fields" style="display:none;">
+                    <label for="ai-endpoint">Endpoint da API</label>
+                    <input type="text" id="ai-endpoint" value="http://localhost:3001/api/chat" onchange="saveAiConfig()">
+                </div>
+                <div id="ai-token-field" style="display:none;">
+                    <label for="ai-token">Token (opcional — preferir .env no servidor)</label>
+                    <input type="password" id="ai-token" placeholder="Deixe vazio se usar server/.env" onchange="saveAiConfig()">
                 </div>
             </div>
+            <p style="font-size:0.72rem;color:var(--gray-500);margin-top:0.75rem;">Execute <code style="color:var(--primary)">cd server && npm install && npm start</code> e configure OPENAI_API_KEY em server/.env</p>
         </div>
 
         <!-- Chat Messages -->
@@ -1248,15 +1416,17 @@
                 <!-- Text Input -->
                 <input type="text" id="chat-input" class="chat-input-field" placeholder="Digite sua mensagem ou anexe um arquivo..." onkeypress="if(event.key === 'Enter') sendMessage()">
 
+                <input type="file" id="chat-file-input" accept=".txt,.md,.pdf,.doc,.docx,.png,.jpg,.jpeg" style="display:none" onchange="handleFileAttach(event)">
+
                 <!-- Attachment Button -->
-                <button class="chat-action-btn" title="Anexar arquivo (PDF, DOCX, imagem)">
+                <button class="chat-action-btn" title="Anexar arquivo (TXT, MD — PDF em breve)" onclick="document.getElementById('chat-file-input').click()">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
                     </svg>
                 </button>
                 
                 <!-- Voice Button -->
-                <button class="chat-action-btn" title="Gravar áudio">
+                <button class="chat-action-btn" id="voice-btn" title="Gravar áudio (ditado)" onclick="toggleVoiceInput()">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
                         <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
@@ -1773,60 +1943,6 @@
         </div>
     </section>
 
-    <!-- ─── CHAT (F-05) ─── -->
-    <section id="view-chat" class="view">
-        <div class="page-header">
-            <div>
-                <h1>Conversa com <span>Agente IA</span></h1>
-                <p>Pergunte sobre portfólio, processos, ICP e discovery — ancorado nas KBs Clear IT.</p>
-            </div>
-            <div class="header-actions">
-                <button class="btn btn-ghost" onclick="clearChat()">Limpar Conversa</button>
-            </div>
-        </div>
-
-        <div class="card" style="display:flex;flex-direction:column;height:calc(100vh - 220px);">
-            <div class="chat-container" id="chat-messages" style="flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:1rem;">
-                <!-- AI Intro Card -->
-                <div class="chat-intro">
-                    <div class="chat-intro-header">
-                        <div class="chat-intro-avatar">🔵</div>
-                        <div>
-                            <div class="chat-intro-name">Clear AI</div>
-                            <div class="chat-intro-title">Assistente de Pré-Vendas e Engenharia de Soluções</div>
-                        </div>
-                    </div>
-                    <div class="chat-intro-description">
-                        Sou a inteligência artificial da Clear IT, especializada em pré-vendas e engenharia de soluções. Minha missão é acelerar o ciclo de pré-vendas, garantir conformidade com o portfólio e reduzir riscos de over-promising.
-                    </div>
-                    <div class="chat-intro-capabilities">
-                        <span class="chat-intro-cap">Portfólio Clear IT</span>
-                        <span class="chat-intro-cap">Processos RACI</span>
-                        <span class="chat-intro-cap">ICP & Personas</span>
-                        <span class="chat-intro-cap">Discovery Técnico</span>
-                        <span class="chat-intro-cap">Escopo de Proposta</span>
-                        <span class="chat-intro-cap">Guardrails de Escopo</span>
-                    </div>
-                    <div class="chat-intro-divider"></div>
-                    <div class="chat-intro-prompts">
-                        <div class="chat-intro-prompts-title">Perguntas Frequentes</div>
-                        <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais são os SLAs do SOC 24/7?')">Quais são os SLAs do SOC 24/7?</div>
-                        <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quem é responsável pela qualificação no RACI?')">Quem é responsável pela qualificação no RACI?</div>
-                        <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais são as exclusões padrão do portfólio?')">Quais são as exclusões padrão do portfólio?</div>
-                        <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais parceiros são homologados?')">Quais parceiros são homologados?</div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="padding:1rem;border-top:1px solid var(--border);">
-                <div style="display:flex;gap:0.75rem;">
-                    <input type="text" id="chat-input" placeholder="Digite sua pergunta..." onkeypress="if(event.key==='Enter')sendMessage()" style="flex:1;">
-                    <button class="btn btn-primary" onclick="sendMessage()">Enviar →</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ─── KNOWLEDGE BASE ─── -->
     <section id="view-kb" class="view">
         <div class="page-header">
@@ -2135,10 +2251,17 @@ let leads = loadLeads();
 
 /* ─── NAVIGATION ─── */
 function switchView(name) {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => {
+        v.classList.remove('active');
+        v.style.display = 'none';
+    });
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('view-' + name).classList.add('active');
-    document.getElementById('menu-' + name).classList.add('active');
+    const view = document.getElementById('view-' + name);
+    if (!view) return;
+    view.classList.add('active');
+    view.style.display = name === 'chat' ? 'flex' : 'block';
+    const menu = document.getElementById('menu-' + name);
+    if (menu) menu.classList.add('active');
 }
 
 /* ─── SEGMENT TOGGLE ─── */
@@ -2762,22 +2885,242 @@ function maskSensitiveData(text) {
     return text;
 }
 
+const AI_CONFIG_KEY = 'clearit_ai_config_v1';
+const CHAT_HISTORY_KEY = 'clearit_chat_history_v1';
+let chatHistory = [];
+let speechRecognition = null;
+let isListening = false;
+
+function loadAiConfig() {
+    try {
+        const raw = localStorage.getItem(AI_CONFIG_KEY);
+        if (raw) return JSON.parse(raw);
+    } catch (e) { /* ignore */ }
+    return { mode: 'mock', endpoint: 'http://localhost:3001/api/chat', token: '' };
+}
+
+function saveAiConfig() {
+    const config = {
+        mode: document.getElementById('ai-mode').value,
+        endpoint: document.getElementById('ai-endpoint').value,
+        token: document.getElementById('ai-token')?.value || ''
+    };
+    localStorage.setItem(AI_CONFIG_KEY, JSON.stringify(config));
+    updateAiStatusPill();
+}
+
+function initAiConfig() {
+    const config = loadAiConfig();
+    document.getElementById('ai-mode').value = config.mode || 'mock';
+    document.getElementById('ai-endpoint').value = config.endpoint || 'http://localhost:3001/api/chat';
+    const tokenEl = document.getElementById('ai-token');
+    if (tokenEl) tokenEl.value = config.token || '';
+    toggleAiMode();
+    updateAiStatusPill();
+}
+
+function updateAiStatusPill() {
+    const pill = document.getElementById('ai-status-pill');
+    if (!pill) return;
+    const mode = document.getElementById('ai-mode').value;
+    if (mode === 'real') {
+        pill.textContent = 'API Bridge';
+        pill.className = 'ai-status-pill live';
+    } else {
+        pill.textContent = 'Modo Simulado';
+        pill.className = 'ai-status-pill mock';
+    }
+}
+
+function toggleSettingsDrawer() {
+    document.getElementById('settings-drawer').classList.toggle('open');
+}
+
+function toggleDevModules() {
+    document.body.classList.toggle('dev-modules');
+}
+
+function toggleAiMode() {
+    const mode = document.getElementById('ai-mode').value;
+    const fields = document.getElementById('ai-config-fields');
+    const tokenField = document.getElementById('ai-token-field');
+    const show = mode === 'real';
+    if (fields) fields.style.display = show ? 'block' : 'none';
+    if (tokenField) tokenField.style.display = show ? 'block' : 'none';
+    updateAiStatusPill();
+}
+
+function detectIntent(message) {
+    const q = message.toLowerCase();
+    if (/qualific|lead|score|icp|raci|oportunidade|prospec/.test(q))
+        return { agent: 'Lead Agent', label: 'Qualificação de Oportunidade' };
+    if (/discovery|roteiro|briefing|rfp|edital|pergunta|reunião/.test(q))
+        return { agent: 'Discovery Agent', label: 'Discovery Técnico' };
+    if (/proposta|escopo|sla|inclus|exclus|contrato/.test(q))
+        return { agent: 'Proposal Agent', label: 'Recomendação de Escopo' };
+    if (/auditoria|histórico|log|modifica|version/.test(q))
+        return { agent: 'Audit Agent', label: 'Auditoria e Versionamento' };
+    return { agent: 'Knowledge Agent', label: 'Consulta à Base de Conhecimento' };
+}
+
+function showProcessingIndicator(statuses) {
+    const container = document.getElementById('chat-messages');
+    const loaderDiv = document.createElement('div');
+    loaderDiv.className = 'typing-indicator';
+    loaderDiv.id = 'ai-loading';
+    loaderDiv.innerHTML = `
+        <span id="ai-loading-text">${statuses[0]}</span>
+        <div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
+    `;
+    container.appendChild(loaderDiv);
+    container.scrollTop = container.scrollHeight;
+
+    let step = 0;
+    const interval = setInterval(() => {
+        step++;
+        const textSpan = document.getElementById('ai-loading-text');
+        if (textSpan && step < statuses.length) textSpan.textContent = statuses[step];
+        else clearInterval(interval);
+    }, 700);
+    return interval;
+}
+
 function sendMessage() {
     const input = document.getElementById('chat-input');
     const message = input.value.trim();
     if (!message) return;
 
     addChatMessage('user', message);
+    chatHistory.push({ role: 'user', content: message });
+    saveChatHistory();
     input.value = '';
 
-    // Mask sensitive data before sending to LLM
+    const intent = detectIntent(message);
     const maskedMessage = maskSensitiveData(message);
+    const statuses = [
+        '⏳ Analisando solicitação...',
+        `🤖 Acionando ${intent.agent}...`,
+        '🔍 Consultando Base de Conhecimento (KBs)...',
+        '🧠 Calculando critérios de ICP e RACI...',
+        '✍️ Gerando resposta...'
+    ];
+    const interval = showProcessingIndicator(statuses);
+    const mode = document.getElementById('ai-mode').value;
 
-    // Simulate agent processing
-    setTimeout(() => {
-        const response = generateAgentResponse(maskedMessage);
-        addChatMessage('agent', response);
-    }, 500);
+    const finish = (reply, agentLabel) => {
+        clearInterval(interval);
+        document.getElementById('ai-loading')?.remove();
+        addChatMessage('agent', reply, agentLabel || intent.agent);
+        chatHistory.push({ role: 'agent', content: reply.replace(/<[^>]+>/g, '') });
+        saveChatHistory();
+    };
+
+    if (mode === 'real') {
+        const endpoint = document.getElementById('ai-endpoint').value;
+        const token = document.getElementById('ai-token')?.value || '';
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                ...(token ? { Authorization: `Bearer ${token}` } : {})
+            },
+            body: JSON.stringify({
+                message: maskedMessage,
+                history: chatHistory.slice(-10),
+                intent
+            })
+        })
+        .then(res => {
+            if (!res.ok) throw new Error('API status ' + res.status);
+            return res.json();
+        })
+        .then(data => {
+            const reply = data.reply || data.fallback || 'Sem resposta.';
+            finish(reply, intent.agent);
+        })
+        .catch(err => {
+            console.error('API Error:', err);
+            const response = orchestrateLocalResponse(maskedMessage, intent);
+            finish(`⚠️ <strong>API indisponível — fallback local:</strong><br><br>${response}`, intent.agent);
+        });
+    } else {
+        setTimeout(() => {
+            finish(orchestrateLocalResponse(maskedMessage, intent), intent.agent);
+        }, 2200);
+    }
+}
+
+function orchestrateLocalResponse(message, intent) {
+    const q = message.toLowerCase();
+    const badge = `<span class="agent-route-badge">${intent.agent}</span>`;
+    if (intent.agent === 'Lead Agent' && /qualific|lead|oportunidade|varejo|governamental|icp/.test(q)) {
+        return badge + generateAgentResponse(message) + '<br><br><em>Próximo passo sugerido: envie o briefing completo para gerar o roteiro de Discovery.</em>';
+    }
+    if (intent.agent === 'Discovery Agent') {
+        return badge + generateAgentResponse(message) + '<br><br><em>Use o Discovery Agent interno: domínios SOC, COps, Infra, Cyber e Backup serão mapeados automaticamente.</em>';
+    }
+    if (intent.agent === 'Proposal Agent') {
+        return badge + generateAgentResponse(message) + '<br><br><em>Escopo sugerido incluirá Inclusões, SLAs, Exclusões e Premissas conforme KB-01/KB-02.</em>';
+    }
+    return badge + generateAgentResponse(message);
+}
+
+function handleFileAttach(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const text = e.target.result;
+        const input = document.getElementById('chat-input');
+        input.value = `[Anexo: ${file.name}]\n${String(text).slice(0, 4000)}`;
+        sendMessage();
+    };
+    if (file.type.startsWith('text/') || file.name.endsWith('.md') || file.name.endsWith('.txt')) {
+        reader.readAsText(file);
+    } else {
+        document.getElementById('chat-input').value = `[Anexo recebido: ${file.name}] Multimodal completo (PDF/DOCX/OCR) previsto na fase P2. Descreva o conteúdo ou cole o texto.`;
+    }
+    event.target.value = '';
+}
+
+function toggleVoiceInput() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        alert('Seu navegador não suporta ditado por voz. Use Chrome ou Edge.');
+        return;
+    }
+    if (isListening && speechRecognition) {
+        speechRecognition.stop();
+        return;
+    }
+    speechRecognition = new SpeechRecognition();
+    speechRecognition.lang = 'pt-BR';
+    speechRecognition.interimResults = false;
+    speechRecognition.onstart = () => {
+        isListening = true;
+        document.getElementById('voice-btn').style.borderColor = 'var(--primary)';
+    };
+    speechRecognition.onend = () => {
+        isListening = false;
+        document.getElementById('voice-btn').style.borderColor = '';
+    };
+    speechRecognition.onresult = (ev) => {
+        const transcript = ev.results[0][0].transcript;
+        document.getElementById('chat-input').value = transcript;
+    };
+    speechRecognition.onerror = () => { isListening = false; };
+    speechRecognition.start();
+}
+
+function saveChatHistory() {
+    try { localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(chatHistory.slice(-50))); } catch (e) { /* ignore */ }
+}
+
+function loadChatHistory() {
+    try {
+        const raw = localStorage.getItem(CHAT_HISTORY_KEY);
+        if (raw) chatHistory = JSON.parse(raw);
+    } catch (e) { chatHistory = []; }
 }
 
 function sendQuickPrompt(prompt) {
@@ -2785,7 +3128,7 @@ function sendQuickPrompt(prompt) {
     sendMessage();
 }
 
-function addChatMessage(type, content) {
+function addChatMessage(type, content, agentLabel) {
     const container = document.getElementById('chat-messages');
     const msgDiv = document.createElement('div');
     msgDiv.className = `chat-message ${type}`;
@@ -2796,9 +3139,9 @@ function addChatMessage(type, content) {
 
     const contentDiv = document.createElement('div');
     contentDiv.className = 'chat-content';
-    // Allow HTML for agent responses (formatting), escape for user messages
     if (type === 'agent') {
-        contentDiv.innerHTML = `<strong>Clear AI</strong><p>${content}</p>`;
+        const label = agentLabel ? `<span class="agent-route-badge">${escapeHtml(agentLabel)}</span>` : '';
+        contentDiv.innerHTML = `<strong>Clear AI</strong>${label}<p>${content}</p>`;
     } else {
         contentDiv.innerHTML = `<strong>Você</strong><p>${escapeHtml(content)}</p>`;
     }
@@ -2810,9 +3153,14 @@ function addChatMessage(type, content) {
 }
 
 function clearChat() {
+    chatHistory = [];
+    saveChatHistory();
     const container = document.getElementById('chat-messages');
-    container.innerHTML = `
-        <!-- AI Intro Card -->
+    container.innerHTML = getChatIntroHtml();
+}
+
+function getChatIntroHtml() {
+    return `
         <div class="chat-intro">
             <div class="chat-intro-header">
                 <div class="chat-intro-avatar">🔵</div>
@@ -2822,7 +3170,7 @@ function clearChat() {
                 </div>
             </div>
             <div class="chat-intro-description">
-                Sou a inteligência artificial da Clear IT, especializada em pré-vendas e engenharia de soluções. Minha missão é acelerar o ciclo de pré-vendas, garantir conformidade com o portfólio e reduzir riscos de over-promising.
+                Sou a inteligência artificial da Clear IT. Envie o que recebeu do cliente — eu identifico a intenção e aciono os agentes certos (Lead, Discovery, Proposta, KB).
             </div>
             <div class="chat-intro-capabilities">
                 <span class="chat-intro-cap">Portfólio Clear IT</span>
@@ -2834,14 +3182,13 @@ function clearChat() {
             </div>
             <div class="chat-intro-divider"></div>
             <div class="chat-intro-prompts">
-                <div class="chat-intro-prompts-title">Perguntas Frequentes</div>
+                <div class="chat-intro-prompts-title">O que você recebeu do cliente hoje?</div>
+                <div class="chat-intro-prompt" onclick="sendQuickPrompt('Recebi um e-mail de um cliente governamental com necessidade de SOC 24/7')">Recebi um e-mail de um cliente governamental com necessidade de SOC 24/7</div>
+                <div class="chat-intro-prompt" onclick="sendQuickPrompt('O cliente enviou um RFP com solicitação de infraestrutura hiperconvergente')">O cliente enviou um RFP com solicitação de infraestrutura hiperconvergente</div>
+                <div class="chat-intro-prompt" onclick="sendQuickPrompt('Preciso qualificar uma oportunidade de varejo com 50 lojas')">Preciso qualificar uma oportunidade de varejo com 50 lojas</div>
                 <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais são os SLAs do SOC 24/7?')">Quais são os SLAs do SOC 24/7?</div>
-                <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quem é responsável pela qualificação no RACI?')">Quem é responsável pela qualificação no RACI?</div>
-                <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais são as exclusões padrão do portfólio?')">Quais são as exclusões padrão do portfólio?</div>
-                <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais parceiros são homologados?')">Quais parceiros são homologados?</div>
             </div>
-        </div>
-    `;
+        </div>`;
 }
 
 function generateAgentResponse(query) {
@@ -3046,7 +3393,15 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e =
 });
 
 /* ─── INIT ─── */
-window.onload = () => { initTheme(); renderLeads(); initKB(); populateLeadSelect(); renderAuditLog(); };
+window.onload = () => {
+    initTheme();
+    initAiConfig();
+    loadChatHistory();
+    renderLeads();
+    initKB();
+    populateLeadSelect();
+    renderAuditLog();
+};
 </script>
 </body>
 </html>
