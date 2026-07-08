@@ -48,6 +48,7 @@ docs/knowledge-base/
 | **[KB-08](design/kb-08-identidade-ia.md)** | Identidade da IA — Clear AI | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
 | **[KB-09](design/kb-09-boas-praticas-cores-modo-claro-escuro.md)** | Boas Práticas de Esquema de Cores e Organização para Sites | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
 | **[KB-11](design/kb-11-estruturacao-sites-hierarquia-visual.md)** | Estruturação de Sites e Hierarquia Visual | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
+| **[KB-13](design/kb-13-boas-praticas-ui-chat-ia.md)** | Boas Práticas de UI/UX para Chat Interfaces com Inteligência Artificial | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
 | **[Guia de Paleta de Cores](./design/guia_de_palheta_de_cores.md)** | Paleta de Cores Clear IT | DocumentaÃ§Ã£o detalhada da paleta de cores da marca Clear IT. | @design | - |
 ### Prompts (Prompts e System Prompts)
 
@@ -111,5 +112,5 @@ Para que o script funcione, cada KB deve conter:
 
 ---
 
-**Ãšltima AtualizaÃ§Ã£o:** 05/07/2026 14:59  
+**Ãšltima AtualizaÃ§Ã£o:** 08/07/2026 14:22  
 **VersÃ£o da KB:** 2.3
