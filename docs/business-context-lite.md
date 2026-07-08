@@ -29,6 +29,15 @@ As features F-01 (Lead Scoring) e F-02 (Discovery) foram validadas com base em *
 
 ---
 
+## 2.2. Validação de Escopo
+* **Escopo aprovado em:** 2026-07-01
+* **Aprovado por:** Heitor Feitosa (Product Owner)
+* **Dentro do escopo:** F-01 a F-05
+* **Fora do escopo (MVP):** Integração real com LLM, autenticação, sincronização multi-dispositivo
+* **Restrições:** LGPD (RN-09/RN-12), guardrails de portfólio (RN-06/RN-10), RACI (RN-03)
+
+---
+
 ## 3. Backlog de Épicos e Features
 
 | ID | Título | Status | Notas |
@@ -38,6 +47,7 @@ As features F-01 (Lead Scoring) e F-02 (Discovery) foram validadas com base em *
 | F-03 | Recomendação de Escopo de Propostas | ✅ Feito | Sugere templates de escopo técnico, SLAs (SOC 24/7, COps) e exclusões comuns. |
 | F-04 | Auditoria de Modificações e Versionamento | ✅ Feito | Rastreamento histórico de edições nos dados dos leads e clientes. |
 | F-05 | Conversa Livre com Agente IA | ✅ Feito | Interface de chat natural com agente ancorado nas KBs e regras de negócio. |
+| F-06 | Workspace Inteligente do Consultor | 🔄 Pronto para Dev | Transforma o sistema de plataforma de módulos em workspace conversacional com orquestração automática de agentes e suporte multimodal. |
 
 ---
 
@@ -109,3 +119,21 @@ As features F-01 (Lead Scoring) e F-02 (Discovery) foram validadas com base em *
   * **CA-07:** O agente responde perguntas sobre portfólio, processos RACI, ICP e discovery em menos de 3 segundos.
   * **CA-08:** O agente sinaliza lacunas de portfólio explicitamente quando perguntado sobre serviços fora do escopo.
   * **CA-09:** O agente pode acessar dados de leads qualificados do LocalStorage para contextualizar respostas.
+
+### F-06: Workspace Inteligente do Consultor
+* **História de Usuário:**
+  * **Como** consultor comercial ou engenheiro de soluções da Clear IT,
+  * **Quero** enviar qualquer informação do cliente (texto, áudio, PDF, imagem, e-mail, RFP, edital) em um único fluxo conversacional,
+  * **Para** que a IA identifique automaticamente a intenção, acione os agentes especializados e entregue uma resposta consolidada sem que eu precise decidir qual funcionalidade utilizar.
+* **Regras de Negócio (RN):**
+  * **RN-16 (Interface Conversacional):** A interface deve ser centrada no chat, com campo de texto, sugestões rápidas, botão de voz, botão de anexos e histórico.
+  * **RN-17 (Suporte Multimodal):** O sistema deve aceitar entrada via texto, áudio (ditado), PDF, DOCX, imagem, capturas de tela, e-mail, RFP e editais.
+  * **RN-18 (Orquestração Automática):** A IA deve identificar automaticamente a intenção do usuário e acionar os agentes internos (Lead Agent, Discovery Agent, Proposal Agent, Knowledge Agent, Audit Agent) sem intervenção manual.
+  * **RN-19 (Agentes Invisíveis):** As features existentes (F-01 a F-05) devem continuar existindo internamente como agentes especializados, mas não devem aparecer como módulos separados na interface.
+  * **RN-20 (Pergunta de Entrada):** A pergunta inicial deve ser "O que você recebeu do cliente hoje?" em vez de "Qual funcionalidade deseja utilizar?".
+* **Critérios de Aceite (CA):**
+  * **CA-10:** A interface remove 70-80% dos elementos visuais atuais, mantendo apenas chat central, campo de texto, sugestões rápidas, botão de voz, botão de anexos e histórico.
+  * **CA-11:** O usuário pode enviar qualquer tipo de arquivo (texto, áudio, PDF, DOCX, imagem) e o sistema processa automaticamente.
+  * **CA-12:** A IA identifica a intenção e aciona automaticamente o agente correto (Lead, Discovery, Proposal, Knowledge, Audit) sem seleção manual do usuário.
+  * **CA-13:** A resposta consolidada integra outputs de múltiplos agentes quando necessário (ex: lead scoring + discovery + proposta em um único fluxo).
+  * **CA-14:** O sistema mantém toda a arquitetura existente, Knowledge Base, regras de negócio e agentes especializados, alterando apenas a experiência do usuário.

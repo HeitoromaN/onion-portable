@@ -85,6 +85,54 @@ graph TD
 
 ---
 
+### Plano futuro: Workspace Inteligente do Consultor (F-06)
+
+> Spec de negócio preenchida em `business-context-lite.md`. Status: Pronto para Dev.
+
+#### Arquivos a serem modificados:
+- `[TODO] index.html` — Redesenhar interface para workspace conversacional centralizado
+- `[TODO] docs/technical-context-lite.md` — Este plano técnico
+
+#### Checklist de implementação:
+- [ ] Redesenhar layout da SPA para remover 70-80% dos elementos visuais atuais
+- [ ] Manter apenas: chat central, campo de texto, sugestões rápidas, botão de voz, botão de anexos, histórico
+- [ ] Implementar suporte multimodal para entrada:
+  - Texto (já existe)
+  - Áudio (ditado via Web Speech API)
+  - PDF (extração de texto via PDF.js)
+  - DOCX (extração de texto via mammoth.js)
+  - Imagem (OCR via Tesseract.js)
+  - E-mail (parser de conteúdo)
+  - RFP/Edital (parser de conteúdo)
+- [ ] Implementar orquestrador de agentes:
+  - Intention Detection Engine (identificar Lead, Discovery, Proposal, Knowledge, Audit)
+  - Agent Router (acionar agente correto automaticamente)
+  - Response Consolidator (integrar outputs de múltiplos agentes)
+- [ ] Manter agentes existentes como módulos internos (não visíveis na UI):
+  - Lead Agent (F-01)
+  - Discovery Agent (F-02)
+  - Proposal Agent (F-03)
+  - Audit Agent (F-04)
+  - Knowledge Agent (F-05)
+- [ ] Alterar pergunta inicial de "Qual funcionalidade deseja utilizar?" para "O que você recebeu do cliente hoje?"
+- [ ] Implementar mascaramento de dados sensíveis em todas as entradas (já existe para chat)
+- [ ] Testar fluxo completo: envio multimodal → detecção de intenção → orquestração → resposta consolidada
+- [ ] Garantir compatibilidade com arquitetura existente (LocalStorage, KBs, regras de negócio)
+
+#### Dependências externas:
+- PDF.js (extração de texto de PDFs)
+- mammoth.js (extração de texto de DOCX)
+- Tesseract.js (OCR de imagens)
+- Web Speech API (ditado por voz - nativo do navegador)
+
+#### Considerações de arquitetura:
+- Preservar toda a lógica existente de F-01 a F-05
+- Agentes continuam existindo como funções/módulos internos
+- Apenas a interface muda (de módulos separados para chat centralizado)
+- Orquestrador atua como dispatcher baseado em intenção detectada
+
+---
+
 ### Plano concluído: Conversa Livre com Agente IA (F-05)
 
 > Spec de negócio preenchida em `business-context-lite.md`. Implementação concluída.
