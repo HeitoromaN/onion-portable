@@ -367,7 +367,7 @@
             min-width: 240px;
             background: var(--bg-panel);
             border-right: 1px solid var(--border);
-            display: flex;
+            display: none; /* Hidden for F-06 Workspace mode */
             flex-direction: column;
             padding: 0;
             position: sticky;
@@ -474,7 +474,7 @@
         main {
             flex: 1;
             min-width: 0;
-            padding: 2rem 2.5rem;
+            padding: 0; /* No padding for F-06 Workspace mode */
             overflow-y: auto;
             max-height: 100vh;
         }
@@ -1158,8 +1158,88 @@
 <!-- ═══ MAIN ═══ -->
 <main>
 
+    <!-- ─── WORKSPACE CHAT (F-06) ─── -->
+    <section id="view-chat" class="view active" style="height: 100vh; display: flex; flex-direction: column;">
+        <!-- Chat Header -->
+        <div style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); background: var(--bg-panel);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; color: white;">C</div>
+                <div>
+                    <div style="font-weight: 700; font-size: 1.1rem; color: var(--white);">Clear AI</div>
+                    <div style="font-size: 0.85rem; color: var(--gray-400);">Workspace Inteligente do Consultor</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Messages -->
+        <div id="chat-messages" style="flex: 1; padding: 2rem; overflow-y: auto; background: var(--bg);">
+            <!-- AI Intro Card -->
+            <div class="chat-intro">
+                <div class="chat-intro-header">
+                    <div class="chat-intro-avatar">🔵</div>
+                    <div>
+                        <div class="chat-intro-name">Clear AI</div>
+                        <div class="chat-intro-title">Assistente de Pré-Vendas e Engenharia de Soluções</div>
+                    </div>
+                </div>
+                <div class="chat-intro-description">
+                    Sou a inteligência artificial da Clear IT, especializada em pré-vendas e engenharia de soluções. Minha missão é acelerar o ciclo de pré-vendas, garantir conformidade com o portfólio e reduzir riscos de over-promising.
+                </div>
+                <div class="chat-intro-capabilities">
+                    <span class="chat-intro-cap">Portfólio Clear IT</span>
+                    <span class="chat-intro-cap">Processos RACI</span>
+                    <span class="chat-intro-cap">ICP & Personas</span>
+                    <span class="chat-intro-cap">Discovery Técnico</span>
+                    <span class="chat-intro-cap">Escopo de Proposta</span>
+                    <span class="chat-intro-cap">Guardrails de Escopo</span>
+                </div>
+                <div class="chat-intro-divider"></div>
+                <div class="chat-intro-prompts">
+                    <div class="chat-intro-prompts-title">O que você recebeu do cliente hoje?</div>
+                    <div class="chat-intro-prompt" onclick="sendQuickPrompt('Recebi um e-mail de um cliente governamental com necessidade de SOC 24/7')">Recebi um e-mail de um cliente governamental com necessidade de SOC 24/7</div>
+                    <div class="chat-intro-prompt" onclick="sendQuickPrompt('O cliente enviou um RFP com solicitação de infraestrutura hiperconvergente')">O cliente enviou um RFP com solicitação de infraestrutura hiperconvergente</div>
+                    <div class="chat-intro-prompt" onclick="sendQuickPrompt('Preciso qualificar uma oportunidade de varejo com 50 lojas')">Preciso qualificar uma oportunidade de varejo com 50 lojas</div>
+                    <div class="chat-intro-prompt" onclick="sendQuickPrompt('Quais são os SLAs do SOC 24/7?')">Quais são os SLAs do SOC 24/7?</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div style="padding: 1.5rem 2rem; border-top: 1px solid var(--border); background: var(--bg-panel);">
+            <div style="display: flex; gap: 12px; align-items: flex-end;">
+                <!-- Attachment Button -->
+                <button style="width: 44px; height: 44px; border: 1px solid var(--border); background: var(--bg-input); border-radius: 8px; color: var(--gray-400); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition);" title="Anexar arquivo (PDF, DOCX, imagem)">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                    </svg>
+                </button>
+                
+                <!-- Voice Button -->
+                <button style="width: 44px; height: 44px; border: 1px solid var(--border); background: var(--bg-input); border-radius: 8px; color: var(--gray-400); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition);" title="Gravar áudio">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                    </svg>
+                </button>
+
+                <!-- Text Input -->
+                <input type="text" id="chat-input" placeholder="Digite sua mensagem ou anexe um arquivo..." style="flex: 1; padding: 12px 16px; border: 1px solid var(--border); background: var(--bg-input); border-radius: 8px; color: var(--white); font-size: 0.95rem; outline: none; transition: var(--transition);" onkeypress="if(event.key === 'Enter') sendMessage()">
+
+                <!-- Send Button -->
+                <button onclick="sendMessage()" style="width: 44px; height: 44px; border: none; background: var(--primary); border-radius: 8px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition);">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
     <!-- ─── DASHBOARD ─── -->
-    <section id="view-dashboard" class="view active">
+    <section id="view-dashboard" class="view" style="display: none;">
         <div class="page-header">
             <div>
                 <h1>Visão Geral <span>Pré-Vendas</span></h1>
