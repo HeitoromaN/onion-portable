@@ -30,14 +30,17 @@ function Get-KBMetadata {
     }
     
     # Extrair descrição (seção Visão Geral)
-    if ($content -match "## 1\. Visão Geral\s+(.+?)(?=\n---|\n##)") {
-        $description = $matches[1].Trim()
+    if ($content -match "(?s)## 1\.\s+Vis[^ \r\n]+o\s+Geral\r?\n(.+?)(?=\r?\n---|\r?\n##)") {
+        $description = $matches[1].Trim().Replace("`r`n", " ").Replace("`n", " ")
+        if ($description.Length -gt 150) {
+            $description = $description.Substring(0, 147) + "..."
+        }
     } else {
         $description = "Descrição não disponível"
     }
     
     # Extrair responsável (cabeçalho de versão)
-    if ($content -match "Responsável:\s+`(@\w+)") {
+    if ($content -match "Respons[^ \r\n:]+:\s*(?:\*\*\s*)?`(@\w+)") {
         $responsible = $matches[1]
     } else {
         $responsible = "@docs"
@@ -132,7 +135,7 @@ docs/knowledge-base/
     # Adicionar KBs Core
     $coreKbs = $kbFiles | Where-Object { $_.Category -eq "core" }
     foreach ($kb in $coreKbs) {
-        $content += "`n| **[KB-$($kb.Number)]($($kb.RelativePath))** | $($kb.Title) | $($kb.Description) | `$($kb.Responsible) | $($kb.Version) |"
+        $content += "`n| **[KB-$($kb.Number)]($($kb.RelativePath))** | $($kb.Title) | $($kb.Description) | $($kb.Responsible) | $($kb.Version) |"
     }
     
     $content += @"
@@ -146,7 +149,7 @@ docs/knowledge-base/
     # Adicionar KBs Technical
     $technicalKbs = $kbFiles | Where-Object { $_.Category -eq "technical" }
     foreach ($kb in $technicalKbs) {
-        $content += "`n| **[KB-$($kb.Number)]($($kb.RelativePath))** | $($kb.Title) | $($kb.Description) | `$($kb.Responsible) | $($kb.Version) |"
+        $content += "`n| **[KB-$($kb.Number)]($($kb.RelativePath))** | $($kb.Title) | $($kb.Description) | $($kb.Responsible) | $($kb.Version) |"
     }
     
     $content += @"
@@ -160,7 +163,7 @@ docs/knowledge-base/
     # Adicionar KBs Design
     $designKbs = $kbFiles | Where-Object { $_.Category -eq "design" }
     foreach ($kb in $designKbs) {
-        $content += "`n| **[KB-$($kb.Number)]($($kb.RelativePath))** | $($kb.Title) | $($kb.Description) | `$($kb.Responsible) | $($kb.Version) |"
+        $content += "`n| **[KB-$($kb.Number)]($($kb.RelativePath))** | $($kb.Title) | $($kb.Description) | $($kb.Responsible) | $($kb.Version) |"
     }
     
     # Adicionar guia de cores manualmente
@@ -180,7 +183,7 @@ docs/knowledge-base/
     # Adicionar KBs Prompts
     $promptsKbs = $kbFiles | Where-Object { $_.Category -eq "prompts" }
     foreach ($kb in $promptsKbs) {
-        $content += "`n| **[KB-$($kb.Number)]($($kb.RelativePath))** | $($kb.Title) | $($kb.Description) | `$($kb.Responsible) | $($kb.Version) |"
+        $content += "`n| **[KB-$($kb.Number)]($($kb.RelativePath))** | $($kb.Title) | $($kb.Description) | $($kb.Responsible) | $($kb.Version) |"
     }
     
     $content += @"
@@ -196,7 +199,7 @@ Documentos mantidos para histórico técnico e referência. Não devem ser usado
     if (Test-Path $legacyPath) {
         $legacyFiles = Get-ChildItem -Path $legacyPath -Filter "*.md" -File
         foreach ($file in $legacyFiles) {
-            $content += "`n- `$($file.Name)"
+            $content += "`n- $($file.Name)"
         }
     }
     

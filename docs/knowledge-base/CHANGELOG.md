@@ -7,6 +7,13 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
+## [2.4] - 08/07/2026
+
+### Adicionados
+- **kb-14-proporcoes-portabilidade-dispositivos.md:** Novo artigo de conhecimento sobre dimensões, proporções e portabilidade responsiva em múltiplos dispositivos móveis e desktops.
+
+---
+
 ## [2.3] - 01/07/2026
 
 ### Simplificados

@@ -30,42 +30,43 @@ docs/knowledge-base/
 
 | CÃ³digo | Artigo de Conhecimento | DescriÃ§Ã£o | ResponsÃ¡vel | VersÃ£o |
 | :--- | :--- | :--- | :--- | :--- |
-| **[KB-01](core/kb-01-portfolio-solucoes.md)** | Portfólio de Soluções e Ecossistema de Parceiros | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
-| **[KB-02](core/kb-02-processo-pre-vendas.md)** | Processo de Pré-Vendas e Matriz RACI | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
-| **[KB-03](core/kb-03-personas-icp.md)** | Ideal Customer Profile (ICP) e Personas da Clear IT | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
-| **[KB-10](core/kb-10-classificacoes-oportunidades.md)** | Classificações de Oportunidades e Critérios de Qualificação | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
-| **[KB-12](core/kb-12-baseline-casos-mvp.md)** | Baseline de Casos e Validação MVP — Pré-Vendas Clear IT | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
+| **[KB-01](core/kb-01-portfolio-solucoes.md)** | Portfólio de Soluções e Ecossistema de Parceiros | Este documento consolida o portfólio oficial de soluções da Clear IT e seu ecossistema de parceiros homologados. Ele orienta a equipe de pré-vendas... | @docs | 1.0 |
+| **[KB-02](core/kb-02-processo-pre-vendas.md)** | Processo de Pré-Vendas e Matriz RACI | Este documento define as regras de responsabilidade e as fases do ciclo comercial de pré-vendas na Clear IT. Ele visa otimizar e agilizar o fluxo o... | @product | 1.0 |
+| **[KB-03](core/kb-03-personas-icp.md)** | Ideal Customer Profile (ICP) e Personas da Clear IT | Este documento mapeia o perfil dos clientes ideais (ICP) e as principais personas de compra da Clear IT. Ele orienta o time de pré-vendas a adotar ... | @docs | 1.0 |
+| **[KB-10](core/kb-10-classificacoes-oportunidades.md)** | Classificações de Oportunidades e Critérios de Qualificação | DescriÃ§Ã£o nÃ£o disponÃ­vel | @engineer | 1.0 |
+| **[KB-12](core/kb-12-baseline-casos-mvp.md)** | Baseline de Casos e Validação MVP — Pré-Vendas Clear IT | DescriÃ§Ã£o nÃ£o disponÃ­vel | @product | 1.0 |
 ### Technical (DocumentaÃ§Ã£o TÃ©cnica)
 
 | CÃ³digo | Artigo de Conhecimento | DescriÃ§Ã£o | ResponsÃ¡vel | VersÃ£o |
 | :--- | :--- | :--- | :--- | :--- |
-| **[KB-04](technical/kb-04-discovery-tecnico.md)** | Questionários de Discovery Técnico | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
-| **[KB-05](technical/kb-05-ancoragem-portfolio.md)** | Ancoragem de Portfólio e Engenharia de Prompt para Classificadores | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
+| **[KB-04](technical/kb-04-discovery-tecnico.md)** | Questionários de Discovery Técnico | Este guia serve de repositório estruturado para conduzir reuniões de descoberta técnica (*discovery*) na Clear IT. As perguntas estão segmentadas p... | @docs | 1.0 |
+| **[KB-05](technical/kb-05-ancoragem-portfolio.md)** | Ancoragem de Portfólio e Engenharia de Prompt para Classificadores | Esta KB aborda técnicas de engenharia de prompt e ancoragem de contexto (context anchoring) para agentes classificadores de oportunidades. O princi... | @docs | 1.0 |
 ### Design (Identidade Visual e UI)
 
 | CÃ³digo | Artigo de Conhecimento | DescriÃ§Ã£o | ResponsÃ¡vel | VersÃ£o |
 | :--- | :--- | :--- | :--- | :--- |
-| **[KB-08](design/kb-08-identidade-ia.md)** | Identidade da IA — Clear AI | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
-| **[KB-09](design/kb-09-boas-praticas-cores-modo-claro-escuro.md)** | Boas Práticas de Esquema de Cores e Organização para Sites | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
-| **[KB-11](design/kb-11-estruturacao-sites-hierarquia-visual.md)** | Estruturação de Sites e Hierarquia Visual | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
-| **[KB-13](design/kb-13-boas-praticas-ui-chat-ia.md)** | Boas Práticas de UI/UX para Chat Interfaces com Inteligência Artificial | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
+| **[KB-08](design/kb-08-identidade-ia.md)** | Identidade da IA — Clear AI | DescriÃ§Ã£o nÃ£o disponÃ­vel | @docs | 1.0 |
+| **[KB-09](design/kb-09-boas-praticas-cores-modo-claro-escuro.md)** | Boas Práticas de Esquema de Cores e Organização para Sites | DescriÃ§Ã£o nÃ£o disponÃ­vel | @docs | 1.0 |
+| **[KB-11](design/kb-11-estruturacao-sites-hierarquia-visual.md)** | Estruturação de Sites e Hierarquia Visual | Este documento estabelece as diretrizes para estruturação de sites, hierarquia visual, clareza de informações e técnicas de atenção visual utilizad... | @docs | 1.0 |
+| **[KB-13](design/kb-13-boas-praticas-ui-chat-ia.md)** | Boas Práticas de UI/UX para Chat Interfaces com Inteligência Artificial | Este documento consolida as melhores práticas de design para interfaces de chat com inteligência artificial, focando em criar experiências conversa... | @design | 1.0 |
+| **[KB-14](design/kb-14-proporcoes-portabilidade-dispositivos.md)** | Proporções, Dimensões e Portabilidade de Sites para Múltiplos Dispositivos | Este documento estabelece as melhores práticas de portabilidade, proporções visuais e design responsivo para o desenvolvimento de sites e aplicaçõe... | @design | 1.0 |
 | **[Guia de Paleta de Cores](./design/guia_de_palheta_de_cores.md)** | Paleta de Cores Clear IT | DocumentaÃ§Ã£o detalhada da paleta de cores da marca Clear IT. | @design | - |
 ### Prompts (Prompts e System Prompts)
 
 | CÃ³digo | Artigo de Conhecimento | DescriÃ§Ã£o | ResponsÃ¡vel | VersÃ£o |
 | :--- | :--- | :--- | :--- | :--- |
-| **[KB-06](prompts/kb-06-system-prompt-storytelling.md)** | System Prompt — Agente de Storytelling Técnico de Pré-Vendas | DescriÃ§Ã£o nÃ£o disponÃ­vel | $(System.Collections.Hashtable.Responsible) | 1.0 |
+| **[KB-06](prompts/kb-06-system-prompt-storytelling.md)** | System Prompt — Agente de Storytelling Técnico de Pré-Vendas | Este documento contém o system prompt pronto para uso do **Agente de Storytelling Técnico da Clear IT**. O agente recebe a descrição de uma oportun... | @docs | 1.0 |
 ### Legacy (Documentos Legados)
 
 Documentos mantidos para histÃ³rico tÃ©cnico e referÃªncia. NÃ£o devem ser usados como fonte principal.
 
-- $(alinhamento_de_portifólio_personas_e_oportunidades comerciais.md.Name)
-- $(compilado_de_propostas_tecnicas.md.Name)
-- $(documentacao_do_contexto_e_problematica.md.Name)
-- $(matriz_de_responsabilidade.md.Name)
-- $(personas_clearit.md.Name)
-- $(questionarios_de_qualificacao_de_oportunidade_e_discovery_tecnico.md.Name)
-- $(relatorio_clearit.md.Name)
+- alinhamento_de_portifólio_personas_e_oportunidades comerciais.md
+- compilado_de_propostas_tecnicas.md
+- documentacao_do_contexto_e_problematica.md
+- matriz_de_responsabilidade.md
+- personas_clearit.md
+- questionarios_de_qualificacao_de_oportunidade_e_discovery_tecnico.md
+- relatorio_clearit.md
 ---
 
 ## ðŸ“– DocumentaÃ§Ã£o de Suporte
@@ -112,5 +113,5 @@ Para que o script funcione, cada KB deve conter:
 
 ---
 
-**Ãšltima AtualizaÃ§Ã£o:** 08/07/2026 14:22  
-**VersÃ£o da KB:** 2.3
+**Ãšltima AtualizaÃ§Ã£o:** 08/07/2026 14:27  
+**VersÃ£o da KB:** 2.4
